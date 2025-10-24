@@ -1,0 +1,47 @@
+.css-path-motion-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 100;
+}
+
+.css-path-motion {
+  position: absolute;
+  animation: css-path-motion-animation var(--animation-duration, 3s) var(--animation-timing, linear)
+    var(--animation-delay, 0s) var(--animation-iterations, 1) var(--animation-direction, normal)
+    forwards;
+  will-change: offset-distance;
+  z-index: 100;
+}
+
+.css-path-motion.with-rotation {
+  animation:
+    css-path-motion-animation var(--animation-duration, 3s) var(--animation-timing, linear)
+      var(--animation-delay, 0s) var(--animation-iterations, 1) var(--animation-direction, normal)
+      forwards,
+    css-path-motion-rotation var(--animation-duration, 3s) linear var(--animation-delay, 0s) 1
+      normal forwards;
+  will-change: offset-distance, transform;
+}
+
+@keyframes css-path-motion-animation {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes css-path-motion-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(var(--rotation-degrees, 1080deg));
+  }
+}

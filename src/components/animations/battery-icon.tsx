@@ -1,0 +1,179 @@
+import { motion } from 'framer-motion';
+import { commonColors } from '../../utils/colors';
+
+const cyanColor = commonColors.cyan[400];
+
+interface BatteryIconProps {
+  isCharging: boolean;
+  isFull: boolean;
+  level: number; // 0-4 (number of bars)
+}
+
+export const BatteryIcon = ({ isCharging, isFull, level }: BatteryIconProps) => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      className="w-4 h-4 shrink-0"
+      data-battery-icon="true"
+    >
+      {/* Battery outline */}
+      <motion.rect
+        x="1"
+        y="3"
+        width="12"
+        height="10"
+        rx="1.5"
+        ry="1.5"
+        fill="none"
+        stroke={cyanColor}
+        strokeWidth="1"
+        opacity={0.6}
+        animate={{
+          opacity: isCharging ? [0.6, 0.8, 0.6] : 0.6,
+        }}
+        transition={{
+          duration: 1,
+          repeat: isCharging ? Infinity : 0,
+          ease: 'easeInOut',
+        }}
+      />
+
+      {/* Battery terminal */}
+      <motion.rect
+        x="13"
+        y="6"
+        width="2"
+        height="4"
+        rx="0.5"
+        ry="0.5"
+        fill={cyanColor}
+        opacity={0.6}
+        animate={{
+          opacity: isCharging ? [0.6, 0.8, 0.6] : 0.6,
+        }}
+        transition={{
+          duration: 1,
+          repeat: isCharging ? Infinity : 0,
+          ease: 'easeInOut',
+        }}
+      />
+
+      {/* Charge level bars */}
+      <motion.rect
+        x="3"
+        y="5"
+        width="1"
+        height="6"
+        fill={level >= 1 ? cyanColor : 'transparent'}
+        initial={{ opacity: 1 }}
+        animate={{
+          opacity: isCharging ? [0.6, 1, 0.6] : 1,
+          fill: isCharging && level >= 1 ? cyanColor : (level >= 1 ? cyanColor : 'transparent'),
+        }}
+        transition={{
+          duration: 0.8,
+          repeat: isCharging ? Infinity : 0,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.rect
+        x="5"
+        y="5"
+        width="1"
+        height="6"
+        fill={level >= 2 ? cyanColor : 'transparent'}
+        initial={{ opacity: 1 }}
+        animate={{
+          opacity: isCharging ? [0.6, 1, 0.6] : 1,
+          fill: isCharging && level >= 2 ? cyanColor : (level >= 2 ? cyanColor : 'transparent'),
+        }}
+        transition={{
+          duration: 0.8,
+          repeat: isCharging ? Infinity : 0,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.rect
+        x="7"
+        y="5"
+        width="1"
+        height="6"
+        fill={level >= 3 ? cyanColor : 'transparent'}
+        initial={{ opacity: 1 }}
+        animate={{
+          opacity: isCharging ? [0.6, 1, 0.6] : 1,
+          fill: isCharging && level >= 3 ? cyanColor : (level >= 3 ? cyanColor : 'transparent'),
+        }}
+        transition={{
+          duration: 0.8,
+          repeat: isCharging ? Infinity : 0,
+          ease: 'easeInOut',
+        }}
+      />
+      <motion.rect
+        x="9"
+        y="5"
+        width="1"
+        height="6"
+        fill={level >= 4 ? cyanColor : 'transparent'}
+        initial={{ opacity: 1 }}
+        animate={{
+          opacity: isCharging ? [0.6, 1, 0.6] : 1,
+          fill: isCharging && level >= 4 ? cyanColor : (level >= 4 ? cyanColor : 'transparent'),
+        }}
+        transition={{
+          duration: 0.8,
+          repeat: isCharging ? Infinity : 0,
+          ease: 'easeInOut',
+        }}
+      />
+
+      {/* Glow effect during charging */}
+      {isCharging && (
+        <motion.rect
+          x="1"
+          y="3"
+          width="12"
+          height="10"
+          rx="1.5"
+          ry="1.5"
+          fill={cyanColor}
+          opacity={0.2}
+          animate={{
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      )}
+
+      {/* Full charge pulse effect */}
+      {isFull && (
+        <motion.rect
+          x="1"
+          y="3"
+          width="12"
+          height="10"
+          rx="1.5"
+          ry="1.5"
+          fill={cyanColor}
+          opacity={0.2}
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      )}
+    </svg>
+  );
+};

@@ -1,0 +1,47 @@
+@import 'tailwindcss';
+@import './styles/glass-text.css';
+@import './styles/content.css';
+
+/* Custom styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background-color: hsl(220, 20%, 8%);
+  overflow-x: hidden;
+}
+
+/* Animations */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 30s linear infinite;
+}
+
+/* Custom gradient utilities */
+bg-gradient-conic {
+  background: conic-gradient(var(--tw-gradient-stops));
+}
+
+/* Z-index utilities */
+z-5 {
+  z-index: 5;
+}
+
+/* Fire effect styles */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}

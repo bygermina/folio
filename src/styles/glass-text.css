@@ -1,0 +1,47 @@
+.glass-text-shine {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(59, 130, 246, 0.9) 25%,
+    rgba(6, 182, 212, 0.8) 35%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(6, 182, 212, 0.8) 65%,
+    rgba(168, 85, 247, 0.9) 75%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.3));
+  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.2);
+  animation: glass-shine 7s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.glass-text {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(59, 130, 246, 0.9) 25%,
+    rgba(6, 182, 212, 0.8) 50%,
+    rgba(168, 85, 247, 0.9) 75%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.3));
+  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+
+@keyframes glass-shine {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
