@@ -11,7 +11,7 @@ export const Footer = () => {
 
   return (
     <motion.div
-      className="absolute bottom-4 left-1/2 mt-16 -translate-x-1/2 transform text-center"
+      className="relative bottom-4 left-1/2 mt-16 -translate-x-1/2 transform text-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8, delay: 1.0 }}
