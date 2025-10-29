@@ -1,0 +1,357 @@
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
+export const getInitialSlides = <T>(
+  arr: T[],
+  containerWidth: number,
+  slideWidth: number
+) => {
+  if (containerWidth === 0 || arr.length === 0) {
+    return arr;
+  }
+
+  const expectedWidth = containerWidth + slideWidth * 2;
+  const copyArray = structuredClone(arr);
+  const chain = [...copyArray];
+
+  while (chain.length * slideWidth < expectedWidth) {
+    chain.push(...copyArray);
+  }
+
+  return chain;
+};
+
+export const getStartState = (slidesNumber: number): number[] =>
+  Array.from({ length: slidesNumber }, () => 0);
+
+export interface Dimensions {
+  left: number;
+  right: number;
+  width: number;
+}
+
+export const updateInfiniteScrollPositions =
+  (
+    slides: (HTMLElement | null)[],
+    container: Dimensions,
+    slidesNumber: number
+  ) =>
+  (prevTranslateX: number[], delta: number): number[] => {
+    return prevTranslateX.map((prevValue, index) => {
+      const el = slides[index];
+      if (!el) return prevValue;
+
+      const element = getElementDimensions(el);
+      let newValue = prevValue + delta;
+
+      if (delta < 0 && element.right < container.left) {
+        newValue += slidesNumber * element.width;
+      } else if (delta > 0 && element.left > container.right) {
+        newValue -= slidesNumber * element.width;
+      }
+
+      return newValue;
+    });
+  };
+
+export const getElementDimensions = (
+  element?: HTMLElement | null
+): Dimensions => {
+  const elementDimensions = element?.getBoundingClientRect();
+
+  return {
+    left: elementDimensions?.left || 0,
+    right: elementDimensions?.right || 0,
+    width: elementDimensions?.width || 0,
+  };
+};
+
+export const applyTransform = (
+  slides: (HTMLElement | null)[],
+  translateX: number[]
+): void => {
+  slides.forEach((el, idx) => {
+    if (el) {
+      el.style.transform = `translate3d(${translateX[idx]}px, 0, 0)`;
+    }
+  });
+};
+
+const EVENTS = {
+  Visibilitychange: "visibilitychange",
+  TouchMove: "touchmove",
+};
+
+const FRICTION = 0.95;
+const VELOCITY_STOP_THRESHOLD = 0.5;
+const VELOCITY_ANIMATE_THRESHOLD = 2;
+const VELOCITY_MULTIPLIER = 25;
+
+interface UseSlider {
+  setCircularAnimationPaused: (paused: boolean) => void;
+  translateX: React.RefObject<number[]>;
+  slides: (HTMLElement | null)[];
+  containerRef: React.RefObject<HTMLElement | null>;
+  updatePositions: (prevTranslateX: number[], delta: number) => number[];
+}
+
+interface UseSliderReturn {
+  domActions: {
+    onTouchStart: (e: React.TouchEvent) => void;
+    onTouchEnd: (e: React.TouchEvent) => void;
+    onMouseLeave: () => void;
+    onMouseEnter: () => void;
+  };
+  stopAnimation: () => void;
+}
+
+export const useSlider = ({
+  setCircularAnimationPaused,
+  translateX,
+  slides,
+  containerRef,
+  updatePositions,
+}: UseSlider): UseSliderReturn => {
+  const posX1 = useRef(0);
+  const lastMoveX = useRef(0);
+  const isDragging = useRef(false);
+  const lastMoveTime = useRef(performance.now());
+  const velocity = useRef(0);
+  const animationId = useRef<number | null>(null);
+  const isInertionAnimationRunning = useRef(false);
+
+  const stopAnimation = useCallback(() => {
+    if (animationId.current) {
+      cancelAnimationFrame(animationId.current);
+    }
+    animationId.current = null;
+    isInertionAnimationRunning.current = false;
+    isDragging.current = false;
+    velocity.current = 0;
+    posX1.current = 0;
+    lastMoveX.current = 0;
+
+    setCircularAnimationPaused(false);
+  }, [setCircularAnimationPaused]);
+
+  useEffect(() => {
+    return () => {
+      stopAnimation();
+    };
+  }, [stopAnimation]);
+
+  const onTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (e.touches.length !== 1) return;
+
+      stopAnimation();
+      setCircularAnimationPaused(true);
+      isDragging.current = true;
+
+      lastMoveTime.current = performance.now();
+      lastMoveX.current = e.touches[0].clientX;
+      velocity.current = 0;
+    },
+    [setCircularAnimationPaused, stopAnimation]
+  );
+
+  const onTouchMove = useCallback(
+    (e: Event) => {
+      if (!isDragging.current || !(e instanceof TouchEvent) || e.touches.length !== 1) return;
+
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+
+      const clientX = e.touches[0].clientX;
+      const delta = clientX - lastMoveX.current;
+
+      lastMoveX.current = clientX;
+
+      translateX.current = updatePositions(translateX.current, delta);
+      applyTransform(slides, translateX.current);
+
+      const now = performance.now();
+      const dt = now - lastMoveTime.current;
+
+      velocity.current = (delta / dt) * VELOCITY_MULTIPLIER;
+      lastMoveTime.current = now;
+    },
+    [translateX, slides, updatePositions]
+  );
+
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      isDragging.current = false;
+      let delta = velocity.current;
+      posX1.current = 0;
+
+      function animate() {
+        if (Math.abs(delta) > VELOCITY_STOP_THRESHOLD) {
+          delta *= FRICTION;
+
+          translateX.current = updatePositions(translateX.current, delta);
+          applyTransform(slides, translateX.current);
+
+          animationId.current = requestAnimationFrame(animate);
+        } else {
+          stopAnimation();
+        }
+      }
+
+      if (Math.abs(delta) > VELOCITY_ANIMATE_THRESHOLD) {
+        isInertionAnimationRunning.current = true;
+        animate();
+      } else {
+        stopAnimation();
+      }
+    },
+    [updatePositions, stopAnimation, slides, translateX]
+  );
+
+  useEffect(() => {
+    const container = containerRef?.current;
+    if (!container) return;
+
+    container.addEventListener(EVENTS.TouchMove, onTouchMove, {
+      passive: false,
+    });
+
+    return () => {
+      container.removeEventListener(EVENTS.TouchMove, onTouchMove);
+    };
+  }, [containerRef, onTouchMove]);
+
+  const onMouseEnter = useCallback(() => {
+    setCircularAnimationPaused(true);
+  }, [setCircularAnimationPaused]);
+
+  const onMouseLeave = useCallback(() => {
+    setCircularAnimationPaused(false);
+  }, [setCircularAnimationPaused]);
+
+  return {
+    domActions: {
+      onTouchStart,
+      onTouchEnd,
+      onMouseEnter,
+      onMouseLeave,
+    },
+    stopAnimation,
+  };
+};
+
+export type Side = "left" | "right";
+
+interface UseAnimationReturn {
+  setCircularAnimationPaused: (paused: boolean) => void;
+}
+
+interface UseAnimation {
+  speed?: number;
+  side: Side;
+  slides: (HTMLElement | null)[];
+  translateX: React.RefObject<number[]>;
+  updatePositions: (prevTranslateX: number[], delta: number) => number[];
+}
+
+export const useAnimation = ({
+  speed,
+  side,
+  slides,
+  translateX,
+  updatePositions,
+}: UseAnimation): UseAnimationReturn => {
+  const [isCircularAnimationPaused, setCircularAnimationPaused] =
+    useState(false);
+
+  useEffect(() => {
+    const windowVisibilityListener = () => {
+      setCircularAnimationPaused(document.visibilityState === "hidden");
+    };
+
+    document.addEventListener(
+      EVENTS.Visibilitychange,
+      windowVisibilityListener
+    );
+
+    return () => {
+      document.removeEventListener(
+        EVENTS.Visibilitychange,
+        windowVisibilityListener
+      );
+    };
+  }, [setCircularAnimationPaused]);
+
+  useEffect(() => {
+    let animationFrameId: number | null = null;
+
+    const animate = () => {
+      if (isCircularAnimationPaused || !speed) {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+        }
+        return;
+      }
+
+      const prevTranslateX = [...translateX.current];
+      const delta = side === "left" ? -speed : speed;
+
+      translateX.current = updatePositions(prevTranslateX, delta);
+      applyTransform(slides, translateX.current);
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    if (!isCircularAnimationPaused && speed) {
+      animationFrameId = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [
+    isCircularAnimationPaused,
+    side,
+    speed,
+    translateX,
+    slides,
+    updatePositions,
+  ]);
+
+  return { setCircularAnimationPaused };
+};
+
+export const useElementSize = (ref: React.RefObject<HTMLElement | null>) => {
+  const [size, setSize] = useState({ left: 0, right: 0, width: 0 });
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const updateSize = () => {
+      setSize({ ...getElementDimensions(element) });
+    };
+
+    updateSize();
+
+    const resizeObserver = new ResizeObserver(updateSize);
+    resizeObserver.observe(element);
+
+    window.addEventListener("resize", updateSize);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateSize);
+    };
+  }, [ref]);
+
+  return size;
+};
