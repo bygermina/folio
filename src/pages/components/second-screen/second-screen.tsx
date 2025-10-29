@@ -2,17 +2,26 @@ import { Slider } from "@/components/basic/slider/slider";
 import { useScreenSize } from "@/hooks/use-screen-size";
 import { useCallback } from "react";
 import CodeBackground from "@/components/basic/code-background";
+import reactLogo from "@/assets/react-logo-filled.svg";
 
 import { SlideContent } from "./components/slide-content";
 
 const LINKS: LinkData[] = [
   {
-    query: "React Hooks",
-    image: "/icon.svg",
+    query: "this is a JS animation",
+    image: reactLogo,
   },
   {
-    query: "React Router",
-    image: "/icon.svg",
+    query: "made without any libraries",
+    image: reactLogo,
+  },
+  {
+    query: "Spin it up",
+    image: reactLogo,
+  },
+  {
+    query: "made without any libraries",
+    image: reactLogo,
   },
 ];
 

@@ -7,11 +7,11 @@ import {
   type Side,
   useSlider,
   useAnimation,
-  useElementSize,
   updateInfiniteScrollPositions,
 } from "./slider.utils";
  
 import { useScreenSize } from "@/hooks/use-screen-size";
+import { useElementSize } from "@/hooks/use-element-size";
 
 export type SetLinksRefs = (index: number) => (el: HTMLElement | null) => void;
 
@@ -92,11 +92,11 @@ export const Slider = <T,>({
   );
 
   return (
-      <div
-        ref={containerRef}
-        className="relative w-screen my-[-10px] py-[10px] overflow-hidden [touch-action:pan-x]"
-        {...domActions}
-      >
+    <div
+      ref={containerRef}
+      className="relative w-screen my-[-10px] py-[10px] overflow-hidden [touch-action:pan-x]"
+      {...domActions}
+    >
       <div className="flex flex-row gap-4 max-md:gap-1">
         {containerAdjustedSlides.map((item, index) =>
           renderSlide(item, index, setLinkRef(index))

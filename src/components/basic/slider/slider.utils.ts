@@ -84,7 +84,10 @@ export const applyTransform = (
 const EVENTS = {
   Visibilitychange: "visibilitychange",
   TouchMove: "touchmove",
-};
+  MouseMove: "mousemove",
+  PointerMove: "pointermove",
+  PointerUp: "pointerup",
+} as const;
 
 const FRICTION = 0.95;
 const VELOCITY_STOP_THRESHOLD = 0.5;
@@ -102,7 +105,9 @@ interface UseSlider {
 interface UseSliderReturn {
   domActions: {
     onTouchStart: (e: React.TouchEvent) => void;
-    onTouchEnd: (e: React.TouchEvent) => void;
+    onMouseDown: (e: React.MouseEvent) => void;
+    onTouchEnd: () => void;
+    onMouseUp: () => void;
     onMouseLeave: () => void;
     onMouseEnter: () => void;
   };
@@ -144,48 +149,26 @@ export const useSlider = ({
     };
   }, [stopAnimation]);
 
-  const onTouchStart = useCallback(
-    (e: React.TouchEvent) => {
-      if (e.touches.length !== 1) return;
+  const onPointerStart = useCallback(
+    (e: React.TouchEvent | React.MouseEvent) => {
+      const isTouchEvent = 'touches' in e;
+      if (isTouchEvent && e.touches.length !== 1) return;
+      
+      const clientX = isTouchEvent ? e.touches[0].clientX : e.clientX;
 
       stopAnimation();
       setCircularAnimationPaused(true);
       isDragging.current = true;
 
       lastMoveTime.current = performance.now();
-      lastMoveX.current = e.touches[0].clientX;
+      lastMoveX.current = clientX;
       velocity.current = 0;
     },
     [setCircularAnimationPaused, stopAnimation]
   );
 
-  const onTouchMove = useCallback(
-    (e: Event) => {
-      if (!isDragging.current || !(e instanceof TouchEvent) || e.touches.length !== 1) return;
-
-      if (e.cancelable) {
-        e.preventDefault();
-      }
-
-      const clientX = e.touches[0].clientX;
-      const delta = clientX - lastMoveX.current;
-
-      lastMoveX.current = clientX;
-
-      translateX.current = updatePositions(translateX.current, delta);
-      applyTransform(slides, translateX.current);
-
-      const now = performance.now();
-      const dt = now - lastMoveTime.current;
-
-      velocity.current = (delta / dt) * VELOCITY_MULTIPLIER;
-      lastMoveTime.current = now;
-    },
-    [translateX, slides, updatePositions]
-  );
-
-  const onTouchEnd = useCallback(
-    (e: React.TouchEvent) => {
+  const onPointerEnd = useCallback(
+    () => {
       isDragging.current = false;
       let delta = velocity.current;
       posX1.current = 0;
@@ -213,18 +196,59 @@ export const useSlider = ({
     [updatePositions, stopAnimation, slides, translateX]
   );
 
+  const onPointerMove = useCallback(
+    (e: Event) => {
+      if (!isDragging.current) return;
+
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+
+      const isTouchEvent = e instanceof TouchEvent;
+      if (isTouchEvent && e.touches.length !== 1) return;
+
+      const clientX = isTouchEvent ? e.touches[0].clientX : (e as MouseEvent).clientX;
+
+      const delta = clientX - lastMoveX.current;
+
+      lastMoveX.current = clientX;
+
+      translateX.current = updatePositions(translateX.current, delta);
+      applyTransform(slides, translateX.current);
+
+      const now = performance.now();
+      const dt = now - lastMoveTime.current;
+
+      velocity.current = (delta / dt) * VELOCITY_MULTIPLIER;
+      lastMoveTime.current = now;
+    },
+    [translateX, slides, updatePositions]
+  );
+
   useEffect(() => {
     const container = containerRef?.current;
     if (!container) return;
 
-    container.addEventListener(EVENTS.TouchMove, onTouchMove, {
-      passive: false,
-    });
+    container.addEventListener("touchmove", onPointerMove as EventListener, { passive: false });
+    container.addEventListener("mousemove", onPointerMove as EventListener, { passive: false });
+
+    const handlePointerEnd = () => {
+      if (isDragging.current) {
+        onPointerEnd();
+      }
+    };
+
+    document.addEventListener("touchend", handlePointerEnd);
+    document.addEventListener("mouseup", handlePointerEnd);
 
     return () => {
-      container.removeEventListener(EVENTS.TouchMove, onTouchMove);
+      container.removeEventListener("touchmove", onPointerMove as EventListener);
+      container.removeEventListener("mousemove", onPointerMove as EventListener);
+      
+      document.removeEventListener("touchend", handlePointerEnd);
+      document.removeEventListener("mouseup", handlePointerEnd);
     };
-  }, [containerRef, onTouchMove]);
+  }, [containerRef, onPointerMove, onPointerEnd]);
 
   const onMouseEnter = useCallback(() => {
     setCircularAnimationPaused(true);
@@ -236,8 +260,10 @@ export const useSlider = ({
 
   return {
     domActions: {
-      onTouchStart,
-      onTouchEnd,
+      onTouchStart: onPointerStart,
+      onMouseDown: onPointerStart,
+      onTouchEnd: onPointerEnd,
+      onMouseUp: onPointerEnd,
       onMouseEnter,
       onMouseLeave,
     },
@@ -327,31 +353,4 @@ export const useAnimation = ({
   ]);
 
   return { setCircularAnimationPaused };
-};
-
-export const useElementSize = (ref: React.RefObject<HTMLElement | null>) => {
-  const [size, setSize] = useState({ left: 0, right: 0, width: 0 });
-
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-
-    const updateSize = () => {
-      setSize({ ...getElementDimensions(element) });
-    };
-
-    updateSize();
-
-    const resizeObserver = new ResizeObserver(updateSize);
-    resizeObserver.observe(element);
-
-    window.addEventListener("resize", updateSize);
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener("resize", updateSize);
-    };
-  }, [ref]);
-
-  return size;
 };

@@ -7,11 +7,11 @@ interface SlideContentProps {
 
 export const SlideContent = forwardRef<HTMLDivElement, SlideContentProps>(({ query, image }, ref) => {
   return (
-    <div ref={ref} className="flex flex-row will-change-transform">
+    <div ref={ref} className="will-change-transform">
       <div
         aria-label={query}
         className={
-          `surface-transparent gap-1 w-[244px] max-w-full bg-transparent text-[color:var(--button-color-one)]
+          `flex flex-row items-center surface-transparent gap-1 w-[244px] max-w-full bg-transparent text-[color:var(--button-color-one)]
           transition-transform duration-300 ease-in-out hover:scale-105
           max-md:mr-[30px] max-md:max-w-[200px] max-md:text-justify max-md:gap-2`
         }
@@ -21,9 +21,11 @@ export const SlideContent = forwardRef<HTMLDivElement, SlideContentProps>(({ que
           height={20}
           src={image}
           alt={query}
-          className="max-md:hidden"
+          className="max-md:hidden flex-basis-[50px] text-blue-500 opacity-80"
         />
-        {query}
+        <div className="flex-basis-[200px] text-blue-500">
+          {query}
+        </div>
       </div>
     </div>
   );

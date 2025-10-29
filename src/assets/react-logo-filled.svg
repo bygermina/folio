@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <style>
+      .react-stroke { stroke: currentColor; stroke-width: 16; fill: none; }
+      .react-fill { fill: currentColor; }
+    </style>
+  </defs>
+  <!-- Nucleus -->
+  <circle cx="128" cy="128" r="20" class="react-fill"/>
+  <!-- Orbit 1 (horizontal) -->
+  <ellipse class="react-stroke" cx="128" cy="128" rx="100" ry="40" />
+  <!-- Orbit 2 (rotated +60deg) -->
+  <g transform="rotate(60 128 128)">
+    <ellipse class="react-stroke" cx="128" cy="128" rx="100" ry="40" />
+  </g>
+  <!-- Orbit 3 (rotated -60deg) -->
+  <g transform="rotate(-60 128 128)">
+    <ellipse class="react-stroke" cx="128" cy="128" rx="100" ry="40" />
+  </g>
+</svg>
+
