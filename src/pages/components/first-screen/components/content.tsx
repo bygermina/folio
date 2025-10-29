@@ -71,7 +71,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               href="https://www.linkedin.com/in/kseniya-liubachka/"
               target="_blank"
               rel="noopener noreferrer"
-              className={`btn-base btn-contact py-2 ${isPortrait ? ' h-9 px-6  text-xs' : 'h-10 px-8 text-sm'}`}
+              className={`btn-base surface-transparent py-2 ${isPortrait ? ' h-9 px-6  text-xs' : 'h-10 px-8 text-sm'}`}
             >
               Contact
             </a>

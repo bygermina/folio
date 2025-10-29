@@ -6,7 +6,7 @@
   @apply border border-cyan-400/40 shadow-lg shadow-cyan-500/25 hover:scale-105 hover:border-cyan-300/60 hover:bg-cyan-500/5 hover:shadow-xl hover:shadow-cyan-400/35 focus-visible:ring-cyan-400/60;
 }
 
-.btn-contact {
+.surface-transparent {
   @apply border border-blue-500/50 hover:border-blue-500 hover:bg-blue-500/10 focus-visible:ring-blue-400/60;
 }
 
