@@ -7,7 +7,7 @@ import { useEvent } from '@/hooks/use-event';
 
 import tailwindConfig from '../../../tailwind.config';
 import { useScreenSizeContext } from '../providers/use-context';
-import { Button } from './button';
+import { Button } from './button/button';
 
 interface MagicButtonProps {
   onClick?: () => void;

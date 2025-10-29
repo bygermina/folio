@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 
-import { rgba, commonColors } from '../../utils/colors';
+import { rgba, commonColors } from '../../../utils/colors';
 
 interface FireEffectProps {
   style?: CSSProperties;

@@ -381,7 +381,7 @@ const codeColumns = [
   ],
 ];
 
-import tailwindConfig from '../../../tailwind.config';
+import tailwindConfig from '../../../../../tailwind.config';
 
 const getColorValue = (startColor: number[], endColor: number[], t: number, channel: number) =>
   Math.round(startColor[channel] * (1 - t) + endColor[channel] * t);

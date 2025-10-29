@@ -3,7 +3,7 @@ import { useRef, useImperativeHandle, forwardRef } from 'react';
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
 import { pathTree, paths } from '@/constants/svg-paths';
 import treeImage from '@/assets/blue circuit tree-small.jpg';
-import { ImageMask } from '@/components/animations/image-mask';
+import { ImageMask } from '@/components/animations/image/image-mask';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 import { getImageOffset, getScaledPath } from '@/utils/svg';
 

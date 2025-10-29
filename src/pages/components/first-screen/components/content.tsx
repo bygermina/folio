@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { forwardRef, useEffect } from 'react';
 
 import { MagicButton } from '@/components/basic/magic-button';
-import { TypeText } from '@/components/animations/type-text';
+import { TypeText } from '@/components/animations/text/type-text';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 
 interface ContentProps {

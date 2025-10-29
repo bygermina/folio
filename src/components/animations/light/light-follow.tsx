@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { useScreenSizeContext } from '../providers/use-context';
-import { commonColors } from '../../utils/colors';
+import { useScreenSizeContext } from '../../providers/use-context';
+import { commonColors } from '../../../utils/colors';
 
 const colors = commonColors.light;
 
