@@ -11,9 +11,8 @@ export const SlideContent = forwardRef<HTMLDivElement, SlideContentProps>(({ que
       <div
         aria-label={query}
         className={
-          `flex flex-row items-center surface-transparent gap-1 w-[244px] max-w-full bg-transparent text-[color:var(--button-color-one)]
-          transition-transform duration-300 ease-in-out hover:scale-105
-          max-md:mr-[30px] max-md:max-w-[200px] max-md:text-justify max-md:gap-2`
+          `flex flex-row gap-1 items-center surface-transparent w-[244px] transition-transform p-1
+          hover:scale-105 max-md:mr-[30px] max-md:max-w-[200px] max-md:gap-2`
         }
       >
         <img
@@ -21,7 +20,7 @@ export const SlideContent = forwardRef<HTMLDivElement, SlideContentProps>(({ que
           height={20}
           src={image}
           alt={query}
-          className="max-md:hidden flex-basis-[50px] text-blue-500 opacity-80"
+          className="max-md:hidden flex-basis-[50px] text-blue-500 opacity-80 mr-2"
         />
         <div className="flex-basis-[200px] text-blue-500">
           {query}
