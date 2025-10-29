@@ -2,34 +2,14 @@ import { useCallback } from 'react';
 
 import { Slider } from '@/components/basic/slider/slider';
 import { useScreenSize } from '@/hooks/use-screen-size';
-import reactLogo from '@/assets/react-logo-filled.svg';
 
 import { SlideContent } from './components/slide-content';
-
-const LINKS: LinkData[] = [
-  {
-    query: 'This is a JS animation',
-    image: reactLogo,
-  },
-  {
-    query: 'made without any libraries',
-    image: reactLogo,
-  },
-  {
-    query: 'Spin it up',
-    image: reactLogo,
-  },
-];
+import { LINKS, type LinkData } from './constants';
 
 const SLIDE_WIDTH = {
   DESKTOP: 288,
   MOBILE: 220,
 } as const;
-
-type LinkData = {
-  query: string;
-  image: string;
-};
 
 export const SecondScreen = () => {
   const { screenWidth } = useScreenSize();
