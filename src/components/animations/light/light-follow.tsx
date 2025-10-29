@@ -37,7 +37,7 @@ const LightFollowCoursor = () => {
     rafId.current = requestAnimationFrame(tick);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove as EventListener);
+      window.removeEventListener('mousemove', handleMouseMove);
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
   }, []);

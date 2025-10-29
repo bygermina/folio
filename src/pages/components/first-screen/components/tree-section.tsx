@@ -13,6 +13,7 @@ const ORIGINAL_RATIO = BASE_HEIGHT / BASE_WIDTH;
 
 export interface TreeSectionProps {
   isContentReady: boolean;
+  containerRef?: React.RefObject<HTMLElement | null>;
 }
 
 type Path = { path: string; start: { x: number; y: number }; delay: number; duration: number };
@@ -23,10 +24,10 @@ export interface TreeSectionRef {
 }
 
 export const TreeSection = forwardRef<TreeSectionRef, TreeSectionProps>(
-  ({ isContentReady }, ref) => {
+  ({ isContentReady, containerRef }, ref) => {
     const imageRef = useRef<HTMLImageElement>(null);
 
-    const imageDimensions = useElementDimensions(imageRef, isContentReady, BASE_HEIGHT);
+    const imageDimensions = useElementDimensions(imageRef, isContentReady, BASE_HEIGHT, 0.5, containerRef);
 
     const dx = getImageOffset(imageDimensions, ORIGINAL_RATIO);
 

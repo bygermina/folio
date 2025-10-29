@@ -12,6 +12,7 @@ import { Content } from './content';
 export const Section = () => {
   const { isPortrait, screenWidth, screenHeight } = useScreenSizeContext();
 
+  const sectionRef = useRef<HTMLElement | null>(null);
   const treeRef = useRef<TreeSectionRef | null>(null);
   const letterIRef = useRef<HTMLSpanElement>(null);
 
@@ -19,9 +20,10 @@ export const Section = () => {
 
   return (
     <section
+      ref={sectionRef}
       className={`relative min-h-screen w-full overflow-hidden flex ${isPortrait ? 'h-screen flex-col justify-between' : 'flex-row'}`}
     >
-      <TreeSection ref={treeRef} isContentReady={isContentReady} />
+      <TreeSection ref={treeRef} isContentReady={isContentReady} containerRef={sectionRef} />
       <Content
         key={screenWidth + screenHeight}
         letterRef={letterIRef}
@@ -32,6 +34,7 @@ export const Section = () => {
         letterIRef={letterIRef}
         isContentReady={isContentReady}
         targetElement={treeRef.current}
+        containerRef={sectionRef}
       />
     </section>
   );
@@ -41,14 +44,16 @@ interface PathEffectsSectionProps {
   letterIRef: React.RefObject<HTMLSpanElement | null>;
   isContentReady: boolean;
   targetElement: TreeSectionRef | null;
+  containerRef: React.RefObject<HTMLElement | null>;
 }
 
 const PathEffectsSection = ({
   letterIRef,
   isContentReady,
   targetElement,
+  containerRef,
 }: PathEffectsSectionProps) => {
-  const letterIDimensions = useElementDimensions(letterIRef, isContentReady, 0, 0.3);
+  const letterIDimensions = useElementDimensions(letterIRef, isContentReady, 0, 0.3, containerRef);
   const { isPortrait } = useScreenSizeContext();
   const scaledPathTree = targetElement?.getPath();
   const scaledPaths = targetElement?.getPaths();

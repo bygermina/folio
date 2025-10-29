@@ -15,19 +15,23 @@ const getElementDimensions = (
   element: HTMLElement | null,
   baseHeight?: number,
   part: number = 0.5,
+  container?: HTMLElement | null,
 ): Dimensions | null => {
   if (!element) return null;
 
   const rect = element?.getBoundingClientRect();
+  const containerRect = container?.getBoundingClientRect();
+  const offsetLeft = containerRect ? containerRect.left : 0;
+  const offsetTop = containerRect ? containerRect.top : 0;
 
   const dimensions: Dimensions = {
     width: rect.width,
     height: rect.height,
     viewport: { x: rect.left, y: rect.top },
-    bottomLeft: { x: rect.left, y: rect.bottom },
+    bottomLeft: { x: rect.left - offsetLeft, y: rect.bottom - offsetTop },
     center: {
-      x: rect.left + rect.width * 0.5,
-      y: rect.top + rect.height * part,
+      x: rect.left - offsetLeft + rect.width * 0.5,
+      y: rect.top - offsetTop + rect.height * part,
     },
     scale: baseHeight ? rect.height / baseHeight : 1,
   };
@@ -49,6 +53,7 @@ export const useElementDimensions = (
   isContentReady?: boolean,
   baseHeight?: number,
   part: number = 0.5,
+  containerRef?: React.RefObject<HTMLElement | null>,
 ) => {
   const [dimensions, setDimensions] = useState<Dimensions>(structuredClone(defaultDimensions));
 
@@ -56,7 +61,12 @@ export const useElementDimensions = (
     if (!elementRef.current) return;
 
     const updateDimensions = () => {
-      const newDimensions = getElementDimensions(elementRef.current, baseHeight, part);
+      const newDimensions = getElementDimensions(
+        elementRef.current,
+        baseHeight,
+        part,
+        containerRef?.current ?? undefined,
+      );
       const value = newDimensions ?? structuredClone(defaultDimensions);
 
       setDimensions(value);
