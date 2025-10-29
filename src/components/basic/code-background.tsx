@@ -396,13 +396,13 @@ const rgbStringToArray = (rgb: string): number[] => {
 const startColor = rgbStringToArray(codeColors.start);
 const endColor = rgbStringToArray(codeColors.end);
 
-const CodeBackground = () => {
+const CodeBackground = ({ className }: { className?: string }) => {
   return (
-    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+    <div className={`${className} pointer-events-none absolute inset-0 z-0 overflow-hidden`}>
       <div className="absolute inset-0 font-mono whitespace-pre opacity-70">
         <div className="grid h-full grid-cols-3 gap-8 p-4">
           {codeColumns.map((column, columnIndex) => (
-            <div key={columnIndex} className="space-y-2">
+            <div key={columnIndex} className="space-y-2 select-none">
               {column.map((line, lineIndex) => {
                 const t = (lineIndex + columnIndex * 0.3) / (column.length - 1);
 

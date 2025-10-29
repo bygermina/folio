@@ -45,7 +45,6 @@ export const SecondScreen = () => {
 
   return (
     <div className="relative z-[1] pt-0">
-      <CodeBackground />
       <Slider<LinkData>
         slides={LINKS}
         speed={0.6}

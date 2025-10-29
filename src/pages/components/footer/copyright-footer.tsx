@@ -10,15 +10,15 @@ export const Footer = () => {
   }
 
   return (
-    <motion.div
-      className="relative bottom-4 left-1/2 mt-16 -translate-x-1/2 transform text-center"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8, delay: 1.0 }}
-    >
-      <p className="text-sm text-slate-500">
+    <div className="relative p-4 text-center overflow-hidden">
+      <motion.p 
+        className="text-sm text-slate-500"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 1.0 }}
+      >
         © {new Date().getFullYear()} Xenia Liubachka. All rights reserved.
-      </p>
-    </motion.div>
+      </motion.p>
+    </div>
   );
 };
