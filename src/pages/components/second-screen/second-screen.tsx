@@ -1,6 +1,7 @@
-import { Slider } from "@/components/basic/slider/Slider";
+import { Slider } from "@/components/basic/slider/slider";
 import { useScreenSize } from "@/hooks/use-screen-size";
 import { useCallback } from "react";
+import CodeBackground from "@/components/basic/code-background";
 
 import { SlideContent } from "./components/slide-content";
 
@@ -38,6 +39,7 @@ export const SecondScreen = () => {
 
   return (
     <div className="relative z-[1] pt-0">
+      <CodeBackground />
       <Slider<LinkData>
         slides={LINKS}
         speed={0.6}
