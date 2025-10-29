@@ -11,7 +11,7 @@ export const Footer = () => {
 
   return (
     <div className="relative p-4 text-center overflow-hidden">
-      <motion.p 
+      <motion.p
         className="text-sm text-slate-500"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

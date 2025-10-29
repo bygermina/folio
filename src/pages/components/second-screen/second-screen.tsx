@@ -1,23 +1,22 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
-import { Slider } from "@/components/basic/slider/slider";
-import { useScreenSize } from "@/hooks/use-screen-size";
-import CodeBackground from "@/components/basic/code-background";
-import reactLogo from "@/assets/react-logo-filled.svg";
+import { Slider } from '@/components/basic/slider/slider';
+import { useScreenSize } from '@/hooks/use-screen-size';
+import reactLogo from '@/assets/react-logo-filled.svg';
 
-import { SlideContent } from "./components/slide-content";
+import { SlideContent } from './components/slide-content';
 
 const LINKS: LinkData[] = [
   {
-    query: "This is a JS animation",
+    query: 'This is a JS animation',
     image: reactLogo,
   },
   {
-    query: "made without any libraries",
+    query: 'made without any libraries',
     image: reactLogo,
   },
   {
-    query: "Spin it up",
+    query: 'Spin it up',
     image: reactLogo,
   },
 ];
@@ -40,7 +39,7 @@ export const SecondScreen = () => {
     (item: LinkData, index: number, setRef: (el: HTMLElement | null) => void) => (
       <SlideContent key={index} ref={setRef} {...item} />
     ),
-    []
+    [],
   );
 
   return (

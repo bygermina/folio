@@ -70,8 +70,14 @@ export const RouteDrawer = ({ predefinedPath, onRouteDrawn }: RouteDrawerProps) 
 
   return (
     <div className="pointer-events-none fixed inset-0 z-100 select-none">
-      <SVGPathVisualization paths={predefinedPath ? [predefinedPath] : undefined} viewBox={viewBox} />
-      <SVGPathVisualization paths={polylinePoints ? [polylinePoints] : undefined} viewBox={viewBox} />
+      <SVGPathVisualization
+        paths={predefinedPath ? [predefinedPath] : undefined}
+        viewBox={viewBox}
+      />
+      <SVGPathVisualization
+        paths={polylinePoints ? [polylinePoints] : undefined}
+        viewBox={viewBox}
+      />
 
       {points.length > 0 && (
         <PathControls

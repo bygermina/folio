@@ -70,7 +70,7 @@ export const BatteryIcon = ({ isCharging, isFull, level }: BatteryIconProps) => 
         initial={{ opacity: 1 }}
         animate={{
           opacity: isCharging ? [0.6, 1, 0.6] : 1,
-          fill: isCharging && level >= 1 ? cyanColor : (level >= 1 ? cyanColor : 'transparent'),
+          fill: isCharging && level >= 1 ? cyanColor : level >= 1 ? cyanColor : 'transparent',
         }}
         transition={{
           duration: 0.8,
@@ -87,7 +87,7 @@ export const BatteryIcon = ({ isCharging, isFull, level }: BatteryIconProps) => 
         initial={{ opacity: 1 }}
         animate={{
           opacity: isCharging ? [0.6, 1, 0.6] : 1,
-          fill: isCharging && level >= 2 ? cyanColor : (level >= 2 ? cyanColor : 'transparent'),
+          fill: isCharging && level >= 2 ? cyanColor : level >= 2 ? cyanColor : 'transparent',
         }}
         transition={{
           duration: 0.8,
@@ -104,7 +104,7 @@ export const BatteryIcon = ({ isCharging, isFull, level }: BatteryIconProps) => 
         initial={{ opacity: 1 }}
         animate={{
           opacity: isCharging ? [0.6, 1, 0.6] : 1,
-          fill: isCharging && level >= 3 ? cyanColor : (level >= 3 ? cyanColor : 'transparent'),
+          fill: isCharging && level >= 3 ? cyanColor : level >= 3 ? cyanColor : 'transparent',
         }}
         transition={{
           duration: 0.8,
@@ -121,7 +121,7 @@ export const BatteryIcon = ({ isCharging, isFull, level }: BatteryIconProps) => 
         initial={{ opacity: 1 }}
         animate={{
           opacity: isCharging ? [0.6, 1, 0.6] : 1,
-          fill: isCharging && level >= 4 ? cyanColor : (level >= 4 ? cyanColor : 'transparent'),
+          fill: isCharging && level >= 4 ? cyanColor : level >= 4 ? cyanColor : 'transparent',
         }}
         transition={{
           duration: 0.8,

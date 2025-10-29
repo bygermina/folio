@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import {
   applyTransform,
@@ -8,10 +8,10 @@ import {
   useSlider,
   useAnimation,
   updateInfiniteScrollPositions,
-} from "./slider.utils";
- 
-import { useScreenSize } from "@/hooks/use-screen-size";
-import { useElementSize } from "@/hooks/use-element-size";
+} from './slider.utils';
+
+import { useScreenSize } from '@/hooks/use-screen-size';
+import { useElementSize } from '@/hooks/use-element-size';
 
 export type SetLinksRefs = (index: number) => (el: HTMLElement | null) => void;
 
@@ -23,13 +23,13 @@ interface SliderProps<T> {
   renderSlide: (
     item: T,
     index: number,
-    setRef: (el: HTMLElement | null) => void
+    setRef: (el: HTMLElement | null) => void,
   ) => React.ReactNode;
 }
 
 export const Slider = <T,>({
   speed,
-  side = "left",
+  side = 'left',
   slides,
   slideWidth,
   renderSlide,
@@ -50,13 +50,8 @@ export const Slider = <T,>({
   const slidesNumber = containerAdjustedSlides.length;
 
   const updatePositions = useMemo(
-    () =>
-      updateInfiniteScrollPositions(
-        slidesRefs.current,
-        containerSize,
-        slidesNumber
-      ),
-    [containerSize, slidesNumber]
+    () => updateInfiniteScrollPositions(slidesRefs.current, containerSize, slidesNumber),
+    [containerSize, slidesNumber],
   );
 
   const { setCircularAnimationPaused } = useAnimation({
@@ -88,7 +83,7 @@ export const Slider = <T,>({
     (index: number) => (element: HTMLElement | null) => {
       slidesRefs.current[index] = element;
     },
-    []
+    [],
   );
 
   return (
@@ -98,9 +93,7 @@ export const Slider = <T,>({
       {...domActions}
     >
       <div className="flex flex-row gap-4 max-md:gap-1">
-        {containerAdjustedSlides.map((item, index) =>
-          renderSlide(item, index, setLinkRef(index))
-        )}
+        {containerAdjustedSlides.map((item, index) => renderSlide(item, index, setLinkRef(index)))}
       </div>
     </div>
   );

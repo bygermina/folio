@@ -4,7 +4,7 @@ import './css-path-motion.css';
 
 const getDurationFromSpeed = (fallbackSeconds: number, speed?: number, length?: number): number => {
   if (!speed || speed <= 0 || !length || length <= 0) return fallbackSeconds;
-  
+
   return Math.max(0.001, length / speed);
 };
 

@@ -15,25 +15,19 @@ interface MagicButtonProps {
 
 const glowColor = tailwindConfig.theme.extend.colors.cyan[400];
 
-export const MagicButton = ({
-  onClick,
-}: MagicButtonProps) => {
+export const MagicButton = ({ onClick }: MagicButtonProps) => {
   const { isPortrait } = useScreenSizeContext();
 
   const [clickCount, setClickCount] = useState(5);
   const [isLampVisible, setIsLampVisible] = useState(false);
 
   const lampBrightness =
-    clickCount <= 1
-      ? 1
-      : clickCount === 2
-      ? 1.5
-      : Math.max(0.3, 1.5 - (clickCount - 2) * 0.2);
+    clickCount <= 1 ? 1 : clickCount === 2 ? 1.5 : Math.max(0.3, 1.5 - (clickCount - 2) * 0.2);
   const isCharging = clickCount < 4;
 
   const handleClick = () => {
     if (isLampVisible) {
-      setClickCount((prev) => prev >= 5 ? 0 : prev + 1);
+      setClickCount((prev) => (prev >= 5 ? 0 : prev + 1));
       onClick?.();
     } else {
       setIsLampVisible(true);
@@ -82,15 +76,11 @@ export const MagicButton = ({
       >
         <Button
           size={isPortrait ? 'default' : 'lg'}
-          className='btn-base btn-magic'
+          className="btn-base btn-magic"
           onClick={handleClick}
         >
           <div className="flex items-center gap-2">
-            <BatteryIcon
-              isCharging={isCharging}
-              isFull={clickCount === 4}
-              level={clickCount}
-            />
+            <BatteryIcon isCharging={isCharging} isFull={clickCount === 4} level={clickCount} />
             <motion.span
               animate={
                 isCharging
@@ -113,10 +103,7 @@ export const MagicButton = ({
         </Button>
       </motion.div>
 
-      <MagicLamp
-        isVisible={isLampVisible}
-        brightness={lampBrightness}
-      />
+      <MagicLamp isVisible={isLampVisible} brightness={lampBrightness} />
     </>
   );
 };

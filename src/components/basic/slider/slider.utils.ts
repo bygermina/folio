@@ -1,15 +1,6 @@
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-export const getInitialSlides = <T>(
-  arr: T[],
-  containerWidth: number,
-  slideWidth: number
-) => {
+export const getInitialSlides = <T>(arr: T[], containerWidth: number, slideWidth: number) => {
   if (containerWidth === 0 || arr.length === 0) {
     return arr;
   }
@@ -35,11 +26,7 @@ export interface Dimensions {
 }
 
 export const updateInfiniteScrollPositions =
-  (
-    slides: (HTMLElement | null)[],
-    container: Dimensions,
-    slidesNumber: number
-  ) =>
+  (slides: (HTMLElement | null)[], container: Dimensions, slidesNumber: number) =>
   (prevTranslateX: number[], delta: number): number[] => {
     return prevTranslateX.map((prevValue, index) => {
       const el = slides[index];
@@ -58,9 +45,7 @@ export const updateInfiniteScrollPositions =
     });
   };
 
-export const getElementDimensions = (
-  element?: HTMLElement | null
-): Dimensions => {
+export const getElementDimensions = (element?: HTMLElement | null): Dimensions => {
   const elementDimensions = element?.getBoundingClientRect();
 
   return {
@@ -70,10 +55,7 @@ export const getElementDimensions = (
   };
 };
 
-export const applyTransform = (
-  slides: (HTMLElement | null)[],
-  translateX: number[]
-): void => {
+export const applyTransform = (slides: (HTMLElement | null)[], translateX: number[]): void => {
   slides.forEach((el, idx) => {
     if (el) {
       el.style.transform = `translate3d(${translateX[idx]}px, 0, 0)`;
@@ -82,11 +64,11 @@ export const applyTransform = (
 };
 
 const EVENTS = {
-  Visibilitychange: "visibilitychange",
-  TouchMove: "touchmove",
-  MouseMove: "mousemove",
-  PointerMove: "pointermove",
-  PointerUp: "pointerup",
+  Visibilitychange: 'visibilitychange',
+  TouchMove: 'touchmove',
+  MouseMove: 'mousemove',
+  PointerMove: 'pointermove',
+  PointerUp: 'pointerup',
 } as const;
 
 const FRICTION = 0.95;
@@ -153,7 +135,7 @@ export const useSlider = ({
     (e: React.TouchEvent | React.MouseEvent) => {
       const isTouchEvent = 'touches' in e;
       if (isTouchEvent && e.touches.length !== 1) return;
-      
+
       const clientX = isTouchEvent ? e.touches[0].clientX : e.clientX;
 
       stopAnimation();
@@ -164,37 +146,34 @@ export const useSlider = ({
       lastMoveX.current = clientX;
       velocity.current = 0;
     },
-    [setCircularAnimationPaused, stopAnimation]
+    [setCircularAnimationPaused, stopAnimation],
   );
 
-  const onPointerEnd = useCallback(
-    () => {
-      isDragging.current = false;
-      let delta = velocity.current;
-      posX1.current = 0;
+  const onPointerEnd = useCallback(() => {
+    isDragging.current = false;
+    let delta = velocity.current;
+    posX1.current = 0;
 
-      function animate() {
-        if (Math.abs(delta) > VELOCITY_STOP_THRESHOLD) {
-          delta *= FRICTION;
+    function animate() {
+      if (Math.abs(delta) > VELOCITY_STOP_THRESHOLD) {
+        delta *= FRICTION;
 
-          translateX.current = updatePositions(translateX.current, delta);
-          applyTransform(slides, translateX.current);
+        translateX.current = updatePositions(translateX.current, delta);
+        applyTransform(slides, translateX.current);
 
-          animationId.current = requestAnimationFrame(animate);
-        } else {
-          stopAnimation();
-        }
-      }
-
-      if (Math.abs(delta) > VELOCITY_ANIMATE_THRESHOLD) {
-        isInertionAnimationRunning.current = true;
-        animate();
+        animationId.current = requestAnimationFrame(animate);
       } else {
         stopAnimation();
       }
-    },
-    [updatePositions, stopAnimation, slides, translateX]
-  );
+    }
+
+    if (Math.abs(delta) > VELOCITY_ANIMATE_THRESHOLD) {
+      isInertionAnimationRunning.current = true;
+      animate();
+    } else {
+      stopAnimation();
+    }
+  }, [updatePositions, stopAnimation, slides, translateX]);
 
   const onPointerMove = useCallback(
     (e: Event) => {
@@ -222,15 +201,15 @@ export const useSlider = ({
       velocity.current = (delta / dt) * VELOCITY_MULTIPLIER;
       lastMoveTime.current = now;
     },
-    [translateX, slides, updatePositions]
+    [translateX, slides, updatePositions],
   );
 
   useEffect(() => {
     const container = containerRef?.current;
     if (!container) return;
 
-    container.addEventListener("touchmove", onPointerMove as EventListener, { passive: false });
-    container.addEventListener("mousemove", onPointerMove as EventListener, { passive: false });
+    container.addEventListener('touchmove', onPointerMove as EventListener, { passive: false });
+    container.addEventListener('mousemove', onPointerMove as EventListener, { passive: false });
 
     const handlePointerEnd = () => {
       if (isDragging.current) {
@@ -238,15 +217,15 @@ export const useSlider = ({
       }
     };
 
-    document.addEventListener("touchend", handlePointerEnd);
-    document.addEventListener("mouseup", handlePointerEnd);
+    document.addEventListener('touchend', handlePointerEnd);
+    document.addEventListener('mouseup', handlePointerEnd);
 
     return () => {
-      container.removeEventListener("touchmove", onPointerMove as EventListener);
-      container.removeEventListener("mousemove", onPointerMove as EventListener);
-      
-      document.removeEventListener("touchend", handlePointerEnd);
-      document.removeEventListener("mouseup", handlePointerEnd);
+      container.removeEventListener('touchmove', onPointerMove as EventListener);
+      container.removeEventListener('mousemove', onPointerMove as EventListener);
+
+      document.removeEventListener('touchend', handlePointerEnd);
+      document.removeEventListener('mouseup', handlePointerEnd);
     };
   }, [containerRef, onPointerMove, onPointerEnd]);
 
@@ -271,7 +250,7 @@ export const useSlider = ({
   };
 };
 
-export type Side = "left" | "right";
+export type Side = 'left' | 'right';
 
 interface UseAnimationReturn {
   setCircularAnimationPaused: (paused: boolean) => void;
@@ -292,24 +271,17 @@ export const useAnimation = ({
   translateX,
   updatePositions,
 }: UseAnimation): UseAnimationReturn => {
-  const [isCircularAnimationPaused, setCircularAnimationPaused] =
-    useState(false);
+  const [isCircularAnimationPaused, setCircularAnimationPaused] = useState(false);
 
   useEffect(() => {
     const windowVisibilityListener = () => {
-      setCircularAnimationPaused(document.visibilityState === "hidden");
+      setCircularAnimationPaused(document.visibilityState === 'hidden');
     };
 
-    document.addEventListener(
-      EVENTS.Visibilitychange,
-      windowVisibilityListener
-    );
+    document.addEventListener(EVENTS.Visibilitychange, windowVisibilityListener);
 
     return () => {
-      document.removeEventListener(
-        EVENTS.Visibilitychange,
-        windowVisibilityListener
-      );
+      document.removeEventListener(EVENTS.Visibilitychange, windowVisibilityListener);
     };
   }, [setCircularAnimationPaused]);
 
@@ -326,7 +298,7 @@ export const useAnimation = ({
       }
 
       const prevTranslateX = [...translateX.current];
-      const delta = side === "left" ? -speed : speed;
+      const delta = side === 'left' ? -speed : speed;
 
       translateX.current = updatePositions(prevTranslateX, delta);
       applyTransform(slides, translateX.current);
@@ -343,14 +315,7 @@ export const useAnimation = ({
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [
-    isCircularAnimationPaused,
-    side,
-    speed,
-    translateX,
-    slides,
-    updatePositions,
-  ]);
+  }, [isCircularAnimationPaused, side, speed, translateX, slides, updatePositions]);
 
   return { setCircularAnimationPaused };
 };

@@ -27,7 +27,13 @@ export const TreeSection = forwardRef<TreeSectionRef, TreeSectionProps>(
   ({ isContentReady, containerRef }, ref) => {
     const imageRef = useRef<HTMLImageElement>(null);
 
-    const imageDimensions = useElementDimensions(imageRef, isContentReady, BASE_HEIGHT, 0.5, containerRef);
+    const imageDimensions = useElementDimensions(
+      imageRef,
+      isContentReady,
+      BASE_HEIGHT,
+      0.5,
+      containerRef,
+    );
 
     const dx = getImageOffset(imageDimensions, ORIGINAL_RATIO);
 
