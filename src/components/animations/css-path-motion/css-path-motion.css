@@ -11,21 +11,26 @@
 
 .css-path-motion {
   position: absolute;
-  animation: css-path-motion-animation var(--animation-duration, 3s) var(--animation-timing, linear)
-    var(--animation-delay, 0s) var(--animation-iterations, 1) var(--animation-direction, normal)
-    forwards;
-  will-change: offset-distance;
+  opacity: 0;
+  animation:
+    css-path-motion-fade-in 0.1s var(--animation-delay, 0s) forwards,
+    css-path-motion-animation var(--animation-duration, 3s) var(--animation-timing, linear)
+      var(--animation-delay, 0s) var(--animation-iterations, 1) var(--animation-direction, normal)
+      forwards;
+  will-change: offset-distance, opacity;
   z-index: 100;
 }
 
 .css-path-motion.with-rotation {
+  opacity: 0;
   animation:
+    css-path-motion-fade-in 0.1s var(--animation-delay, 0s) forwards,
     css-path-motion-animation var(--animation-duration, 3s) var(--animation-timing, linear)
       var(--animation-delay, 0s) var(--animation-iterations, 1) var(--animation-direction, normal)
       forwards,
     css-path-motion-rotation var(--animation-duration, 3s) linear var(--animation-delay, 0s) 1
       normal forwards;
-  will-change: offset-distance, transform;
+  will-change: offset-distance, transform, opacity;
 }
 
 @keyframes css-path-motion-animation {
@@ -43,5 +48,14 @@
   }
   100% {
     transform: rotate(var(--rotation-degrees, 1080deg));
+  }
+}
+
+@keyframes css-path-motion-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

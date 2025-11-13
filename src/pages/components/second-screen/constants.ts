@@ -7,11 +7,11 @@ export type LinkData = {
 
 export const LINKS: LinkData[] = [
   {
-    query: 'This is a JS animation',
+    query: 'Spin it up',
     image: 'reactlogo',
   },
   {
-    query: 'made without any libraries',
+    query: 'Spin it up',
     image: 'reactlogo',
   },
   {
