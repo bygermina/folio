@@ -1,21 +1,21 @@
-import reactLogo from '@/assets/react-logo-filled.svg';
+import type { IconName } from './components/slide-content';
 
 export type LinkData = {
   query: string;
-  image: string;
+  image: IconName;
 };
 
 export const LINKS: LinkData[] = [
   {
     query: 'This is a JS animation',
-    image: reactLogo,
+    image: 'reactlogo',
   },
   {
     query: 'made without any libraries',
-    image: reactLogo,
+    image: 'reactlogo',
   },
   {
     query: 'Spin it up',
-    image: reactLogo,
+    image: 'reactlogo',
   },
 ];
