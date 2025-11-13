@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react';
 
 import FireEffect from '@/components/animations/light/fire-effect';
 import { CSSPathMotion } from '@/components/animations/css-path-motion/css-path-motion';
-import { createSvgArc, getLastPointFromSvgPath, getPathLength } from '@/utils/svg';
+import { createSvgArc, getLastPointFromSvgPath } from '@/utils/svg';
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 
