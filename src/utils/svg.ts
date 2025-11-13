@@ -94,3 +94,17 @@ export const getScaledPath = (
     elDimensions.scale,
   );
 };
+
+export const getPathLength = (svgPath: string): number => {
+  if (!svgPath || typeof svgPath !== 'string' || typeof document === 'undefined') return 0;
+
+  try {
+    const svg = 'http://www.w3.org/2000/svg';
+    const pathEl = document.createElementNS(svg, 'path');
+    pathEl.setAttribute('d', svgPath);
+
+    return pathEl.getTotalLength();
+  } catch {
+    return 0;
+  }
+};

@@ -1,5 +1,6 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 
+import { getPathLength } from '@/utils/svg';
 import './css-path-motion.css';
 
 const getDurationFromSpeed = (fallbackSeconds: number, speed?: number, length?: number): number => {
@@ -48,15 +49,8 @@ export const CSSPathMotion: React.FC<CSSPathMotionProps> = ({
       return;
     }
 
-    try {
-      const svgNS = 'http://www.w3.org/2000/svg';
-      const pathEl = document.createElementNS(svgNS, 'path');
-      pathEl.setAttribute('d', path);
-      const length = pathEl.getTotalLength();
-      computedDurationRef.current = getDurationFromSpeed(duration, speed, length);
-    } catch {
-      computedDurationRef.current = duration;
-    }
+    const length = getPathLength(path);
+    computedDurationRef.current = getDurationFromSpeed(duration, speed, length);
   }, [path, speed, duration]);
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react';
 
 import FireEffect from '@/components/animations/light/fire-effect';
 import { CSSPathMotion } from '@/components/animations/css-path-motion/css-path-motion';
-import { createSvgArc, getLastPointFromSvgPath } from '@/utils/svg';
+import { createSvgArc, getLastPointFromSvgPath, getPathLength } from '@/utils/svg';
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 
@@ -54,7 +54,7 @@ const PathEffectsSection = ({
   containerRef,
 }: PathEffectsSectionProps) => {
   const letterIDimensions = useElementDimensions(letterIRef, isContentReady, 0, 0.3, containerRef);
-  const { isPortrait } = useScreenSizeContext();
+  const { isPortrait, screenWidth, isMobile } = useScreenSizeContext();
   const scaledPathTree = targetElement?.getPath();
   const scaledPaths = targetElement?.getPaths();
 
@@ -71,13 +71,19 @@ const PathEffectsSection = ({
     return createSvgArc(lastPoint.x, lastPoint.y, targetPosition.x, targetPosition.y, 100);
   }, [scaledPathTree, letterIDimensions, isPortrait]);
 
-  const path = scaledPathTree?.path + curve;
+  const path = scaledPathTree?.path ? scaledPathTree.path + curve : '';
+
+  const screenSpeedMultiplier = useMemo(() => {
+    if (isMobile) return 0.6;
+    if (screenWidth < 1024) return 0.9;
+    return 1.2;
+  }, [isMobile, screenWidth]);
 
   if (!scaledPathTree || !isContentReady) {
     return null;
   }
 
-  const speed = 250;
+  const speed = 250 * screenSpeedMultiplier;
 
   return (
     <>

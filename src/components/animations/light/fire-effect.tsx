@@ -14,7 +14,7 @@ const FireEffect = ({ style }: FireEffectProps) => {
   const { screenWidth } = useScreenSizeContext();
   const pingDelay = Math.random() * 2;
 
-  const scale = Math.max(0.7, Math.min(1.5, screenWidth / 500));
+  const scale = Math.max(0.9, Math.min(1.5, screenWidth / 500));
 
   const containerSize = 40 * scale;
   const horizontalBeamHeight = 0.5 * scale;
