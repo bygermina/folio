@@ -35,11 +35,13 @@ export const Slider = <T,>({
   renderSlide,
 }: SliderProps<T>) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const slidesContainerRef = useRef<HTMLDivElement | null>(null);
   const slidesRefs = useRef<(HTMLElement | null)[]>([]);
   const translateX = useRef<number[]>([]);
 
   const { screenWidth } = useScreenSize();
   const containerSize = useElementSize(containerRef);
+  const slidesContainerSize = useElementSize(slidesContainerRef);
 
   const containerAdjustedSlides = useMemo(() => {
     const effectiveWidth = containerSize.width || 600;
@@ -49,9 +51,11 @@ export const Slider = <T,>({
 
   const slidesNumber = containerAdjustedSlides.length;
 
+  const gap = (slidesContainerSize.width - slidesNumber * slideWidth) / (slidesNumber - 1);
+
   const updatePositions = useMemo(
-    () => updateInfiniteScrollPositions(slidesRefs.current, containerSize, slidesNumber),
-    [containerSize, slidesNumber],
+    () => updateInfiniteScrollPositions(slidesRefs.current, containerSize, slidesNumber, gap),
+    [containerSize, slidesNumber, gap],
   );
 
   const { setCircularAnimationPaused } = useAnimation({
@@ -92,7 +96,7 @@ export const Slider = <T,>({
       className="relative w-screen my-[-10px] py-[10px] overflow-hidden [touch-action:pan-x]"
       {...domActions}
     >
-      <div className="flex flex-row gap-4 max-md:gap-1">
+      <div ref={slidesContainerRef} className="flex flex-row gap-4 w-fit">
         {containerAdjustedSlides.map((item, index) => renderSlide(item, index, setLinkRef(index)))}
       </div>
     </div>

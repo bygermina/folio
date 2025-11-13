@@ -22,7 +22,7 @@ export const SlideContent = forwardRef<HTMLDivElement, SlideContentProps>(
         <div
           aria-label={query}
           className={`flex flex-row gap-1 items-center surface-transparent w-[244px] transition-transform p-1
-          hover:scale-105 max-md:mr-[30px] max-md:max-w-[200px] max-md:gap-2 cursor-grab`}
+          hover:scale-105 max-md:max-w-[200px] max-md:gap-2 cursor-grab`}
         >
           <Icon
             width={20}

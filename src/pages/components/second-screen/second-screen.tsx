@@ -7,8 +7,8 @@ import { SlideContent } from './components/slide-content';
 import { LINKS, type LinkData } from './constants';
 
 const SLIDE_WIDTH = {
-  DESKTOP: 288,
-  MOBILE: 220,
+  DESKTOP: 244,
+  MOBILE: 200,
 } as const;
 
 export const SecondScreen = () => {

@@ -26,7 +26,7 @@ export interface Dimensions {
 }
 
 export const updateInfiniteScrollPositions =
-  (slides: (HTMLElement | null)[], container: Dimensions, slidesNumber: number) =>
+  (slides: (HTMLElement | null)[], container: Dimensions, slidesNumber: number, gap: number) =>
   (prevTranslateX: number[], delta: number): number[] => {
     return prevTranslateX.map((prevValue, index) => {
       const el = slides[index];
@@ -36,9 +36,9 @@ export const updateInfiniteScrollPositions =
       let newValue = prevValue + delta;
 
       if (delta < 0 && element.right < container.left) {
-        newValue += slidesNumber * element.width;
+        newValue += slidesNumber * (element.width + gap);
       } else if (delta > 0 && element.left > container.right) {
-        newValue -= slidesNumber * element.width;
+        newValue -= slidesNumber * (element.width + gap);
       }
 
       return newValue;
