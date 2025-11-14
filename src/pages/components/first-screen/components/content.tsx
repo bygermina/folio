@@ -13,9 +13,7 @@ interface ContentProps {
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
   ({ letterRef, onContentReady }, ref) => {
-    const { isPortrait, isSquare } = useScreenSizeContext();
-    const screenMode = isPortrait ? 'portrait' : 'landscape';
-    const containerScreenMode = isSquare ? 'square' : screenMode;
+    const { isPortrait, screenMode, containerScreenMode } = useScreenSizeContext();
 
     useEffect(() => {
       return () => onContentReady?.(false);

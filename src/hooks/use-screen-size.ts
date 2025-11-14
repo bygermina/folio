@@ -40,11 +40,15 @@ export const useScreenSize = () => {
     [screenWidth],
   );
 
+  const screenMode = isPortrait ? 'portrait' : 'landscape';
+  const containerScreenMode = isSquare ? 'square' : screenMode;
+
   return {
     screenWidth,
     screenHeight,
     isPortrait,
-    isSquare,
+    screenMode,
+    containerScreenMode,
     ...deviceInfo,
   };
 };
