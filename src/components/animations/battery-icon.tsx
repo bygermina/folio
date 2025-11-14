@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+
 import { commonColors } from '../../utils/colors';
 
 const cyanColor = commonColors.cyan[400];
@@ -61,74 +62,34 @@ export const BatteryIcon = ({ isCharging, isFull, level }: BatteryIconProps) => 
       />
 
       {/* Charge level bars */}
-      <motion.rect
-        x="3"
-        y="5"
-        width="1"
-        height="6"
-        fill={level >= 1 ? cyanColor : 'transparent'}
-        initial={{ opacity: 1 }}
-        animate={{
-          opacity: isCharging ? [0.6, 1, 0.6] : 1,
-          fill: isCharging && level >= 1 ? cyanColor : level >= 1 ? cyanColor : 'transparent',
-        }}
-        transition={{
-          duration: 0.8,
-          repeat: isCharging ? Infinity : 0,
-          ease: 'easeInOut',
-        }}
-      />
-      <motion.rect
-        x="5"
-        y="5"
-        width="1"
-        height="6"
-        fill={level >= 2 ? cyanColor : 'transparent'}
-        initial={{ opacity: 1 }}
-        animate={{
-          opacity: isCharging ? [0.6, 1, 0.6] : 1,
-          fill: isCharging && level >= 2 ? cyanColor : level >= 2 ? cyanColor : 'transparent',
-        }}
-        transition={{
-          duration: 0.8,
-          repeat: isCharging ? Infinity : 0,
-          ease: 'easeInOut',
-        }}
-      />
-      <motion.rect
-        x="7"
-        y="5"
-        width="1"
-        height="6"
-        fill={level >= 3 ? cyanColor : 'transparent'}
-        initial={{ opacity: 1 }}
-        animate={{
-          opacity: isCharging ? [0.6, 1, 0.6] : 1,
-          fill: isCharging && level >= 3 ? cyanColor : level >= 3 ? cyanColor : 'transparent',
-        }}
-        transition={{
-          duration: 0.8,
-          repeat: isCharging ? Infinity : 0,
-          ease: 'easeInOut',
-        }}
-      />
-      <motion.rect
-        x="9"
-        y="5"
-        width="1"
-        height="6"
-        fill={level >= 4 ? cyanColor : 'transparent'}
-        initial={{ opacity: 1 }}
-        animate={{
-          opacity: isCharging ? [0.6, 1, 0.6] : 1,
-          fill: isCharging && level >= 4 ? cyanColor : level >= 4 ? cyanColor : 'transparent',
-        }}
-        transition={{
-          duration: 0.8,
-          repeat: isCharging ? Infinity : 0,
-          ease: 'easeInOut',
-        }}
-      />
+      {[
+        { x: 3, minLevel: 1 },
+        { x: 5, minLevel: 2 },
+        { x: 7, minLevel: 3 },
+        { x: 9, minLevel: 4 },
+      ].map((bar) => {
+        const isActive = level >= bar.minLevel;
+        return (
+          <motion.rect
+            key={bar.x}
+            x={bar.x}
+            y="5"
+            width="1"
+            height="6"
+            fill={isActive ? cyanColor : 'transparent'}
+            initial={{ opacity: 1 }}
+            animate={{
+              opacity: isCharging ? [0.6, 1, 0.6] : 1,
+              fill: isCharging && isActive ? cyanColor : isActive ? cyanColor : 'transparent',
+            }}
+            transition={{
+              duration: 0.8,
+              repeat: isCharging ? Infinity : 0,
+              ease: 'easeInOut',
+            }}
+          />
+        );
+      })}
 
       {/* Glow effect during charging */}
       {isCharging && (

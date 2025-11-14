@@ -12,7 +12,7 @@ const Index = () => {
       <div className="relative 100dvh">
         <CodeBackground className="fixed inset-0 z-0" />
         <LightFollowCoursor />
-        <div className="relative z-[1] h-full overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling: touch">
+        <div className="relative z-[1] h-full overflow-y-auto overflow-x-hidden [-webkit-overflow-scrolling:touch]">
           <FirstScreen />
           <SecondScreen />
           <Footer />
