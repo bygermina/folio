@@ -5,6 +5,7 @@ import { TypeText } from '@/components/animations/text/type-text';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 import { Vibration } from '@/components/animations/vibration';
 import { Scroll } from '@/components/navigation/scroll';
+import { Button } from '@/components/basic/button/button';
 
 interface ContentProps {
   letterRef?: React.RefObject<HTMLSpanElement | null>;
@@ -67,9 +68,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         >
           <Scroll targetSectionId="js-animations">
             <Vibration startEvent="starAnimationComplete">
-              <div className="btn-base btn-magic py-2 px-4">
-                Explore what I can do for your project
-              </div>
+              <Button variant="magic">Explore what I can do for your project</Button>
             </Vibration>
           </Scroll>
 
