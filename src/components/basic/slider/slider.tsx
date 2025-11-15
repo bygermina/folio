@@ -81,7 +81,7 @@ export const Slider = <T,>({
       applyTransform(slidesRefs.current, translateX.current);
     };
     resetSlider();
-  }, [screenWidth, slidesNumber, stopAnimation]);
+  }, [screenWidth, slidesNumber, stopAnimation, speed, side]);
 
   const setLinkRef = useCallback(
     (index: number) => (element: HTMLElement | null) => {

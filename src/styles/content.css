@@ -11,11 +11,11 @@
 }
 
 .heading-portrait {
-  @apply text-[clamp(2rem,8vw,3.5rem)] mb-3 leading-tight font-extrabold tracking-tight;
+  @apply text-[clamp(2rem,8vw,3.5rem)] leading-tight font-extrabold tracking-tight;
 }
 
 .heading-landscape {
-  @apply text-5xl sm:text-6xl md:text-7xl mb-6 leading-[1.05] sm:leading-[1] md:leading-[0.95] font-extrabold tracking-tight;
+  @apply text-5xl sm:text-6xl md:text-7xl leading-[1.05] sm:leading-[1] md:leading-[0.95] font-extrabold tracking-tight;
 }
 
 .subheading-portrait {
@@ -31,7 +31,7 @@
 }
 
 .content-container-landscape {
-  @apply relative z-10 container mx-auto ml-[30vw] flex min-h-screen flex-col items-center justify-center px-6 pt-2 text-center;
+  @apply relative z-10 container mx-auto ml-[30vw] flex min-h-screen flex-col items-center justify-center text-center;
 }
 
 .content-container-square {

@@ -37,7 +37,7 @@ export const TypeText = forwardRef<HTMLSpanElement, TypeTextProps>(
     }, [currentIndex, text, delay, speed]);
 
     return (
-      <span className={className}>
+      <div className={className}>
         <TextWithTargetLetter
           ref={ref}
           opacity={opacity}
@@ -50,7 +50,7 @@ export const TypeText = forwardRef<HTMLSpanElement, TypeTextProps>(
             transition={{ duration: 0.8, repeat: Infinity, repeatType: 'reverse' }}
           />
         )}
-      </span>
+      </div>
     );
   },
 );
