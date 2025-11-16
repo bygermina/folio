@@ -9,12 +9,18 @@ interface TextWithTargetLetterProps {
 
 export const TextWithTargetLetter = forwardRef<HTMLSpanElement, TextWithTargetLetterProps>(
   ({ text, targetLetterIndex, className = '', opacity = 60 }, ref) => {
+    const opacityStyle = { opacity: opacity / 100 };
+
     if (
       targetLetterIndex === undefined ||
       targetLetterIndex < 0 ||
       targetLetterIndex >= text.length
     ) {
-      return <span className={className + ' opacity-' + opacity}>{text}</span>;
+      return (
+        <span className={className} style={opacityStyle}>
+          {text}
+        </span>
+      );
     }
 
     const beforeTarget = text.slice(0, targetLetterIndex);
@@ -22,7 +28,7 @@ export const TextWithTargetLetter = forwardRef<HTMLSpanElement, TextWithTargetLe
     const afterTarget = text.slice(targetLetterIndex + 1);
 
     return (
-      <span className={className + ' opacity-' + opacity}>
+      <span className={className} style={opacityStyle}>
         {beforeTarget}
         <span ref={ref}>{targetLetter}</span>
         {afterTarget}

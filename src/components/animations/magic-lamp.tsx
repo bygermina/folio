@@ -1,9 +1,27 @@
 import { motion, useMotionValue, useAnimationFrame, useReducedMotion } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
 
-import tailwindConfig, { rgba } from '../../../tailwind.config';
+import { colorWithOpacity } from '@/utils/colors';
 
-const lampColors = tailwindConfig.theme.extend.colors.lamp;
+import styles from './magic-lamp.module.scss';
+
+const lampColors = {
+  cord: {
+    from: 'var(--color-sky-200)',
+    to: 'var(--color-sky-300)',
+  },
+  glow: 'var(--color-cyan-400)',
+  border: 'var(--color-cyan-300)',
+  shadow: {
+    black: 'var(--color-black-30)',
+    radial: 'var(--color-black-20)',
+  },
+  highlight: {
+    core: 'var(--color-aqua-22)',
+    middle: 'var(--color-aqua-10)',
+    outer: 'var(--color-black-16)',
+  },
+};
 const DEG_PER_RAD = 180 / Math.PI;
 const MAX_DT = 0.05; // seconds, cap integration step
 const PARALLAX = 0.22;
@@ -135,11 +153,11 @@ export const MagicLamp: React.FC<MagicLampProps> = ({
   if (!isVisible || prefersReduced) return null;
 
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none" aria-hidden role="presentation">
-      <div className="relative h-full" style={{ left: `${pivotLeftPercent}%` }}>
+    <div className={styles.root} aria-hidden role="presentation">
+      <div className={styles.container} style={{ left: `${pivotLeftPercent}%` }}>
         {/* Entire pendulum system: rotate around top-center */}
         <motion.div
-          className="absolute -top-5 origin-top"
+          className={styles.pendulum}
           style={{
             rotate: rotDeg, // <- real physical angle
             y: dropped ? 0 : -220, // visual entry from above
@@ -151,63 +169,39 @@ export const MagicLamp: React.FC<MagicLampProps> = ({
           }}
         >
           {/* Cord */}
-          <div
-            className="w-[2px] mx-auto"
-            style={{
-              height: cordLengthPx,
-              background: `linear-gradient(to bottom, ${rgba(lampColors.cord.from, 0.4)}, ${rgba(
-                lampColors.cord.to,
-                0.5,
-              )})`,
-            }}
-          />
+          <div className={styles.cord} style={{ height: cordLengthPx }} />
 
           {/* Lamp - donut with transparent center */}
-          <div className="relative mx-auto">
+          <div className={styles.lampContainer}>
             <div
-              className="w-16 h-16 rounded-full relative overflow-hidden bg-transparent"
+              className={styles.lamp}
               style={{
-                border: `2px solid ${rgba(lampColors.border, 0.5)}`,
-                boxShadow: `0 0 ${20 * brightness}px ${rgba(
+                boxShadow: `0 0 ${20 * brightness}px ${colorWithOpacity(
                   lampColors.glow,
                   0.4 * brightness,
-                )}, 0 0 ${40 * brightness}px ${rgba(
+                )}, 0 0 ${40 * brightness}px ${colorWithOpacity(
                   lampColors.glow,
                   0.2 * brightness,
-                )}, 0 0 ${60 * brightness}px ${rgba(lampColors.glow, 0.1 * brightness)}, 0 8px 16px ${
+                )}, 0 0 ${60 * brightness}px ${colorWithOpacity(lampColors.glow, 0.1 * brightness)}, 0 8px 16px ${
                   lampColors.shadow.black
                 }`,
               }}
             />
 
             {/* Shadow under lamp for depth effect */}
-            <div
-              className="absolute top-20 left-1/2 w-12 h-6 -translate-x-1/2 rounded-full blur-md opacity-60"
-              style={{
-                background: `radial-gradient(ellipse at center, ${lampColors.shadow.radial} 0%, transparent 70%)`,
-              }}
-            />
+            <div className={styles.lampShadow} />
           </div>
         </motion.div>
 
         {/* SHADOW/HIGHLIGHT on "wall" — synchronized with angle via shadowX */}
         <motion.div
-          className="absolute left-0 w-[180px] h-[90px] -ml-[90px] blur-[22px] opacity-[0.55]"
+          className={styles.wallHighlight}
           style={{
             top: cordLengthPx + 40,
             x: shadowX,
           }}
         >
-          <div
-            className="w-full h-full rounded-full"
-            style={{
-              background: `radial-gradient(50% 60% at 50% 50%, ${
-                lampColors.highlight.core
-              } 0%, ${lampColors.highlight.middle} 45%, ${
-                lampColors.highlight.outer
-              } 78%, rgba(0,0,0,0.0) 100%)`,
-            }}
-          />
+          <div className={styles.wallHighlightInner} />
         </motion.div>
       </div>
     </div>

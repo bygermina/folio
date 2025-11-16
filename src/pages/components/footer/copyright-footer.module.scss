@@ -1,0 +1,13 @@
+@use '../../../styles/design-system' as *;
+
+.footer {
+  position: relative;
+  padding: spacing(4);
+  text-align: center;
+  overflow: hidden;
+
+  &Text {
+    @include typography(sm);
+    color: var(--color-slate-500);
+  }
+}

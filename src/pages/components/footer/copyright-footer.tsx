@@ -2,17 +2,17 @@ import { motion } from 'framer-motion';
 
 import { useScreenSizeContext } from '@/components/providers/use-context';
 
+import styles from './copyright-footer.module.scss';
+
 export const Footer = () => {
   const { isPortrait } = useScreenSizeContext();
 
-  if (isPortrait) {
-    return null;
-  }
+  if (isPortrait) return null;
 
   return (
-    <div className="relative p-4 text-center overflow-hidden">
+    <div className={styles.footer}>
       <motion.p
-        className="text-sm text-slate-500"
+        className={styles.footerText}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 1.0 }}

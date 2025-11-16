@@ -1,0 +1,20 @@
+@use '../../../styles/design-system' as *;
+
+.root {
+  position: fixed;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--color-violet-deep-18) 0%,
+    var(--color-violet-medium-27) 30%,
+    var(--color-deepBlue-7) 70%,
+    transparent 100%
+  );
+  filter: blur(80px);
+  z-index: 50;
+  mix-blend-mode: color-dodge;
+  pointer-events: none;
+  will-change: left, top;
+}

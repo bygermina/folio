@@ -3,6 +3,8 @@ import { useEffect, useState, forwardRef } from 'react';
 
 import { TextWithTargetLetter } from './displayed-text';
 
+import styles from './type-text.module.scss';
+
 interface TypeTextProps {
   text: string;
   targetLetterIndex?: number; // Index of the letter for reference
@@ -46,7 +48,7 @@ export const TypeText = forwardRef<HTMLSpanElement, TypeTextProps>(
         />
         {currentIndex < text.length && displayedText && (
           <motion.span
-            className="ml-1 inline-block h-[1em] w-0.5 bg-blue-500"
+            className={styles.cursor}
             transition={{ duration: 0.8, repeat: Infinity, repeatType: 'reverse' }}
           />
         )}

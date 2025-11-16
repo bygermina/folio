@@ -13,6 +13,8 @@ import {
 import { useScreenSize } from '@/hooks/use-screen-size';
 import { useElementSize } from '@/hooks/use-element-size';
 
+import styles from './slider.module.scss';
+
 export type SetLinksRefs = (index: number) => (el: HTMLElement | null) => void;
 
 interface SliderProps<T> {
@@ -91,12 +93,8 @@ export const Slider = <T,>({
   );
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-screen my-[-10px] py-[10px] overflow-hidden [touch-action:pan-x]"
-      {...domActions}
-    >
-      <div ref={slidesContainerRef} className="flex flex-row gap-4 w-fit">
+    <div ref={containerRef} className={styles.container} {...domActions}>
+      <div ref={slidesContainerRef} className={styles.slidesContainer}>
         {containerAdjustedSlides.map((item, index) => renderSlide(item, index, setLinkRef(index)))}
       </div>
     </div>

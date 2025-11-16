@@ -1,5 +1,7 @@
-import tailwindConfig, { baseColors } from '../../tailwind.config';
-
+/**
+ * Convert RGB string to RGBA with opacity
+ * @deprecated Use colorWithOpacity() for CSS variables instead
+ */
 export const rgba = (rgbStr: string, alpha: number): string => {
   const match = rgbStr.match(/rgb\((\d+),(\d+),(\d+)\)/);
   if (!match) return rgbStr;
@@ -7,6 +9,9 @@ export const rgba = (rgbStr: string, alpha: number): string => {
   return `rgba(${match[1]},${match[2]},${match[3]},${alpha})`;
 };
 
+/**
+ * Convert RGB string to array of numbers
+ */
 export const rgbStringToArray = (rgbStr: string): [number, number, number] => {
   const match = rgbStr.match(/rgb\((\d+),(\d+),(\d+)\)/);
   if (!match) return [0, 0, 0];
@@ -14,23 +19,18 @@ export const rgbStringToArray = (rgbStr: string): [number, number, number] => {
   return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])];
 };
 
-export const colors = {
-  ...tailwindConfig.theme.extend.colors,
+export const colorWithOpacity = (colorVar: string, opacity: number): string => {
+  return `rgba(from ${colorVar} r g b / ${opacity})`;
 };
 
-export { baseColors };
-
-export const commonColors = {
-  white: colors.white.DEFAULT,
-  dark: colors.dark.DEFAULT,
-  fire: colors.fire,
-  code: colors.code,
-  light: colors.light,
-  lamp: colors.lamp,
-  glass: colors.glass,
-  cyan: colors.cyan,
-  blue: colors.blue,
-  purple: colors.purple,
-  indigo: colors.indigo,
-  slate: colors.slate,
+/**
+ * Get RGB values from a CSS variable (for cases where rgba() syntax is not supported)
+ * Note: This requires the color to be available at runtime
+ */
+export const getRgbFromVar = (colorVar: string): string => {
+  if (typeof window === 'undefined') return colorVar;
+  const value = getComputedStyle(document.documentElement).getPropertyValue(
+    colorVar.trim().replace('var(', '').replace(')', ''),
+  );
+  return value.trim() || colorVar;
 };

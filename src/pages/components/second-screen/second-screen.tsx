@@ -7,6 +7,8 @@ import { SlideContent } from './components/slide-content';
 import { SliderControls } from './components/slider-controls';
 import { LINKS, type LinkData } from './constants';
 
+import styles from './second-screen.module.scss';
+
 const SLIDE_WIDTH = {
   DESKTOP: 244,
   MOBILE: 200,
@@ -14,7 +16,7 @@ const SLIDE_WIDTH = {
 
 export const SecondScreen = () => {
   const { screenWidth } = useScreenSize();
-  const slideWidth = screenWidth > 700 ? SLIDE_WIDTH.DESKTOP : SLIDE_WIDTH.MOBILE;
+  const slideWidth = screenWidth > 768 ? SLIDE_WIDTH.DESKTOP : SLIDE_WIDTH.MOBILE;
 
   const [sliderConfig, setSliderConfig] = useState<{
     slides: LinkData[];
@@ -34,15 +36,11 @@ export const SecondScreen = () => {
   );
 
   return (
-    <div className="relative z-[1] pt-0 min-h-screen flex flex-col">
-      <div className="flex-1 flex flex-col items-center justify-center py-12">
-        <div className="text-center mb-8 px-4">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-            reusable customizable components Add sliders with JS animations
-          </h2>
-          <p className="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto mb-2">
-            Reusable blocks with JS animations
-          </p>
+    <div className={styles.root}>
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <h2 className={styles.title}>Reusable components with JS animations</h2>
+          <p className={styles.subtitle}>Configure slider to</p>
         </div>
         <SliderControls
           onUpdate={setSliderConfig}

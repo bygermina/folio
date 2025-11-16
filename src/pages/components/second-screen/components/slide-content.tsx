@@ -1,6 +1,9 @@
 /// <reference types="vite-plugin-svgr/client" />
 import ReactLogo from '@/assets/react-logo-filled.svg?react';
 import { forwardRef } from 'react';
+import { cn } from '@/utils/cn';
+
+import styles from './slide-content.module.scss';
 
 const icons = {
   reactlogo: ReactLogo,
@@ -11,26 +14,30 @@ export type IconName = keyof typeof icons;
 interface SlideContentProps {
   query: string;
   image: IconName;
+  width?: number;
+  height?: number;
 }
 
 export const SlideContent = forwardRef<HTMLDivElement, SlideContentProps>(
-  ({ query, image }, ref) => {
+  ({ query, image, width = 20, height = 20, ...props }, ref) => {
     const Icon = icons[image];
 
+    if (!Icon) {
+      console.warn(`Icon not found for: ${image}`);
+      return null;
+    }
+
     return (
-      <div ref={ref} className="will-change-transform">
-        <div
-          aria-label={query}
-          className={`flex flex-row gap-1 items-center surface-transparent w-[244px] transition-transform p-1
-          hover:scale-105 max-md:max-w-[200px] max-md:gap-2 cursor-grab`}
-        >
+      <div ref={ref} className={styles.root}>
+        <div aria-label={query} className={cn(styles.content, 'surface-transparent')}>
           <Icon
-            width={20}
-            height={20}
-            fill="red"
-            className="max-md:hidden flex-basis-[50px] text-blue-500 opacity-80 mr-2"
+            {...props}
+            width={width}
+            height={height}
+            viewBox="0 0 256 256"
+            className={styles.icon}
           />
-          <div className="flex-basis-[200px] text-blue-500">{query}</div>
+          <div className={styles.text}>{query}</div>
         </div>
       </div>
     );

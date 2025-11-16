@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { useScreenSizeContext } from '../../providers/use-context';
-import { commonColors } from '../../../utils/colors';
 
-const colors = commonColors.light;
+import styles from './light-follow.module.scss';
+
+const SIZE = 360;
+const OFFSET = SIZE / 2;
 
 const LightFollowCoursor = () => {
   const { isMobile } = useScreenSizeContext();
@@ -18,20 +20,25 @@ const LightFollowCoursor = () => {
       lastY.current = e.clientY;
     };
 
-    const tick = () => {
+    const updatePosition = () => {
       const el = ref.current;
       if (el) {
-        el.style.left = `${lastX.current - 180}px`;
-        el.style.top = `${lastY.current - 180}px`;
+        el.style.left = `${lastX.current - OFFSET}px`;
+        el.style.top = `${lastY.current - OFFSET}px`;
       }
+    };
+
+    const tick = () => {
+      updatePosition();
       rafId.current = requestAnimationFrame(tick);
     };
 
-    const el = ref.current;
-    if (el) {
-      el.style.left = `${lastX.current - 180}px`;
-      el.style.top = `${lastY.current - 180}px`;
+    // Initial position
+    if (typeof window !== 'undefined') {
+      lastX.current = window.innerWidth / 2;
+      lastY.current = window.innerHeight / 2;
     }
+    updatePosition();
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     rafId.current = requestAnimationFrame(tick);
@@ -44,25 +51,7 @@ const LightFollowCoursor = () => {
 
   if (isMobile) return null;
 
-  return (
-    <div
-      ref={ref}
-      style={{
-        position: 'fixed',
-        left: typeof window !== 'undefined' ? window.innerWidth / 2 - 180 : 0,
-        top: typeof window !== 'undefined' ? window.innerHeight / 2 - 180 : 0,
-        width: 360,
-        height: 360,
-        borderRadius: '50%',
-        background: `radial-gradient(circle, ${colors.core} 0%, ${colors.middle} 30%, ${colors.outer} 70%, transparent 100%)`,
-        filter: 'blur(80px)',
-        zIndex: 50,
-        mixBlendMode: 'color-dodge',
-        pointerEvents: 'none',
-        willChange: 'left, top',
-      }}
-    />
-  );
+  return <div ref={ref} className={styles.root} />;
 };
 
 export default LightFollowCoursor;

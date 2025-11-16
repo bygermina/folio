@@ -6,6 +6,9 @@ import treeImage from '@/assets/blue circuit tree-small.jpg';
 import { ImageMask } from '@/components/animations/image/image-mask';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 import { getImageOffset, getScaledPath } from '@/utils/svg';
+import { cn } from '@/utils/cn';
+
+import styles from './tree-section.module.scss';
 
 const BASE_HEIGHT = 932; // Original tree image height
 const BASE_WIDTH = 720;
@@ -53,14 +56,17 @@ export const TreeSection = forwardRef<TreeSectionRef, TreeSectionProps>(
 export const TreeImage = forwardRef<HTMLImageElement>((_props, ref) => {
   const { isPortrait } = useScreenSizeContext();
 
-  const currentClassName = isPortrait
-    ? 'w-full md:-translate-y-24 md:basis-[40%] md:self-center'
-    : 'w-[50vw] max-w-[220px] max-h-[220px] mx-auto md:max-w-none md:max-h-none';
-
   return (
     <ImageMask
       ref={ref}
-      className={`absolute left-0 will-change-transform flex flex-col justify-center items-center md:h-full md:top-0 ${currentClassName}`}
+      className={cn(styles.treeImage, {
+        [styles.treeImagePortrait]: isPortrait,
+        [styles.treeImageLandscape]: !isPortrait,
+      })}
+      imageClassName={cn(styles.image, {
+        [styles.imagePortrait]: isPortrait,
+        [styles.imageLandscape]: !isPortrait,
+      })}
       src={treeImage}
       isPortrait={isPortrait}
     />

@@ -1,0 +1,136 @@
+@use '../../../../styles/design-system' as *;
+
+.root {
+  margin-bottom: spacing(8);
+  z-index: z-index(modal);
+}
+
+.button {
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.panel {
+  position: fixed;
+  top: 8rem;
+  right: spacing(6);
+  z-index: z-index(modal);
+  width: 20rem;
+  max-width: calc(100vw - spacing(12));
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: rgba(from var(--color-slate-900) r g b / 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(from var(--color-cyan-400) r g b / 0.3);
+  border-radius: radius(lg);
+  padding: spacing(6);
+  box-shadow: shadow(xl);
+  box-sizing: border-box;
+
+  @include respond-to(md) {
+    right: spacing(4);
+    width: 18rem;
+    max-width: calc(100vw - spacing(8));
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+}
+
+.title {
+  color: var(--color-cyan-400);
+  font-weight: font-weight(bold);
+  @include typography(lg);
+  margin-bottom: spacing(4);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(4);
+  min-width: 0;
+  width: 100%;
+}
+
+.label {
+  display: block;
+  color: var(--color-slate-300);
+  @include typography(sm);
+  font-weight: font-weight(medium);
+  margin-bottom: spacing(2);
+}
+
+.directionGroup {
+  display: flex;
+  gap: spacing(2);
+  min-width: 0;
+  width: 100%;
+}
+
+.directionButton {
+  flex: 1;
+}
+
+.slidesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(3);
+  max-height: 15rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+  width: 100%;
+}
+
+.slide {
+  background-color: rgba(from var(--color-slate-800) r g b / 0.5);
+  padding: spacing(3);
+  border-radius: radius(md);
+  border: 1px solid var(--color-slate-700);
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.slideIndex {
+  @include typography(xs);
+  color: var(--color-slate-400);
+  margin-bottom: spacing(2);
+}
+
+.input,
+.select {
+  width: 100%;
+  max-width: 100%;
+  padding: spacing(2) spacing(3);
+  background-color: var(--color-slate-900);
+  border: 1px solid var(--color-slate-600);
+  border-radius: radius(md);
+  color: var(--color-slate-300);
+  @include typography(sm);
+  transition: border-color transition(base);
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-cyan-400);
+  }
+}
+
+.input {
+  margin-bottom: spacing(2);
+}
+
+.applyButton {
+  width: 100%;
+}

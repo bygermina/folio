@@ -2,9 +2,11 @@ import { useState } from 'react';
 
 import { MagicLamp } from '@/components/animations/magic-lamp';
 import { Button } from '@/components/basic/button/button';
-import { Vibration } from '@/components/animations/vibration';
+import { WithVibration } from '@/components/animations/vibration';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 import { BatteryIcon } from '@/components/animations/battery-icon';
+
+import styles from './magic-button.module.scss';
 
 interface MagicButtonProps {
   onClick?: () => void;
@@ -31,18 +33,14 @@ export const MagicButton = ({ onClick }: MagicButtonProps) => {
 
   return (
     <>
-      <Vibration startEvent="starAnimationComplete">
-        <Button
-          size={isPortrait ? 'default' : 'lg'}
-          className="btn-base btn-magic"
-          onClick={handleClick}
-        >
-          <div className="flex items-center gap-2">
+      <WithVibration startEvent="starAnimationComplete">
+        <Button size={isPortrait ? 'default' : 'lg'} variant="magic" onClick={handleClick}>
+          <div className={styles.magicButtonContent}>
             <BatteryIcon isCharging={isCharging} isFull={clickCount === 4} level={clickCount} />
             Magic button
           </div>
         </Button>
-      </Vibration>
+      </WithVibration>
 
       <MagicLamp isVisible={isLampVisible} brightness={lampBrightness} />
     </>

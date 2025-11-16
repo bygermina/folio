@@ -1,0 +1,41 @@
+@use '../../../../styles/design-system' as *;
+
+.root {
+  will-change: transform;
+  width: 200px;
+
+  @include respond-to(md) {
+    width: 244px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  gap: spacing(1);
+  align-items: center;
+  width: 100%;
+  transition: transform transition(base);
+  padding: spacing(1);
+  cursor: grab;
+  color: var(--color-blue-500);
+  box-sizing: border-box;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  @include respond-to(md) {
+    gap: spacing(2);
+  }
+}
+
+.icon {
+  display: block;
+  color: var(--color-blue-500);
+}
+
+.text {
+  flex-basis: 200px;
+  color: var(--color-blue-500);
+}

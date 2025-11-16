@@ -1,3 +1,7 @@
+import { cn } from '@/utils/cn';
+
+import styles from './code-background.module.scss';
+
 const codeColumns = [
   [
     { text: "import React, { useState, useEffect }; from 'react';", size: 'text-2xl' },
@@ -381,28 +385,21 @@ const codeColumns = [
   ],
 ];
 
-import tailwindConfig from '../../../tailwind.config.ts';
-
 const getColorValue = (startColor: number[], endColor: number[], t: number, channel: number) =>
   Math.round(startColor[channel] * (1 - t) + endColor[channel] * t);
 
-const codeColors = tailwindConfig.theme.extend.colors.code;
-
-const rgbStringToArray = (rgb: string): number[] => {
-  const match = rgb.match(/\d+/g);
-  return match ? match.map(Number) : [0, 0, 0];
-};
-
-const startColor = rgbStringToArray(codeColors.start);
-const endColor = rgbStringToArray(codeColors.end);
+// Code gradient colors: blue-500 to slate-700
+// Values from design system tokens
+const startColor = [59, 130, 246]; // blue-500
+const endColor = [51, 65, 85]; // slate-700
 
 const CodeBackground = ({ className }: { className?: string }) => {
   return (
-    <div className={`${className} pointer-events-none absolute inset-0 z-0 overflow-hidden`}>
-      <div className="absolute inset-0 font-mono whitespace-pre opacity-70">
-        <div className="grid h-full grid-cols-3 gap-8 p-4">
+    <div className={cn(styles.root, className)}>
+      <div className={styles.container}>
+        <div className={styles.grid}>
           {codeColumns.map((column, columnIndex) => (
-            <div key={columnIndex} className="space-y-2 select-none">
+            <div key={columnIndex} className={styles.column}>
               {column.map((line, lineIndex) => {
                 const t = (lineIndex + columnIndex * 0.3) / (column.length - 1);
 
@@ -416,12 +413,11 @@ const CodeBackground = ({ className }: { className?: string }) => {
                 return (
                   <div
                     key={lineIndex}
-                    className={line.size}
+                    className={styles.line}
                     style={{
                       color: `rgba(${r}, ${g}, ${b}, 0.32)`,
                       fontSize: `${fontSize}em`,
                       opacity,
-                      transition: 'all 0.5s',
                     }}
                   >
                     {line.text}

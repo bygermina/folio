@@ -1,0 +1,53 @@
+@use '../../../../styles/design-system' as *;
+
+.treeImage {
+  position: absolute;
+  left: 0;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @include respond-to(md) {
+    height: 100%;
+    top: 0;
+  }
+
+  &Portrait {
+    width: 100%;
+
+    @include respond-to(md) {
+      transform: translateY(-6rem);
+      flex-basis: 40%;
+      align-self: center;
+    }
+  }
+
+  &Landscape {
+    width: 50vw;
+    max-width: 220px;
+    max-height: 220px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include respond-to(md) {
+      max-width: none;
+      max-height: none;
+    }
+  }
+}
+
+.image {
+  height: auto;
+  object-fit: cover;
+
+  &Portrait {
+    max-height: 80vh;
+  }
+
+  &Landscape {
+    height: 100%;
+    width: auto;
+  }
+}

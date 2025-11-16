@@ -1,4 +1,8 @@
+import * as React from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
+import { cn } from '@/utils/cn';
+
+import styles from './scroll.module.scss';
 
 interface ScrollProps extends HTMLMotionProps<'div'> {
   targetSectionId: string;
@@ -38,21 +42,17 @@ export const Scroll = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className={`${className} cursor-pointer`}
+      className={cn(styles.root, className)}
       {...props}
     >
-      <button
-        onClick={scrollToNext}
-        className="flex flex-col items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors group"
-        aria-label={label}
-      >
+      <div className={styles.buttonWrapper} onClick={scrollToNext}>
         {children}
-        {label && <span className="text-sm font-medium">{label}</span>}
+        {label && <span className={styles.label}>{label}</span>}
         {arrow && (
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="flex flex-col items-center"
+            className={styles.arrow}
           >
             <svg
               width="24"
@@ -61,13 +61,13 @@ export const Scroll = ({
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className="group-hover:scale-110 transition-transform"
+              className={styles.arrowIcon}
             >
               <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
             </svg>
           </motion.div>
         )}
-      </button>
+      </div>
     </motion.div>
   );
 };

@@ -7,7 +7,7 @@ interface VibrationProps {
   startEvent?: string;
 }
 
-export const Vibration = ({ startEvent, children }: VibrationProps) => {
+export const WithVibration = ({ startEvent, children }: VibrationProps) => {
   const [isVibrating, setIsVibrating] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 

@@ -5,9 +5,12 @@ import { CSSPathMotion } from '@/components/animations/css-path-motion/css-path-
 import { createSvgArc, getLastPointFromSvgPath } from '@/utils/svg';
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
 import { useScreenSizeContext } from '@/components/providers/use-context';
+import { cn } from '@/utils/cn';
 
 import { TreeSection, type TreeSectionRef } from './tree-section';
 import { Content } from './content';
+
+import styles from './section.module.scss';
 
 export const Section = () => {
   const { isPortrait, screenWidth, screenHeight } = useScreenSizeContext();
@@ -21,7 +24,10 @@ export const Section = () => {
   return (
     <section
       ref={sectionRef}
-      className={`relative min-h-screen w-full overflow-hidden flex ${isPortrait ? 'h-screen flex-col justify-between' : 'flex-row'}`}
+      className={cn(styles.root, {
+        [styles.rootPortrait]: isPortrait,
+        [styles.rootLandscape]: !isPortrait,
+      })}
     >
       <TreeSection ref={treeRef} isContentReady={isContentReady} containerRef={sectionRef} />
       <Content

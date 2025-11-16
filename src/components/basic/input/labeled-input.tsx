@@ -1,6 +1,8 @@
 import type { InputHTMLAttributes } from 'react';
 import { cn } from '@/utils/cn';
 
+import styles from './labeled-input.module.scss';
+
 interface LabeledInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'id'> {
   label: string;
   id?: string;
@@ -10,18 +12,6 @@ interface LabeledInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   labelClassName?: string;
   inputClassName?: string;
 }
-
-const baseInputClasses = 'w-full rounded-lg';
-const baseLabelClasses = 'block text-slate-300 text-sm font-medium mb-2';
-
-const inputVariants = {
-  range: cn(baseInputClasses, 'h-2 bg-slate-700 appearance-none cursor-pointer accent-cyan-400'),
-  text: cn(
-    baseInputClasses,
-    'px-3 py-2 bg-slate-900 border border-slate-600 text-slate-200 text-sm',
-    'focus:outline-none focus:border-cyan-400',
-  ),
-} as const;
 
 export const LabeledInput = ({
   label,
@@ -37,11 +27,11 @@ export const LabeledInput = ({
   const inputId = id || `input-${label.toLowerCase().replace(/\s+/g, '-')}`;
   const displayValue = valueDisplay !== undefined ? valueDisplay : inputProps.value?.toString();
 
-  const inputVariant = type === 'range' ? inputVariants.range : inputVariants.text;
+  const inputVariant = type === 'range' ? styles.inputRange : styles.inputText;
 
   return (
     <div className={className}>
-      <label htmlFor={inputId} className={cn(baseLabelClasses, labelClassName)}>
+      <label htmlFor={inputId} className={cn(styles.label, labelClassName)}>
         {label}
         {showValue && displayValue && `: ${displayValue}`}
       </label>
@@ -49,7 +39,7 @@ export const LabeledInput = ({
         id={inputId}
         type={type}
         {...inputProps}
-        className={cn(inputVariant, inputClassName)}
+        className={cn(styles.input, inputVariant, inputClassName)}
       />
     </div>
   );

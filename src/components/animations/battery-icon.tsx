@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
-import { commonColors } from '../../utils/colors';
+import styles from './battery-icon.module.scss';
 
-const cyanColor = commonColors.cyan[400];
+const cyanColor = 'var(--color-cyan-400)';
 
 interface BatteryIconProps {
   isCharging: boolean;
@@ -16,7 +16,7 @@ export const BatteryIcon = ({ isCharging, isFull, level }: BatteryIconProps) => 
       width="16"
       height="16"
       viewBox="0 0 16 16"
-      className="w-4 h-4 shrink-0"
+      className={styles.icon}
       data-battery-icon="true"
     >
       {/* Battery outline */}

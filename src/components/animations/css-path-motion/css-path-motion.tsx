@@ -1,7 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 
 import { getPathLength } from '@/utils/svg';
-import './css-path-motion.css';
+import styles from './css-path-motion.module.scss';
 
 const getDurationFromSpeed = (fallbackSeconds: number, speed?: number, length?: number): number => {
   if (!speed || speed <= 0 || !length || length <= 0) return fallbackSeconds;
@@ -88,10 +88,10 @@ export const CSSPathMotion: React.FC<CSSPathMotionProps> = ({
   ]);
 
   return (
-    <div className="css-path-motion-container">
+    <div className={styles.container}>
       <div
         ref={motionRef}
-        className={`css-path-motion ${enableRotation ? 'with-rotation' : ''}`}
+        className={enableRotation ? styles.motionWithRotation : styles.motion}
         style={{
           offsetPath: `path('${path}')`,
           offsetRotate: autoRotate ? 'auto' : '0deg',

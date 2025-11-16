@@ -1,0 +1,37 @@
+@use '../../../../styles/design-system' as *;
+
+.content {
+  margin: 0 auto;
+}
+
+.heading {
+  margin-bottom: spacing(8);
+  color: var(--color-white);
+}
+
+.titleMain {
+  margin-right: spacing(4);
+}
+
+.subtitle {
+  margin: 0 auto spacing(8);
+  max-width: 42rem;
+  color: var(--color-slate-300);
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  &Portrait {
+    gap: spacing(3);
+  }
+
+  &Landscape {
+    margin-bottom: spacing(12);
+    gap: spacing(4);
+  }
+}

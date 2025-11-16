@@ -1,0 +1,49 @@
+@use '../../styles/design-system' as *;
+
+.root {
+  cursor: pointer;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: spacing(2);
+  color: var(--color-cyan-400);
+  transition: color transition(base);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-cyan-300);
+  }
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: font-weight(medium);
+}
+
+.arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.arrowIcon {
+  transition: transform transition(base);
+
+  .button:hover &,
+  .buttonWrapper:hover & {
+    transform: scale(1.1);
+  }
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: spacing(2);
+}

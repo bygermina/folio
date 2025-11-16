@@ -1,46 +1,53 @@
 import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
+import { cn } from '@/utils/cn';
+
+import styles from './image-mask.module.scss';
 
 const DEFAULT_MASK =
-  'linear-gradient(to bottom, transparent 0%, white 30%, white 70%, transparent 100%), linear-gradient(to right, transparent 0%, white 30%, white 70%, transparent 100%)';
+  'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.5) 20%, white 30%, white 70%, rgba(255,255,255,0.5) 80%, transparent 100%), linear-gradient(to right, transparent 0%, rgba(255,255,255,0.5) 20%, white 30%, white 70%, rgba(255,255,255,0.5) 80%, transparent 100%)';
+
+const ANIMATION_DURATION = {
+  container: 0.5,
+  image: 0.8,
+};
+
+const ANIMATION_DELAY = {
+  image: 0.2,
+};
 
 interface ImageMaskProps {
   src: string;
   mask?: string;
   className?: string;
+  imageClassName?: string;
   style?: React.CSSProperties;
-  isPortrait?: boolean;
 }
 
 export const ImageMask = forwardRef<HTMLImageElement, ImageMaskProps>(
-  ({ src, mask, className = '', style = {}, isPortrait }, ref) => {
-    const activeMask = mask || DEFAULT_MASK;
+  ({ src, mask = DEFAULT_MASK, className, imageClassName, style }, ref) => {
+    const maskStyle = {
+      WebkitMaskImage: mask,
+      maskImage: mask,
+    };
 
     return (
       <motion.div
-        className={className}
+        className={cn(styles.container, className)}
         style={style}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: ANIMATION_DURATION.container }}
       >
         <motion.img
           ref={ref}
           src={src}
           alt="masked"
-          className={`h-auto object-cover ${isPortrait ? 'max-h-[80vh]' : 'h-full w-auto'}`}
+          className={cn(styles.image, imageClassName)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          style={{
-            WebkitMaskImage: activeMask,
-            maskImage: activeMask,
-            maskRepeat: 'no-repeat',
-            WebkitMaskRepeat: 'no-repeat',
-            WebkitMaskSize: '100% 100%',
-            maskComposite: 'intersect',
-            WebkitMaskComposite: 'source-in',
-          }}
+          transition={{ duration: ANIMATION_DURATION.image, delay: ANIMATION_DELAY.image }}
+          style={maskStyle}
         />
       </motion.div>
     );
