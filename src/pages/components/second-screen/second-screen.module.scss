@@ -52,6 +52,10 @@
   animation: fadeInUp 0.6s ease-out forwards;
   filter: drop-shadow(0 0 8px var(--slider-color, transparent));
   transition: filter transition(base);
+  // GPU ускорение
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity, filter;
 
   @for $i from 1 through 6 {
     &:nth-child(#{$i}) {
@@ -59,19 +63,31 @@
     }
   }
 
+  // Убрать will-change после завершения анимации
+  &:not(:hover) {
+    animation: fadeInUp 0.6s ease-out forwards, removeWillChange 0.1s 0.6s forwards;
+  }
+
   &:hover {
     filter: drop-shadow(0 0 16px var(--slider-color, transparent))
       drop-shadow(0 0 24px var(--slider-color, transparent));
+    will-change: filter;
   }
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate3d(0, 20px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes removeWillChange {
+  to {
+    will-change: auto;
   }
 }

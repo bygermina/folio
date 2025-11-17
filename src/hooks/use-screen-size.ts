@@ -17,17 +17,24 @@ export const useScreenSize = () => {
 
   useEffect(() => {
     let timeoutId: number;
+    let rafId: number | null = null;
 
     const throttledResize = () => {
-      clearTimeout(timeoutId);
-      timeoutId = window.setTimeout(updateScreenSize, 16); // ~60fps
+      if (rafId) return;
+
+      rafId = requestAnimationFrame(() => {
+        clearTimeout(timeoutId);
+        timeoutId = window.setTimeout(updateScreenSize, 100); // Оптимизированный throttle
+        rafId = null;
+      });
     };
 
-    window.addEventListener('resize', throttledResize);
+    window.addEventListener('resize', throttledResize, { passive: true });
 
     return () => {
       window.removeEventListener('resize', throttledResize);
       clearTimeout(timeoutId);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, [updateScreenSize]);
 

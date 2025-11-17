@@ -1,5 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
 import ReactLogo from '@/assets/react-logo-filled.svg?react';
+import TypeScriptLogo from '@/assets/typescript-logo.svg?react';
+import NodeJsLogo from '@/assets/nodejs-logo.svg?react';
 import { forwardRef } from 'react';
 import { cn } from '@/utils/cn';
 
@@ -7,6 +9,8 @@ import styles from './slide-content.module.scss';
 
 const icons = {
   reactlogo: ReactLogo,
+  typescript: TypeScriptLogo,
+  nodejs: NodeJsLogo,
 } as const;
 
 export type IconName = keyof typeof icons;
@@ -16,6 +20,7 @@ interface SlideContentProps {
   image: IconName;
   width?: number;
   height?: number;
+  color?: string;
 }
 
 export const SlideContent = forwardRef<HTMLDivElement, SlideContentProps>(

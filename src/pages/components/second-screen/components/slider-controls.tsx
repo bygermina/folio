@@ -139,6 +139,8 @@ export const SliderControls = ({
                         className={styles.select}
                       >
                         <option value="reactlogo">React Logo</option>
+                        <option value="typescript">TypeScript Logo</option>
+                        <option value="nodejs">Node.js Logo</option>
                       </select>
                     </div>
                   ))}

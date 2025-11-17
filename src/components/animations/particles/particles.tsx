@@ -1,5 +1,7 @@
-import { useRef } from 'react';
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
+
+import { useScreenSize } from '@/hooks/use-screen-size';
 
 import styles from './particles.module.scss';
 
@@ -9,21 +11,27 @@ export const Particles = () => {
     window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const particlesRef = useRef(
-    Array.from({ length: 30 }).map(() => ({
-      initialX: Math.random() * 1200,
-      initialY: Math.random() * 800,
-      targetX: Math.random() * 1200,
-      targetY: Math.random() * 800,
-      duration: Math.random() * 10 + 10,
-    })),
+  const { isMobile } = useScreenSize();
+
+  const particleCount = useMemo(() => (isMobile ? 15 : 30), [isMobile]);
+
+  const particles = useMemo(
+    () =>
+      Array.from({ length: particleCount }).map(() => ({
+        initialX: Math.random() * 1200,
+        initialY: Math.random() * 800,
+        targetX: Math.random() * 1200,
+        targetY: Math.random() * 800,
+        duration: Math.random() * 10 + 10,
+      })),
+    [particleCount],
   );
 
   if (prefersReducedMotion) return null;
 
   return (
     <div className={styles.container}>
-      {particlesRef.current.map((p, i) => (
+      {particles.map((p, i) => (
         <motion.div
           key={i}
           className={styles.particle}
