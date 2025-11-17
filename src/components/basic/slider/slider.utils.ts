@@ -297,10 +297,8 @@ export const useAnimation = ({
         return;
       }
 
-      const prevTranslateX = [...translateX.current];
       const delta = side === 'left' ? -speed : speed;
-
-      translateX.current = updatePositions(prevTranslateX, delta);
+      translateX.current = updatePositions(translateX.current, delta);
       applyTransform(slides, translateX.current);
 
       animationFrameId = requestAnimationFrame(animate);

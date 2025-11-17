@@ -2,7 +2,7 @@
 import ReactLogo from '@/assets/react-logo-filled.svg?react';
 import TypeScriptLogo from '@/assets/typescript-logo.svg?react';
 import NodeJsLogo from '@/assets/nodejs-logo.svg?react';
-import { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 import { cn } from '@/utils/cn';
 
 import styles from './slide-content.module.scss';
@@ -23,7 +23,7 @@ interface SlideContentProps {
   color?: string;
 }
 
-export const SlideContent = forwardRef<HTMLDivElement, SlideContentProps>(
+const SlideContentComponent = forwardRef<HTMLDivElement, SlideContentProps>(
   ({ query, image, width = 20, height = 20, ...props }, ref) => {
     const Icon = icons[image];
 
@@ -49,4 +49,6 @@ export const SlideContent = forwardRef<HTMLDivElement, SlideContentProps>(
   },
 );
 
-SlideContent.displayName = 'SlideContent';
+SlideContentComponent.displayName = 'SlideContent';
+
+export const SlideContent = memo(SlideContentComponent);

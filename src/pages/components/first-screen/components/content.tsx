@@ -24,13 +24,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     }, [onContentReady]);
 
     return (
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.5 }}
-        className={`content-container content-container-${containerScreenMode}`}
-      >
+      <div ref={ref} className={`content-container content-container-${containerScreenMode}`}>
         <div className={styles.content}>
           <motion.h1
             className={cn(styles.heading, `heading-${screenMode}`)}
@@ -83,7 +77,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           </a> */}
           </motion.div>
         </div>
-      </motion.div>
+      </div>
     );
   },
 );

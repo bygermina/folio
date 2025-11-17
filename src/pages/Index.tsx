@@ -5,14 +5,9 @@ import LightFollowCoursor from '@/components/animations/light/light-follow';
 import CodeBackground from '@/components/basic/code-background/code-background';
 
 import { Footer } from './components/footer/copyright-footer';
+import { FirstScreen } from './components/first-screen/first-screen';
 
 import styles from './index.module.scss';
-
-const FirstScreen = lazy(() =>
-  import('./components/first-screen/first-screen').then((module) => ({
-    default: module.FirstScreen,
-  })),
-);
 
 const SecondScreen = lazy(() =>
   import('./components/second-screen/second-screen').then((module) => ({
@@ -28,9 +23,7 @@ const Index = () => {
         <LightFollowCoursor />
         <div className={styles.scrollContainer}>
           <div id="home">
-            <Suspense fallback={null}>
-              <FirstScreen />
-            </Suspense>
+            <FirstScreen />
           </div>
           <div id="js-animations">
             <Suspense fallback={null}>

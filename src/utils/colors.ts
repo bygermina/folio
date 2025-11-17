@@ -32,5 +32,6 @@ export const getRgbFromVar = (colorVar: string): string => {
   const value = getComputedStyle(document.documentElement).getPropertyValue(
     colorVar.trim().replace('var(', '').replace(')', ''),
   );
+
   return value.trim() || colorVar;
 };
