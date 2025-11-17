@@ -4,6 +4,8 @@ import { SVGPathVisualization } from '@/components/debug/svg-path-visualization'
 import { PathControls } from '@/components/debug/path-controls';
 import { pointsToPath } from '@/utils/svg';
 
+import styles from './route-drawer.module.scss';
+
 export type RouteDrawerProps = {
   onRouteDrawn?: (points: Array<[number, number]>) => void;
   predefinedPath?: string;
@@ -69,7 +71,7 @@ export const RouteDrawer = ({ predefinedPath, onRouteDrawn }: RouteDrawerProps) 
   const viewBox = `0 0 ${window.innerWidth} ${window.innerHeight}`;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-100 select-none">
+    <div className={styles.container}>
       <SVGPathVisualization
         paths={predefinedPath ? [predefinedPath] : undefined}
         viewBox={viewBox}
@@ -89,15 +91,11 @@ export const RouteDrawer = ({ predefinedPath, onRouteDrawn }: RouteDrawerProps) 
         />
       )}
 
-      {isDrawMode && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg pointer-events-none z-[9999]">
-          Drawing mode active (hold Ctrl/Cmd)
-        </div>
-      )}
+      {isDrawMode && <div className={styles.notification}>Drawing mode active (hold Ctrl/Cmd)</div>}
 
       <svg
         ref={svgRef}
-        className="absolute inset-0 w-full h-full z-50"
+        className={styles.svg}
         style={{
           pointerEvents: isDrawMode ? 'auto' : 'none',
           cursor: isDrawMode ? 'crosshair' : 'default',
@@ -108,17 +106,9 @@ export const RouteDrawer = ({ predefinedPath, onRouteDrawn }: RouteDrawerProps) 
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
-        {predefinedPath && (
-          <path
-            d={predefinedPath}
-            stroke="blue"
-            strokeWidth={2}
-            fill="none"
-            opacity={0.7}
-            strokeDasharray="6 6"
-          />
-        )}
+        {predefinedPath && <path d={predefinedPath} className={styles.path} />}
       </svg>
     </div>
   );
 };
+

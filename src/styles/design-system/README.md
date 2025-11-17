@@ -1,37 +1,37 @@
 # Design System
 
-Централизованная система дизайна для проекта Portfolio.
+Centralized design system for the Portfolio project.
 
-## Структура
+## Structure
 
 ```
 design-system/
-├── _tokens.scss      # Дизайн-токены (цвета, отступы, типографика)
-├── _functions.scss   # SCSS функции для работы с токенами
-├── _mixins.scss      # Переиспользуемые миксины
-├── _css-variables.scss # CSS переменные для runtime
-└── _index.scss       # Точка входа
+├── _tokens.scss      # Design tokens (colors, spacing, typography)
+├── _functions.scss   # SCSS functions for working with tokens
+├── _mixins.scss      # Reusable mixins
+├── _css-variables.scss # CSS variables for runtime
+└── _index.scss       # Entry point
 ```
 
-## Использование
+## Usage
 
-### В SCSS файлах
+### In SCSS files
 
 ```scss
 @use '../styles/design-system' as *;
 
 .my-component {
-  // Использование функций
+  // Using functions
   color: ds-color('cyan', 400);
   padding: spacing(4);
   border-radius: radius(md);
   font-size: font-size(base);
-  
-  // Использование миксинов
+
+  // Using mixins
   @include typography(base, medium);
   @include focus-ring('cyan', 400);
   @include flex-center;
-  
+
   // Responsive
   @include respond-to(md) {
     padding: spacing(8);
@@ -39,27 +39,25 @@ design-system/
 }
 ```
 
-### В компонентах React
+### In React components
 
-Используйте CSS переменные для runtime значений:
+Use CSS variables for runtime values:
 
 ```tsx
-<div style={{ color: 'var(--color-cyan-400)', padding: 'var(--spacing-4)' }}>
-  Content
-</div>
+<div style={{ color: 'var(--color-cyan-400)', padding: 'var(--spacing-4)' }}>Content</div>
 ```
 
-## Токены
+## Tokens
 
-### Цвета
+### Colors
 
 ```scss
-ds-color('cyan', 400)      // Основной cyan
-ds-color('slate', 800)     // Темный slate
-color-opacity('cyan', 400, 0.5) // С прозрачностью
+ds-color('cyan', 400)      // Primary cyan
+ds-color('slate', 800)     // Dark slate
+color-opacity('cyan', 400, 0.5) // With opacity
 ```
 
-### Отступы
+### Spacing
 
 ```scss
 spacing(1)  // 4px
@@ -67,16 +65,16 @@ spacing(4)  // 16px
 spacing(8)  // 32px
 ```
 
-### Типографика
+### Typography
 
 ```scss
-@include typography(base, medium);  // Размер и вес
+@include typography(base, medium); // Size and weight
 font-size: font-size(xl);
 line-height: line-height(xl);
 font-weight: font-weight(bold);
 ```
 
-### Тени
+### Shadows
 
 ```scss
 box-shadow: shadow(lg);
@@ -88,34 +86,40 @@ box-shadow: shadow(lg);
 z-index: z(modal);
 ```
 
-## Миксины
+## Mixins
 
 ### `@include button-base`
-Базовые стили для кнопок
+
+Base styles for buttons
 
 ### `@include typography($size, $weight)`
-Типографика с размером и весом
+
+Typography with size and weight
 
 ### `@include focus-ring($color, $shade, $opacity)`
-Стили для focus состояния
+
+Styles for focus state
 
 ### `@include respond-to($breakpoint)`
+
 Responsive breakpoints
 
 ### `@include flex-center`
-Flexbox с центрированием
+
+Flexbox with centering
 
 ### `@include truncate`
-Обрезка текста с ellipsis
+
+Text truncation with ellipsis
 
 ### `@include scrollbar($width, $track-color, $thumb-color)`
-Кастомный скроллбар
 
-## Расширение
+Custom scrollbar
 
-Для добавления новых токенов:
+## Extending
 
-1. Добавьте в `_tokens.scss`
-2. Создайте функцию в `_functions.scss` (если нужно)
-3. Обновите `_css-variables.scss` для runtime использования
+To add new tokens:
 
+1. Add to `_tokens.scss`
+2. Create a function in `_functions.scss` (if needed)
+3. Update `_css-variables.scss` for runtime usage
