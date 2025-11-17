@@ -40,7 +40,7 @@ export const SecondScreen = () => {
       <div className={styles.content}>
         <div className={styles.header}>
           <h2 className={styles.title}>Reusable components with JS animations</h2>
-          <p className={styles.subtitle}>Configure slider to</p>
+          <p className={styles.subtitle}>Configure your own slider</p>
         </div>
         <SliderControls
           onUpdate={setSliderConfig}

@@ -68,7 +68,6 @@ export const TreeImage = forwardRef<HTMLImageElement>((_props, ref) => {
         [styles.imageLandscape]: !isPortrait,
       })}
       src={treeImage}
-      isPortrait={isPortrait}
     />
   );
 });
