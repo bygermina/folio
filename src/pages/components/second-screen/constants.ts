@@ -11,11 +11,11 @@ export const LINKS: LinkData[] = [
     image: 'reactlogo',
   },
   {
-    query: 'Spin it up',
-    image: 'reactlogo',
+    query: 'Type it safe',
+    image: 'typescript',
   },
   {
-    query: 'Spin it up',
-    image: 'reactlogo',
+    query: 'Run it fast',
+    image: 'nodejs',
   },
 ];

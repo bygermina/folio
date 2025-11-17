@@ -14,6 +14,17 @@ const SLIDE_WIDTH = {
   MOBILE: 200,
 } as const;
 
+const SLIDERS_COUNT = 6;
+
+const SLIDER_COLORS = [
+  '#06B6D4', // cyan-400
+  '#3B82F6', // blue-400
+  '#A855F7', // purple-500
+  '#6366F1', // indigo-500
+  '#7DD3FC', // sky-300
+  '#8B5CF6', // purple-400 (custom)
+] as const;
+
 export const SecondScreen = () => {
   const { screenWidth } = useScreenSize();
   const slideWidth = screenWidth > 768 ? SLIDE_WIDTH.DESKTOP : SLIDE_WIDTH.MOBILE;
@@ -48,15 +59,21 @@ export const SecondScreen = () => {
           initialSpeed={0.6}
           initialSide="left"
         />
-        <div data-slider>
-          <Slider<LinkData>
-            slides={sliderConfig.slides}
-            speed={sliderConfig.speed}
-            side={sliderConfig.side}
-            slideWidth={slideWidth}
-            renderSlide={renderSlide}
-          />
-        </div>
+        {Array.from({ length: SLIDERS_COUNT }).map((_, index) => (
+          <div
+            key={index}
+            className={styles.sliderContainer}
+            style={{ '--slider-color': SLIDER_COLORS[index] } as React.CSSProperties}
+          >
+            <Slider<LinkData>
+              slides={sliderConfig.slides}
+              speed={sliderConfig.speed}
+              side={sliderConfig.side}
+              slideWidth={slideWidth}
+              renderSlide={renderSlide}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
