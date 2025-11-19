@@ -1,0 +1,60 @@
+@use '../../../styles/design-system' as *;
+
+.section {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: spacing(8) 0;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 0 spacing(4);
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.heading {
+  font-weight: font-weight(bold);
+  margin-bottom: spacing(6);
+}
+
+.subheading {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 42rem;
+  color: var(--color-slate-300);
+  margin-bottom: spacing(6);
+}
+
+.issueLabel {
+  color: var(--color-cyan-400);
+}
+
+.dataContainer {
+  margin-top: spacing(8);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: spacing(4);
+  border-radius: radius(lg);
+  background-color: rgba(from var(--color-slate-800) r g b / 0.3);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(from var(--color-slate-600) r g b / 0.2);
+  box-sizing: border-box;
+
+  // Ensure no horizontal scroll
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}

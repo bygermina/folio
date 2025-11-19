@@ -15,6 +15,12 @@ const SecondScreen = lazy(() =>
   })),
 );
 
+const ThirdScreen = lazy(() =>
+  import('./components/third-screen/third-screen').then((module) => ({
+    default: module.ThirdScreen,
+  })),
+);
+
 const Index = () => {
   return (
     <ScreenSizeProvider>
@@ -28,6 +34,11 @@ const Index = () => {
           <div id="js-animations">
             <Suspense fallback={null}>
               <SecondScreen />
+            </Suspense>
+          </div>
+          <div id="js-animations1">
+            <Suspense fallback={null}>
+              <ThirdScreen />
             </Suspense>
           </div>
           <Footer />

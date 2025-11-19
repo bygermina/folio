@@ -20,7 +20,7 @@ export const Scroll = ({
   children,
   ...props
 }: ScrollProps) => {
-  const scrollToNext = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const scrollToNext = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
