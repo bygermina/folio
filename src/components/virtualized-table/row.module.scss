@@ -5,12 +5,16 @@
   align-items: flex-start;
   width: 100%;
   box-sizing: border-box;
+  gap: var(--row-gap, 8px);
+  padding: var(--row-gap, 8px);
 }
 
 .dataCard {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: var(--card-size, 32px);
+  height: var(--card-size, 32px);
   border-radius: radius(sm);
   background-color: rgba(from var(--color-slate-800) r g b / 0.5);
   backdrop-filter: blur(4px);
@@ -18,13 +22,16 @@
   transition:
     border-color 0.3s ease,
     background-color 0.3s ease,
-    box-shadow 0.3s ease;
+    box-shadow 0.3s ease,
+    transform 0.2s ease-out;
   padding: 0;
   cursor: default;
   transform-style: preserve-3d;
   position: relative;
   overflow: hidden;
   flex: 0 0 auto;
+  box-sizing: border-box;
+  transform: scale(1);
 
   &:hover {
     cursor: pointer;
@@ -35,17 +42,22 @@
       0 0 1rem rgba(from var(--color-cyan-400) r g b / 0.4),
       0 4px 12px rgba(from var(--color-cyan-400) r g b / 0.3);
   }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &Selected {
+    transform: scale(1.15);
+  }
 }
 
-.cardValueWrapper {
+.cardValue {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
-}
-
-.cardValue {
   font-size: 0.875rem;
   font-weight: font-weight(bold);
   color: var(--color-cyan-300);
