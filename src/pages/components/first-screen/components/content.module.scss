@@ -34,15 +34,6 @@
   }
 }
 
-// surface-transparent вынесен в глобальные стили (index.css)
-
-// ============================================
-// ГЛОБАЛЬНЫЕ КЛАССЫ ДЛЯ HERO-СЕКЦИЙ
-// ============================================
-// Эти классы переопределяют размеры для специфичных случаев
-// (например, главный экран с адаптивными размерами)
-
-// Portrait mode - адаптивные размеры для мобильных
 .heading-portrait {
   font-size: clamp(2rem, 8vw, 3.5rem);
   line-height: 1.1;
@@ -53,7 +44,6 @@
   margin-bottom: spacing(4);
 }
 
-// Landscape mode - фиксированные размеры для десктопа
 .heading-landscape {
   font-size: 3rem;
   line-height: 1.05;
@@ -84,7 +74,6 @@
   width: 100%;
 }
 
-// Content containers - Portrait mode
 .container-portrait {
   width: 100%;
   padding: 0 spacing(4);
@@ -93,14 +82,12 @@
   overflow: hidden;
 }
 
-// Content containers - Landscape mode
 .container-landscape {
   max-width: 1280px;
   margin: 0 auto 0 30vw;
   min-height: 100vh;
 }
 
-// Content containers - Square mode
 .container-square {
   position: relative;
   z-index: z-index(content);

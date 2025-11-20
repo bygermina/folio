@@ -38,9 +38,4 @@
   backdrop-filter: blur(4px);
   border: 1px solid rgba(from var(--color-slate-600) r g b / 0.2);
   box-sizing: border-box;
-
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
 }
