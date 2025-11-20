@@ -48,9 +48,6 @@
 }
 
 .title {
-  color: var(--color-cyan-400);
-  font-weight: font-weight(bold);
-  @include typography(lg);
   margin-bottom: spacing(4);
 }
 
@@ -103,8 +100,6 @@
 }
 
 .slideIndex {
-  @include typography(xs);
-  color: var(--color-slate-400);
   margin-bottom: spacing(2);
 }
 

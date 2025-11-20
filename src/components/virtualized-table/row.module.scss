@@ -22,8 +22,7 @@
   transition:
     border-color 0.3s ease,
     background-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.2s ease-out;
+    box-shadow 0.3s ease;
   padding: 0;
   cursor: default;
   transform-style: preserve-3d;
@@ -31,7 +30,6 @@
   overflow: hidden;
   flex: 0 0 auto;
   box-sizing: border-box;
-  transform: scale(1);
 
   &:hover {
     cursor: pointer;
@@ -41,14 +39,6 @@
       0 0 0.5rem rgba(from var(--color-cyan-400) r g b / 0.6),
       0 0 1rem rgba(from var(--color-cyan-400) r g b / 0.4),
       0 4px 12px rgba(from var(--color-cyan-400) r g b / 0.3);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-
-  &Selected {
-    transform: scale(1.15);
   }
 }
 
