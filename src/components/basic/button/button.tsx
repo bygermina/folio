@@ -11,9 +11,6 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'default', size = 'default', isActive, ...props }, ref) => {
-    const variantClass = variant !== 'default' ? styles[variant] : '';
-    const sizeClass = styles[size];
-
     const stateClass =
       variant !== 'default' && isActive !== undefined
         ? styles[`${variant}${isActive ? 'Active' : 'Inactive'}`]
@@ -21,7 +18,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        className={cn(styles.root, variantClass, sizeClass, stateClass, className)}
+        className={cn(styles.root, styles[variant], styles[size], stateClass, className)}
         ref={ref}
         {...props}
       />
