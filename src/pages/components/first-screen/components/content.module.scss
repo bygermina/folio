@@ -6,7 +6,6 @@
 
 .heading {
   margin-bottom: spacing(8);
-  color: var(--color-white);
 }
 
 .titleMain {
@@ -16,7 +15,6 @@
 .subtitle {
   margin: 0 auto spacing(8);
   max-width: 42rem;
-  color: var(--color-slate-300);
 }
 
 .actions {
@@ -34,4 +32,86 @@
     margin-bottom: spacing(12);
     gap: spacing(4);
   }
+}
+
+// surface-transparent вынесен в глобальные стили (index.css)
+
+// ============================================
+// ГЛОБАЛЬНЫЕ КЛАССЫ ДЛЯ HERO-СЕКЦИЙ
+// ============================================
+// Эти классы переопределяют размеры для специфичных случаев
+// (например, главный экран с адаптивными размерами)
+
+// Portrait mode - адаптивные размеры для мобильных
+.heading-portrait {
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  line-height: 1.1;
+}
+
+.subheading-portrait {
+  font-size: clamp(0.875rem, 3.5vw, 1.25rem);
+  margin-bottom: spacing(4);
+}
+
+// Landscape mode - фиксированные размеры для десктопа
+.heading-landscape {
+  font-size: 3rem;
+  line-height: 1.05;
+
+  @include respond-to(sm) {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  @include respond-to(md) {
+    font-size: 4.5rem;
+    line-height: 0.95;
+  }
+}
+
+.subheading-landscape {
+  margin-bottom: spacing(8);
+}
+
+.container {
+  position: relative;
+  z-index: z-index(content);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+// Content containers - Portrait mode
+.container-portrait {
+  width: 100%;
+  padding: 0 spacing(4);
+  margin-top: 100vw;
+  height: calc(100vh - 100vw);
+  overflow: hidden;
+}
+
+// Content containers - Landscape mode
+.container-landscape {
+  max-width: 1280px;
+  margin: 0 auto 0 30vw;
+  min-height: 100vh;
+}
+
+// Content containers - Square mode
+.container-square {
+  position: relative;
+  z-index: z-index(content);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 spacing(4);
+  text-align: center;
+  overflow: hidden;
+  margin-top: 70vw;
+  height: calc(100vh - 70vw);
 }

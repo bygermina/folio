@@ -26,25 +26,13 @@
 }
 
 .title {
-  @include typography(3xl);
-  font-weight: font-weight(bold);
-  color: var(--color-white);
   margin-bottom: spacing(4);
-
-  @include respond-to(md) {
-    @include typography(5xl);
-  }
 }
 
 .subtitle {
-  color: var(--color-slate-300);
-  @include typography(lg);
   max-width: 42rem;
   margin: 0 auto spacing(2);
-
-  @include respond-to(md) {
-    @include typography(xl);
-  }
+  // Цвет и типографика теперь в Typography компоненте
 }
 
 .sliderContainer {

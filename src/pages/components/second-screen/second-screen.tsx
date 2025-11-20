@@ -1,6 +1,7 @@
 import { useCallback, useState, useMemo, useRef, useEffect } from 'react';
 
 import { Slider } from '@/components/basic/slider/slider';
+import { Typography } from '@/components/basic/typography/typography';
 import { useScreenSize } from '@/hooks/use-screen-size';
 
 import { SlideContent } from './components/slide-content';
@@ -43,9 +44,9 @@ export const SecondScreen = () => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        setIsVisible(entry.isIntersecting && entry.intersectionRatio > 0.1);
       },
-      { threshold: 0.1, rootMargin: '50px' },
+      { threshold: [0, 0.1, 0.5, 1], rootMargin: '0px' },
     );
 
     observer.observe(containerRef.current);
@@ -76,8 +77,12 @@ export const SecondScreen = () => {
     <div ref={containerRef} className={styles.root}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <h2 className={styles.title}>Reusable components with JS animations</h2>
-          <p className={styles.subtitle}>Configure your own slider</p>
+          <Typography variant="h2" size="3xl" weight="bold" className={styles.title}>
+            Reusable components with JS animations
+          </Typography>
+          <Typography variant="body" className={styles.subtitle} color="muted">
+            Configure your own slider
+          </Typography>
         </div>
         <SliderControls
           onUpdate={setSliderConfig}

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { WithVibration } from '@/components/animations/vibration';
 import { LabeledInput } from '@/components/basic/input/labeled-input';
 import { Button } from '@/components/basic/button/button';
+import { Typography } from '@/components/basic/typography/typography';
 
 import type { LinkData } from '../constants';
 import type { IconName } from './slide-content';
@@ -84,7 +85,15 @@ export const SliderControls = ({
             exit={{ opacity: 0, x: 300 }}
             className={styles.panel}
           >
-            <h3 className={styles.title}>Slider Configuration</h3>
+            <Typography
+              variant="h3"
+              size="lg"
+              weight="bold"
+              color="primary"
+              className={styles.title}
+            >
+              Slider Configuration
+            </Typography>
 
             <div className={styles.section}>
               <LabeledInput
@@ -99,7 +108,9 @@ export const SliderControls = ({
               />
 
               <div>
-                <label className={styles.label}>Direction</label>
+                <Typography variant="label" className={styles.label} color="muted">
+                  Direction
+                </Typography>
                 <div className={styles.directionGroup}>
                   <Button
                     variant="toggle"
@@ -121,11 +132,15 @@ export const SliderControls = ({
               </div>
 
               <div>
-                <label className={styles.label}>Slide Content</label>
+                <Typography variant="label" className={styles.label} color="muted">
+                  Slide Content
+                </Typography>
                 <div className={styles.slidesContainer}>
                   {slides.map((slide, index) => (
                     <div key={index} className={styles.slide}>
-                      <div className={styles.slideIndex}>Slide {index + 1}</div>
+                      <Typography variant="caption" className={styles.slideIndex}>
+                        Slide {index + 1}
+                      </Typography>
                       <input
                         type="text"
                         value={slide.query}

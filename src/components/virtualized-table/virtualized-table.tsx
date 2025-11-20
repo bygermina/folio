@@ -1,42 +1,33 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { List } from 'react-window';
+
+import { cn } from '@/utils/cn';
 
 import styles from './virtualized-table.module.scss';
 
-interface RowComponentProps {
-  index: number;
-  item: number[];
+export interface RowComponentProps {
+  item: unknown;
   style: React.CSSProperties;
   gap?: number;
 }
 
 interface VirtualizedTableProps {
-  items: number[];
+  rows: unknown[][];
   rowComponent: React.ComponentType<RowComponentProps>;
   rowHeight?: number;
   height?: number;
-  columnCount?: number;
   gap?: number;
   className?: string;
 }
 
 const VirtualizedTable = ({
-  items,
+  rows,
   rowComponent: RowComponent,
   rowHeight = 48,
   height = 600,
-  columnCount = 20,
   gap = 8,
   className = '',
 }: VirtualizedTableProps) => {
-  const rows = useMemo(
-    () =>
-      Array.from({ length: Math.ceil(items.length / columnCount) }, (_, i) =>
-        items.slice(i * columnCount, (i + 1) * columnCount),
-      ),
-    [items, columnCount],
-  );
-
   const RowWrapper = useCallback(
     ({
       index,
@@ -47,24 +38,17 @@ const VirtualizedTable = ({
       style: React.CSSProperties;
       gap?: number;
     }) => {
-      const row = rows[index];
-      if (!row || !Array.isArray(row) || row.length === 0) {
-        return <div style={style} />;
-      }
-      return <RowComponent index={index} item={row} style={style} gap={rowProps.gap ?? gap} />;
+      return <RowComponent item={rows[index] || []} style={style} gap={rowProps.gap ?? gap} />;
     },
     [rows, RowComponent, gap],
   );
 
-  if (items.length === 0) {
-    return <div className={styles['virtualized-table-empty']}>No items to display</div>;
+  if (rows.length === 0) {
+    return <div className={styles.virtualizedTableEmpty}>No items to display</div>;
   }
 
   return (
-    <div
-      className={`${styles['virtualized-table']} ${className}`.trim()}
-      style={{ height, width: '100%' }}
-    >
+    <div className={cn(styles.virtualizedTable, className)} style={{ height }}>
       <List<{ gap?: number }>
         rowComponent={RowWrapper}
         rowCount={rows.length}

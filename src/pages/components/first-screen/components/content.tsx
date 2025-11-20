@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { forwardRef, useEffect } from 'react';
 
 import { TypeText } from '@/components/animations/text/type-text';
+import { Typography } from '@/components/basic/typography/typography';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 import { WithVibration } from '@/components/animations/vibration';
 import { Scroll } from '@/components/navigation/scroll';
@@ -24,14 +25,9 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     }, [onContentReady]);
 
     return (
-      <div ref={ref} className={`content-container content-container-${containerScreenMode}`}>
+      <div ref={ref} className={cn(styles.container, `container-${containerScreenMode}`)}>
         <div className={styles.content}>
-          <motion.h1
-            className={cn(styles.heading, `heading-${screenMode}`)}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 1.7 }}
-          >
+          <Typography variant="h1" className={cn(styles.heading, `heading-${screenMode}`)}>
             <TypeText
               text="Code is art"
               ref={letterRef}
@@ -42,15 +38,20 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
             />
 
             <TypeText text="that does something" className={`heading-${screenMode}`} delay={3.0} />
-          </motion.h1>
-          <motion.p
-            className={cn(styles.subtitle, `subheading-${screenMode}`)}
+          </Typography>
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 5.0 }}
           >
-            Xenia Liubachka • interactive portfolio
-          </motion.p>
+            <Typography
+              variant="subheading"
+              className={cn(styles.subtitle, `subheading-${screenMode}`)}
+              color="muted"
+            >
+              Xenia Liubachka • interactive portfolio
+            </Typography>
+          </motion.div>
           <motion.div
             className={cn(styles.actions, {
               [styles.actionsPortrait]: isPortrait,

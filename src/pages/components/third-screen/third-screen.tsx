@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 
 import { cn } from '@/utils/cn';
-import { TypeText } from '@/components/animations/text/type-text';
 import { Typography } from '@/components/basic/typography/typography';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 

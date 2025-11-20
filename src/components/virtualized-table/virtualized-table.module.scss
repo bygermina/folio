@@ -1,13 +1,15 @@
-.virtualized-table {
-  border: 1px solid #ccc;
+@use '../../styles/design-system' as *;
+
+.virtualizedTable {
+  width: 100%;
   overflow: hidden;
 }
 
-.virtualized-table-empty {
+.virtualizedTableEmpty {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 400px;
-  color: #999;
-  font-size: 16px;
+  color: var(--color-slate-400);
+  font-size: 1rem;
 }

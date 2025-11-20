@@ -13,7 +13,8 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(from var(--color-blue-500) r g b / 0.4)) drop-shadow(0 0 20px rgba(from var(--color-cyan-400) r g b / 0.3));
+  filter: drop-shadow(0 0 10px rgba(from var(--color-blue-500) r g b / 0.4))
+    drop-shadow(0 0 20px rgba(from var(--color-cyan-400) r g b / 0.3));
   -webkit-text-stroke: 0.5px rgba(from var(--color-white) r g b / 0.2);
   animation: glass-shine 7s ease-in-out infinite;
   animation-delay: 2s;
@@ -31,7 +32,8 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(from var(--color-blue-500) r g b / 0.4)) drop-shadow(0 0 20px rgba(from var(--color-cyan-400) r g b / 0.3));
+  filter: drop-shadow(0 0 10px rgba(from var(--color-blue-500) r g b / 0.4))
+    drop-shadow(0 0 20px rgba(from var(--color-cyan-400) r g b / 0.3));
   -webkit-text-stroke: 0.5px rgba(from var(--color-white) r g b / 0.2);
   position: relative;
 }
