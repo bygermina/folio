@@ -23,43 +23,51 @@ export const ThirdScreen = () => {
 
   return (
     <section className={styles.section}>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-      >
+      <div className={styles.contentWrapper}>
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <Typography variant="h1" className={styles.heading}>
-            Data intensive
-          </Typography>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <Typography variant="h1" className={styles.heading}>
+              Data intensive
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 3.5 }}
+          >
+            <Typography variant="subheading" className={styles.subheading} color="muted">
+              <Typography as="span" variant="body" color="primary" weight="medium">
+                Issue:
+              </Typography>{' '}
+              Rendering {DEFAULT_DATA_COUNT} data points
+            </Typography>
+          </motion.div>
         </motion.div>
 
         <motion.div
+          className={styles.dataContainer}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 3.5 }}
+          transition={{ duration: 1, delay: 1 }}
         >
-          <Typography variant="subheading" className={styles.subheading} color="muted">
-            <Typography as="span" variant="body" color="primary" weight="medium">
-              Issue:
-            </Typography>{' '}
-            Rendering {DEFAULT_DATA_COUNT.toLocaleString()} data points without optimization
-          </Typography>
+          <VirtualizedTable
+            rows={rows}
+            rowComponent={DataRow}
+            rowHeight={56}
+            height={600}
+            gap={8}
+          />
         </motion.div>
-      </motion.div>
-
-      <motion.div
-        className={styles.dataContainer}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-      >
-        <VirtualizedTable rows={rows} rowComponent={DataRow} rowHeight={56} height={600} gap={8} />
-      </motion.div>
+      </div>
     </section>
   );
 };

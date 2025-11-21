@@ -11,6 +11,17 @@
   margin: 0 auto;
 }
 
+.contentWrapper {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+  width: 100%;
+
+  > * {
+    pointer-events: auto;
+  }
+}
+
 .heading {
   margin-bottom: spacing(6);
   text-align: center;
@@ -25,6 +36,13 @@
 
 .loading {
   opacity: 0.5;
+}
+
+.waterEffect {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: auto;
 }
 
 .dataContainer {
