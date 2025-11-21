@@ -3,6 +3,7 @@
 .row {
   display: flex;
   align-items: flex-start;
+  justify-content: center;
   width: 100%;
   box-sizing: border-box;
   gap: var(--row-gap, 8px);

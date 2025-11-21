@@ -18,11 +18,10 @@ let normalizedEntities: Record<number, DataItem> | null = null;
 let entityIds: number[] | null = null;
 let rows: number[][] | null = null;
 let initPromise: Promise<void> | null = null;
+let currentItemsPerRow = 0;
 
 const CHUNK_SIZE = 100;
 const TOTAL_ITEMS = 10000;
-const ITEMS_PER_ROW = 20;
-const TOTAL_CHUNKS = Math.ceil(TOTAL_ITEMS / CHUNK_SIZE);
 
 const scheduleNext = (callback: () => void) => {
   if (typeof requestIdleCallback !== 'undefined') {
@@ -32,34 +31,48 @@ const scheduleNext = (callback: () => void) => {
   }
 };
 
-const initializeData = async () => {
-  if (normalizedEntities && entityIds) return initPromise;
-  if (initPromise) return initPromise;
+const initializeData = async (itemsPerRow: number) => {
+  if (itemsPerRow === 0) return Promise.resolve();
+  if (normalizedEntities && entityIds && currentItemsPerRow === itemsPerRow) {
+    return initPromise;
+  }
+
+  if (initPromise && currentItemsPerRow === itemsPerRow) return initPromise;
+
+  currentItemsPerRow = itemsPerRow;
+  normalizedEntities = null;
+  entityIds = null;
+  rows = null;
+  initPromise = null;
+  globalIdCounter = 0;
+
+  const TOTAL_CHUNKS = Math.ceil(TOTAL_ITEMS / CHUNK_SIZE);
 
   initPromise = new Promise<void>((resolve) => {
-    const dataArray: DataItem[][] = [];
+    const dataArray: DataItem[] = [];
     let chunkIndex = 0;
 
     const processChunk = () => {
       const start = chunkIndex * CHUNK_SIZE;
       const end = Math.min(start + CHUNK_SIZE, TOTAL_ITEMS);
 
-      for (let i = start; i < end; i++) {
-        dataArray[i] = generateData(ITEMS_PER_ROW);
-      }
+      const chunkSize = end - start;
+      const chunkItems = generateData(chunkSize);
+      dataArray.push(...chunkItems);
 
       chunkIndex++;
 
       if (chunkIndex < TOTAL_CHUNKS) {
         scheduleNext(processChunk);
       } else {
-        normalizedEntities = Object.fromEntries(
-          dataArray.flat().map((item) => [item.id, item]),
-        ) as Record<number, DataItem>;
-        entityIds = dataArray.flatMap((items) => items.map((item) => item.id));
+        normalizedEntities = Object.fromEntries(dataArray.map((item) => [item.id, item])) as Record<
+          number,
+          DataItem
+        >;
+        entityIds = dataArray.map((item) => item.id);
 
-        rows = Array.from({ length: Math.ceil(entityIds.length / ITEMS_PER_ROW) }, (_, i) =>
-          entityIds!.slice(i * ITEMS_PER_ROW, (i + 1) * ITEMS_PER_ROW),
+        rows = Array.from({ length: Math.ceil(entityIds.length / itemsPerRow) }, (_, i) =>
+          entityIds!.slice(i * itemsPerRow, (i + 1) * itemsPerRow),
         );
 
         resolve();
@@ -76,20 +89,27 @@ export interface StoreState {
   entities: Record<number, { id: number; value: number }>;
   entityIds: number[];
   rows: number[][];
+  itemsPerRow: number;
   toggleValue: (id: number) => void;
+  setItemsPerRow: (itemsPerRow: number) => void;
 }
 
-export const useStore = create<StoreState>((set) => {
-  initializeData().then(() => {
+export const useStore = create<StoreState>((set, get) => {
+  const updateData = async (itemsPerRow: number) => {
+    if (itemsPerRow === 0) return;
+
+    await initializeData(itemsPerRow);
+
     if (normalizedEntities && entityIds && rows) {
-      set({ entities: normalizedEntities, entityIds, rows });
+      set({ entities: normalizedEntities, entityIds, rows, itemsPerRow });
     }
-  });
+  };
 
   return {
     entities: normalizedEntities || {},
     entityIds: entityIds || [],
     rows: rows || [],
+    itemsPerRow: currentItemsPerRow,
     toggleValue: (id) =>
       set((state) => {
         const entity = state.entities[id];
@@ -105,5 +125,11 @@ export const useStore = create<StoreState>((set) => {
           },
         };
       }),
+    setItemsPerRow: (itemsPerRow: number) => {
+      const current = get().itemsPerRow;
+      if (current !== itemsPerRow) {
+        updateData(itemsPerRow);
+      }
+    },
   };
 });

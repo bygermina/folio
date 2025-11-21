@@ -1,25 +1,48 @@
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import { Typography } from '@/components/basic/typography/typography';
+import VirtualizedTable from '@//components/virtualized-table/virtualized-table';
+import { useElementDimensions } from '@/hooks/use-element-dimensions';
 
 import { DataRow } from './data-row';
-import VirtualizedTable from '../../../components/virtualized-table/virtualized-table';
 import { useStore } from './store';
 
 import styles from './third-screen.module.scss';
 
-const DEFAULT_DATA_COUNT = 10000;
+const ROW_HEIGHT = 56;
+const GAP = 8;
 
 export const ThirdScreen = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dimensions = useElementDimensions(containerRef, true);
   const rows = useStore((state) => state?.rows);
+  const itemsPerRow = useStore((state) => state?.itemsPerRow);
+  const setItemsPerRow = useStore((state) => state?.setItemsPerRow);
 
-  if (!rows?.length) {
-    return (
-      <section className={styles.section}>
-        <div className={styles.loading}>Loading data...</div>
-      </section>
+  useEffect(() => {
+    const container = containerRef.current;
+
+    if (!container) return;
+
+    const containerWidth = container.clientWidth;
+    if (containerWidth <= 0) return;
+
+    const computedStyle = window.getComputedStyle(container);
+    const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+    const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+
+    const rowWidth = containerWidth - paddingLeft - paddingRight;
+    const availableWidth = rowWidth - GAP * 2;
+    const cardSize = ROW_HEIGHT - GAP * 2;
+
+    const calculatedItemsPerRow = Math.max(
+      1,
+      Math.floor((availableWidth + GAP) / (cardSize + GAP)),
     );
-  }
+
+    if (calculatedItemsPerRow !== itemsPerRow) setItemsPerRow(calculatedItemsPerRow);
+  }, [dimensions.width, itemsPerRow, setItemsPerRow]);
 
   return (
     <section className={styles.section}>
@@ -42,17 +65,28 @@ export const ThirdScreen = () => {
           <Typography as="span" variant="body" color="primary" weight="medium">
             Issue:
           </Typography>{' '}
-          Rendering {DEFAULT_DATA_COUNT} data points
+          Rendering {rows.length * itemsPerRow} data points
         </Typography>
       </motion.div>
 
       <motion.div
+        ref={containerRef}
         className={styles.dataContainer}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1 }}
       >
-        <VirtualizedTable rows={rows} rowComponent={DataRow} rowHeight={56} height={600} gap={8} />
+        {rows?.length ? (
+          <VirtualizedTable
+            rows={rows}
+            rowComponent={DataRow}
+            rowHeight={ROW_HEIGHT}
+            height={600}
+            gap={GAP}
+          />
+        ) : (
+          <div className={styles.loading}>Loading data...</div>
+        )}
       </motion.div>
     </section>
   );
