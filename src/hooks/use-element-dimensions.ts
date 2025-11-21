@@ -5,7 +5,6 @@ type ViewportPosition = { x: number; y: number };
 export type Dimensions = {
   width: number;
   height: number;
-  viewport: ViewportPosition;
   bottomLeft: ViewportPosition;
   center: ViewportPosition;
   scale: number;
@@ -27,7 +26,6 @@ const getElementDimensions = (
   const dimensions: Dimensions = {
     width: rect.width,
     height: rect.height,
-    viewport: { x: rect.left, y: rect.top },
     bottomLeft: { x: rect.left - offsetLeft, y: rect.bottom - offsetTop },
     center: {
       x: rect.left - offsetLeft + rect.width * 0.5,
@@ -54,8 +52,6 @@ const areDimensionsEqual = (a: Dimensions, b: Dimensions): boolean => {
   if (Math.abs(a.width - b.width) > EPSILON) return false;
   if (Math.abs(a.height - b.height) > EPSILON) return false;
   if (Math.abs(a.scale - b.scale) > EPSILON) return false;
-  if (Math.abs(a.viewport.x - b.viewport.x) > EPSILON) return false;
-  if (Math.abs(a.viewport.y - b.viewport.y) > EPSILON) return false;
   if (Math.abs(a.bottomLeft.x - b.bottomLeft.x) > EPSILON) return false;
   if (Math.abs(a.bottomLeft.y - b.bottomLeft.y) > EPSILON) return false;
   if (Math.abs(a.center.x - b.center.x) > EPSILON) return false;
@@ -88,6 +84,7 @@ export const useElementDimensions = (
         if (areDimensionsEqual(prevDimensions, value)) {
           return prevDimensions;
         }
+
         return value;
       });
     };
