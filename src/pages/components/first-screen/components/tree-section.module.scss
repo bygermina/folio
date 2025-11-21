@@ -22,9 +22,9 @@
   &Landscape {
     width: 50vw;
     height: 100vh;
+    max-width: 960px;
 
     @include respond-to(md) {
-      max-width: none;
       max-height: none;
     }
   }
@@ -48,6 +48,8 @@
   &Landscape {
     height: 100%;
     width: auto;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   &Square {
