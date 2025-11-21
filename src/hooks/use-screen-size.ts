@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 
+import { BREAKPOINTS } from '@/constants/breakpoints';
+
 export const useScreenSize = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
@@ -11,9 +13,11 @@ export const useScreenSize = () => {
     const newWidth = window.innerWidth;
     const newHeight = window.innerHeight;
 
-    setScreenWidth((prev) => (prev !== newWidth ? newWidth : prev));
-    setScreenHeight((prev) => (prev !== newHeight ? newHeight : prev));
-  }, []);
+    if (newWidth === screenWidth && newHeight === screenHeight) return;
+
+    setScreenWidth(newWidth);
+    setScreenHeight(newHeight);
+  }, [screenWidth, screenHeight]);
 
   useEffect(() => {
     let timeoutId: number;
@@ -24,7 +28,7 @@ export const useScreenSize = () => {
 
       rafId = requestAnimationFrame(() => {
         clearTimeout(timeoutId);
-        timeoutId = window.setTimeout(updateScreenSize, 100); // Оптимизированный throttle
+        timeoutId = window.setTimeout(updateScreenSize, 100);
         rafId = null;
       });
     };
@@ -40,9 +44,9 @@ export const useScreenSize = () => {
 
   const deviceInfo = useMemo(
     () => ({
-      isMobile: screenWidth < 768,
-      isTablet: screenWidth >= 768 && screenWidth < 1024,
-      isDesktop: screenWidth >= 1024,
+      isMobile: screenWidth < BREAKPOINTS.MOBILE,
+      isTablet: screenWidth >= BREAKPOINTS.MOBILE && screenWidth < BREAKPOINTS.TABLET,
+      isDesktop: screenWidth >= BREAKPOINTS.TABLET,
     }),
     [screenWidth],
   );

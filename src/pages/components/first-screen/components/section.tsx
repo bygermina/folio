@@ -5,6 +5,7 @@ import { CSSPathMotion } from '@/components/animations/css-path-motion/css-path-
 import { createSvgArc, getLastPointFromSvgPath } from '@/utils/svg';
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
 import { useScreenSizeContext } from '@/components/providers/use-context';
+import { BREAKPOINTS } from '@/constants/breakpoints';
 import { cn } from '@/utils/cn';
 
 import { TreeSection, type TreeSectionRef } from './tree-section';
@@ -15,7 +16,6 @@ import styles from './section.module.scss';
 const ARC_RADIUS = 100;
 const BASE_SPEED = 250;
 const LETTER_PART = 0.3;
-const TABLET_BREAKPOINT = 1024;
 
 const SPEED_MULTIPLIERS = {
   MOBILE: 0.6,
@@ -92,7 +92,7 @@ const PathEffectsSection = ({
 
   const screenSpeedMultiplier = useMemo(() => {
     if (isMobile) return SPEED_MULTIPLIERS.MOBILE;
-    if (screenWidth < TABLET_BREAKPOINT) return SPEED_MULTIPLIERS.TABLET;
+    if (screenWidth < BREAKPOINTS.TABLET) return SPEED_MULTIPLIERS.TABLET;
     return SPEED_MULTIPLIERS.DESKTOP;
   }, [isMobile, screenWidth]);
 

@@ -3,6 +3,7 @@ import { useCallback, useState, useRef, useEffect } from 'react';
 import { Slider } from '@/components/basic/slider/slider';
 import { Typography } from '@/components/basic/typography/typography';
 import { useScreenSize } from '@/hooks/use-screen-size';
+import { BREAKPOINTS } from '@/constants/breakpoints';
 
 import { SlideContent } from './components/slide-content';
 import { SliderControls } from './components/slider-controls';
@@ -14,8 +15,6 @@ const SLIDE_WIDTH = {
   DESKTOP: 244,
   MOBILE: 200,
 } as const;
-
-const MOBILE_BREAKPOINT = 768;
 
 const SLIDERS_COUNT = 6;
 
@@ -52,7 +51,8 @@ const TitleSection = () => (
 
 export const SecondScreen = () => {
   const { screenWidth } = useScreenSize();
-  const slideWidth = screenWidth > MOBILE_BREAKPOINT ? SLIDE_WIDTH.DESKTOP : SLIDE_WIDTH.MOBILE;
+  const slideWidth =
+    screenWidth > BREAKPOINTS.MOBILE ? SLIDE_WIDTH.DESKTOP : SLIDE_WIDTH.MOBILE;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
