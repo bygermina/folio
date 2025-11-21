@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
+
 import { cn } from '@/utils/cn';
+import { Picture } from '@/components/basic/picture/picture';
+import { type PictureSource } from '@/components/basic/picture/picture.utils';
 
 import styles from './image-mask.module.scss';
-
-const DEFAULT_MASK =
-  'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.5) 20%, white 30%, white 70%, rgba(255,255,255,0.5) 80%, transparent 100%), linear-gradient(to right, transparent 0%, rgba(255,255,255,0.5) 20%, white 30%, white 70%, rgba(255,255,255,0.5) 80%, transparent 100%)';
 
 const ANIMATION_DURATION = {
   container: 0.5,
@@ -16,39 +16,61 @@ const ANIMATION_DELAY = {
   image: 0.2,
 };
 
+export type ImageMaskVariant = 'Gradient' | 'None';
+
 interface ImageMaskProps {
   src: string;
-  mask?: string;
+  variant?: ImageMaskVariant;
   className?: string;
   imageClassName?: string;
   style?: React.CSSProperties;
+  sources?: PictureSource[];
+  srcSet?: string;
+  sizes?: string;
+  alt?: string;
 }
 
 export const ImageMask = forwardRef<HTMLImageElement, ImageMaskProps>(
-  ({ src, mask = DEFAULT_MASK, className, imageClassName, style }, ref) => {
-    const maskStyle = {
-      WebkitMaskImage: mask,
-      maskImage: mask,
-    };
-
+  (
+    {
+      src,
+      variant = 'Gradient',
+      className,
+      imageClassName,
+      style,
+      sources,
+      srcSet,
+      sizes,
+      alt = 'masked',
+    },
+    ref,
+  ) => {
     return (
       <motion.div
-        className={cn(styles.container, className)}
+        className={className}
         style={style}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: ANIMATION_DURATION.container }}
       >
-        <motion.img
-          ref={ref}
-          src={src}
-          alt="masked"
-          className={cn(styles.image, imageClassName)}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: ANIMATION_DURATION.image, delay: ANIMATION_DELAY.image }}
-          style={maskStyle}
-        />
+          className={cn(styles.imageWrapper, styles[`imageWrapper${variant}`], imageClassName)}
+        >
+          <Picture
+            ref={ref}
+            src={src}
+            alt={alt}
+            sources={sources}
+            srcSet={srcSet}
+            sizes={sizes}
+            className={styles.picture}
+            loading="eager"
+            fetchPriority="high"
+          />
+        </motion.div>
       </motion.div>
     );
   },

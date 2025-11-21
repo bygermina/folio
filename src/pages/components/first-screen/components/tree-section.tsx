@@ -6,7 +6,7 @@ import desktop from '@/assets/blue circuit tree-large.jpg';
 import mobile from '@/assets/blue circuit tree-500.jpg';
 import tablet from '@/assets/blue circuit tree-932 .jpg';
 import { ImageMask } from '@/components/animations/image/image-mask';
-import { createResponsiveSources } from '@/components/basic/picture/picture';
+import { createResponsiveSources } from '@/components/basic/picture/picture.utils';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 import { getImageOffset, getScaledPath } from '@/utils/svg';
 import { cn } from '@/utils/cn';
@@ -57,7 +57,7 @@ export const TreeSection = forwardRef<TreeSectionRef, TreeSectionProps>(
 );
 
 export const TreeImage = forwardRef<HTMLImageElement>((_props, ref) => {
-  const { containerScreenMode } = useScreenSizeContext();
+  const { containerScreenMode, screenWidth } = useScreenSizeContext();
 
   const sources = createResponsiveSources({
     mobile,
@@ -65,12 +65,15 @@ export const TreeImage = forwardRef<HTMLImageElement>((_props, ref) => {
     desktop,
   });
 
+  const fallbackSrc = screenWidth >= 1024 ? desktop : screenWidth >= 768 ? tablet : mobile;
+
   return (
     <ImageMask
+      key={screenWidth}
       ref={ref}
       className={cn(styles.treeImage, styles[`treeImage${containerScreenMode}`])}
       imageClassName={cn(styles.image, styles[`image${containerScreenMode}`])}
-      src={desktop}
+      src={fallbackSrc}
       sources={sources}
       alt="Circuit tree"
     />
