@@ -103,7 +103,6 @@ export const SecondScreen = () => {
               speed={isVisible ? sliderConfig.speed : 0}
               side={sliderConfig.side}
               slideWidth={slideWidth}
-              screenWidth={screenWidth}
               renderSlide={renderSlide}
             />
           </div>
