@@ -6,6 +6,26 @@
 
 .heading {
   margin-bottom: spacing(8);
+
+  &Portrait {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    line-height: 1.1;
+  }
+
+  &Landscape {
+    font-size: 3rem;
+    line-height: 1.05;
+
+    @include respond-to(sm) {
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+
+    @include respond-to(md) {
+      font-size: 4.5rem;
+      line-height: 0.95;
+    }
+  }
 }
 
 .titleMain {
@@ -17,6 +37,17 @@
   max-width: 42rem;
 }
 
+.subheading {
+  &Landscape {
+    margin-bottom: spacing(8);
+  }
+
+  &Portrait {
+    font-size: clamp(0.875rem, 3.5vw, 1.25rem);
+    margin-bottom: spacing(4);
+  }
+}
+
 .actions {
   display: flex;
   flex-direction: row;
@@ -24,43 +55,14 @@
   align-items: center;
   justify-content: center;
 
-  &Portrait {
-    gap: spacing(3);
-  }
-
   &Landscape {
     margin-bottom: spacing(12);
     gap: spacing(4);
   }
-}
 
-.heading-portrait {
-  font-size: clamp(2rem, 8vw, 3.5rem);
-  line-height: 1.1;
-}
-
-.subheading-portrait {
-  font-size: clamp(0.875rem, 3.5vw, 1.25rem);
-  margin-bottom: spacing(4);
-}
-
-.heading-landscape {
-  font-size: 3rem;
-  line-height: 1.05;
-
-  @include respond-to(sm) {
-    font-size: 3.75rem;
-    line-height: 1;
+  &Portrait {
+    gap: spacing(3);
   }
-
-  @include respond-to(md) {
-    font-size: 4.5rem;
-    line-height: 0.95;
-  }
-}
-
-.subheading-landscape {
-  margin-bottom: spacing(8);
 }
 
 .container {
@@ -72,33 +74,21 @@
   justify-content: center;
   text-align: center;
   width: 100%;
-}
 
-.container-portrait {
-  width: 100%;
-  padding: 0 spacing(4);
-  margin-top: 100vw;
-  height: calc(100vh - 100vw);
-  overflow: hidden;
-}
+  &Landscape {
+    max-width: 1280px;
+    margin: 0 auto 0 30vw;
+    min-height: 100vh;
+  }
 
-.container-landscape {
-  max-width: 1280px;
-  margin: 0 auto 0 30vw;
-  min-height: 100vh;
-}
+  &Square {
+    margin-top: 70vw;
+    height: calc(100vh - 70vw);
+  }
 
-.container-square {
-  position: relative;
-  z-index: z-index(content);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 spacing(4);
-  text-align: center;
-  overflow: hidden;
-  margin-top: 70vw;
-  height: calc(100vh - 70vw);
+  &Portrait {
+    padding: 0 spacing(4);
+    margin-top: 100vw;
+    height: calc(100vh - 100vw);
+  }
 }

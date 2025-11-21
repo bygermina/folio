@@ -18,26 +18,30 @@ interface ContentProps {
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
   ({ letterRef, onContentReady }, ref) => {
-    const { isPortrait, screenMode, containerScreenMode } = useScreenSizeContext();
+    const { screenMode, containerScreenMode } = useScreenSizeContext();
 
     useEffect(() => {
       return () => onContentReady?.(false);
     }, [onContentReady]);
 
     return (
-      <div ref={ref} className={cn(styles.container, `container-${containerScreenMode}`)}>
+      <div ref={ref} className={cn(styles.container, styles[`container${containerScreenMode}`])}>
         <div className={styles.content}>
-          <Typography variant="h1" className={cn(styles.heading, `heading-${screenMode}`)}>
+          <Typography variant="h1" className={cn(styles.heading, styles[`heading${screenMode}`])}>
             <TypeText
               text="Code is art"
               ref={letterRef}
               targetLetterIndex={5}
-              className={cn('glass-text-shine', styles.titleMain, `heading-${screenMode}`)}
+              className={cn('glass-text-shine', styles.titleMain, styles[`heading${screenMode}`])}
               speed={0.1}
               delay={1.0}
             />
 
-            <TypeText text="that does something" className={`heading-${screenMode}`} delay={3.0} />
+            <TypeText
+              text="that does something"
+              className={styles[`heading${screenMode}`]}
+              delay={3.0}
+            />
           </Typography>
           <motion.div
             initial={{ opacity: 0 }}
@@ -46,17 +50,14 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           >
             <Typography
               variant="subheading"
-              className={cn(styles.subtitle, `subheading-${screenMode}`)}
+              className={cn(styles.subtitle, styles[`subheading${screenMode}`])}
               color="muted"
             >
               Xenia Liubachka • interactive portfolio
             </Typography>
           </motion.div>
           <motion.div
-            className={cn(styles.actions, {
-              [styles.actionsPortrait]: isPortrait,
-              [styles.actionsLandscape]: !isPortrait,
-            })}
+            className={cn(styles.actions, styles[`actions${screenMode}`])}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 5.2 }}

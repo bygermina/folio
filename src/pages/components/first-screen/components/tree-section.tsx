@@ -2,8 +2,11 @@ import { useRef, useImperativeHandle, forwardRef } from 'react';
 
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
 import { pathTree, paths } from '@/constants/svg-paths';
-import treeImage from '@/assets/blue circuit tree-small.jpg';
+import desktop from '@/assets/blue circuit tree-large.jpg';
+import mobile from '@/assets/blue circuit tree-500.jpg';
+import tablet from '@/assets/blue circuit tree-932 .jpg';
 import { ImageMask } from '@/components/animations/image/image-mask';
+import { createResponsiveSources } from '@/components/basic/picture/picture';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 import { getImageOffset, getScaledPath } from '@/utils/svg';
 import { cn } from '@/utils/cn';
@@ -54,20 +57,22 @@ export const TreeSection = forwardRef<TreeSectionRef, TreeSectionProps>(
 );
 
 export const TreeImage = forwardRef<HTMLImageElement>((_props, ref) => {
-  const { isPortrait } = useScreenSizeContext();
+  const { containerScreenMode } = useScreenSizeContext();
+
+  const sources = createResponsiveSources({
+    mobile,
+    tablet,
+    desktop,
+  });
 
   return (
     <ImageMask
       ref={ref}
-      className={cn(styles.treeImage, {
-        [styles.treeImagePortrait]: isPortrait,
-        [styles.treeImageLandscape]: !isPortrait,
-      })}
-      imageClassName={cn(styles.image, {
-        [styles.imagePortrait]: isPortrait,
-        [styles.imageLandscape]: !isPortrait,
-      })}
-      src={treeImage}
+      className={cn(styles.treeImage, styles[`treeImage${containerScreenMode}`])}
+      imageClassName={cn(styles.image, styles[`image${containerScreenMode}`])}
+      src={desktop}
+      sources={sources}
+      alt="Circuit tree"
     />
   );
 });

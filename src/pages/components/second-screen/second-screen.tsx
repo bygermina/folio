@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, useRef, useEffect } from 'react';
+import { useCallback, useState, useMemo, useRef, useEffect, memo } from 'react';
 
 import { Slider } from '@/components/basic/slider/slider';
 import { Typography } from '@/components/basic/typography/typography';
@@ -25,6 +25,19 @@ const SLIDER_COLORS = [
   '#7DD3FC', // sky-300
   '#8B5CF6', // purple-400 (custom)
 ] as const;
+
+const TitleSection = memo(() => (
+  <div className={styles.header}>
+    <Typography variant="h2" size="3xl" weight="bold" className={styles.title}>
+      Reusable components with JS animations
+    </Typography>
+    <Typography variant="body" className={styles.subtitle} color="muted">
+      Configure your own slider
+    </Typography>
+  </div>
+));
+
+TitleSection.displayName = 'TitleSection';
 
 export const SecondScreen = () => {
   const { screenWidth } = useScreenSize();
@@ -76,14 +89,7 @@ export const SecondScreen = () => {
   return (
     <div ref={containerRef} className={styles.root}>
       <div className={styles.content}>
-        <div className={styles.header}>
-          <Typography variant="h2" size="3xl" weight="bold" className={styles.title}>
-            Reusable components with JS animations
-          </Typography>
-          <Typography variant="body" className={styles.subtitle} color="muted">
-            Configure your own slider
-          </Typography>
-        </div>
+        <TitleSection />
         <SliderControls
           onUpdate={setSliderConfig}
           initialSlides={LINKS}
@@ -97,6 +103,7 @@ export const SecondScreen = () => {
               speed={isVisible ? sliderConfig.speed : 0}
               side={sliderConfig.side}
               slideWidth={slideWidth}
+              screenWidth={screenWidth}
               renderSlide={renderSlide}
             />
           </div>

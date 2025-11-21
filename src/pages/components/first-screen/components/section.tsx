@@ -13,7 +13,7 @@ import { Content } from './content';
 import styles from './section.module.scss';
 
 export const Section = () => {
-  const { isPortrait, screenWidth, screenHeight } = useScreenSizeContext();
+  const { screenMode, screenWidth, screenHeight } = useScreenSizeContext();
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const treeRef = useRef<TreeSectionRef | null>(null);
@@ -22,13 +22,7 @@ export const Section = () => {
   const [isContentReady, setIsContentReady] = useState(false);
 
   return (
-    <section
-      ref={sectionRef}
-      className={cn(styles.root, {
-        [styles.rootPortrait]: isPortrait,
-        [styles.rootLandscape]: !isPortrait,
-      })}
-    >
+    <section ref={sectionRef} className={cn(styles.root, styles[`root${screenMode}`])}>
       <TreeSection ref={treeRef} isContentReady={isContentReady} containerRef={sectionRef} />
       <Content
         key={screenWidth + screenHeight}

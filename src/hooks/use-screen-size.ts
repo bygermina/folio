@@ -47,8 +47,8 @@ export const useScreenSize = () => {
     [screenWidth],
   );
 
-  const screenMode = isPortrait ? 'portrait' : 'landscape';
-  const containerScreenMode = isSquare ? 'square' : screenMode;
+  const screenMode = isPortrait ? 'Portrait' : 'Landscape';
+  const containerScreenMode = isSquare ? 'Square' : screenMode;
 
   return {
     screenWidth,
