@@ -48,6 +48,21 @@ const defaultDimensions = {
   scale: 0,
 };
 
+const EPSILON = 0.01; // Погрешность для сравнения чисел
+
+const areDimensionsEqual = (a: Dimensions, b: Dimensions): boolean => {
+  if (Math.abs(a.width - b.width) > EPSILON) return false;
+  if (Math.abs(a.height - b.height) > EPSILON) return false;
+  if (Math.abs(a.scale - b.scale) > EPSILON) return false;
+  if (Math.abs(a.viewport.x - b.viewport.x) > EPSILON) return false;
+  if (Math.abs(a.viewport.y - b.viewport.y) > EPSILON) return false;
+  if (Math.abs(a.bottomLeft.x - b.bottomLeft.x) > EPSILON) return false;
+  if (Math.abs(a.bottomLeft.y - b.bottomLeft.y) > EPSILON) return false;
+  if (Math.abs(a.center.x - b.center.x) > EPSILON) return false;
+  if (Math.abs(a.center.y - b.center.y) > EPSILON) return false;
+  return true;
+};
+
 export const useElementDimensions = (
   elementRef: React.RefObject<HTMLElement | null>,
   isContentReady?: boolean,
@@ -69,7 +84,12 @@ export const useElementDimensions = (
       );
       const value = newDimensions ?? structuredClone(defaultDimensions);
 
-      setDimensions(value);
+      setDimensions((prevDimensions) => {
+        if (areDimensionsEqual(prevDimensions, value)) {
+          return prevDimensions;
+        }
+        return value;
+      });
     };
 
     if (isContentReady !== false) {
