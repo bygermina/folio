@@ -20,7 +20,6 @@ interface SlideContentProps {
   image: IconName;
   width?: number;
   height?: number;
-  color?: string;
 }
 
 const SlideContentComponent = forwardRef<HTMLDivElement, SlideContentProps>(
@@ -28,7 +27,6 @@ const SlideContentComponent = forwardRef<HTMLDivElement, SlideContentProps>(
     const Icon = icons[image];
 
     if (!Icon) {
-      console.warn(`Icon not found for: ${image}`);
       return null;
     }
 

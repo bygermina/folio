@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, useRef, useEffect, memo } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 
 import { Slider } from '@/components/basic/slider/slider';
 import { Typography } from '@/components/basic/typography/typography';
@@ -15,6 +15,8 @@ const SLIDE_WIDTH = {
   MOBILE: 200,
 } as const;
 
+const MOBILE_BREAKPOINT = 768;
+
 const SLIDERS_COUNT = 6;
 
 const SLIDER_COLORS = [
@@ -26,7 +28,18 @@ const SLIDER_COLORS = [
   '#8B5CF6', // purple-400 (custom)
 ] as const;
 
-const TitleSection = memo(() => (
+const SLIDER_INDICES = Array.from({ length: SLIDERS_COUNT }, (_, i) => i);
+const SLIDER_STYLES = SLIDER_COLORS.map(
+  (color) => ({ '--slider-color': color }) as React.CSSProperties,
+);
+
+const DEFAULT_SLIDER_CONFIG = {
+  slides: LINKS,
+  speed: 0.6,
+  side: 'left' as const,
+};
+
+const TitleSection = () => (
   <div className={styles.header}>
     <Typography variant="h2" size="3xl" weight="bold" className={styles.title}>
       Reusable components with JS animations
@@ -35,22 +48,13 @@ const TitleSection = memo(() => (
       Configure your own slider
     </Typography>
   </div>
-));
-
-TitleSection.displayName = 'TitleSection';
+);
 
 export const SecondScreen = () => {
   const { screenWidth } = useScreenSize();
-  const slideWidth = screenWidth > 768 ? SLIDE_WIDTH.DESKTOP : SLIDE_WIDTH.MOBILE;
+  const slideWidth = screenWidth > MOBILE_BREAKPOINT ? SLIDE_WIDTH.DESKTOP : SLIDE_WIDTH.MOBILE;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-
-  const sliderIndices = useMemo(() => Array.from({ length: SLIDERS_COUNT }, (_, i) => i), []);
-
-  const sliderStyles = useMemo(
-    () => SLIDER_COLORS.map((color) => ({ '--slider-color': color }) as React.CSSProperties),
-    [],
-  );
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -73,11 +77,7 @@ export const SecondScreen = () => {
     slides: LinkData[];
     speed: number;
     side: 'left' | 'right';
-  }>({
-    slides: LINKS,
-    speed: 0.6,
-    side: 'left',
-  });
+  }>(DEFAULT_SLIDER_CONFIG);
 
   const renderSlide = useCallback(
     (item: LinkData, index: number, setRef: (el: HTMLElement | null) => void) => (
@@ -92,12 +92,12 @@ export const SecondScreen = () => {
         <TitleSection />
         <SliderControls
           onUpdate={setSliderConfig}
-          initialSlides={LINKS}
-          initialSpeed={0.6}
-          initialSide="left"
+          initialSlides={DEFAULT_SLIDER_CONFIG.slides}
+          initialSpeed={DEFAULT_SLIDER_CONFIG.speed}
+          initialSide={DEFAULT_SLIDER_CONFIG.side}
         />
-        {sliderIndices.map((index) => (
-          <div key={index} className={styles.sliderContainer} style={sliderStyles[index]}>
+        {SLIDER_INDICES.map((index) => (
+          <div key={index} className={styles.sliderContainer} style={SLIDER_STYLES[index]}>
             <Slider<LinkData>
               slides={sliderConfig.slides}
               speed={isVisible ? sliderConfig.speed : 0}

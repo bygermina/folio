@@ -26,7 +26,7 @@ export const DataCard = memo(
         className={cn(styles.dataCard, isSelected && styles.dataCardSelected, className)}
         onClick={handleClick}
       >
-        <span className={styles.cardValue}>{value}</span>
+        {value}
       </div>
     );
   },

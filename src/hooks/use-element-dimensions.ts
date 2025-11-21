@@ -77,7 +77,10 @@ export const useElementDimensions = (
     }
 
     const resizeObserver = new ResizeObserver(updateDimensions);
-    const mutationObserver = new MutationObserver(updateDimensions);
+
+    const mutationObserver = new MutationObserver(() => {
+      requestAnimationFrame(updateDimensions);
+    });
 
     resizeObserver.observe(elementRef.current);
     mutationObserver.observe(elementRef.current, {
@@ -95,7 +98,7 @@ export const useElementDimensions = (
       window.removeEventListener('scroll', updateDimensions);
       window.removeEventListener('resize', updateDimensions);
     };
-  }, [baseHeight, elementRef, isContentReady, part]);
+  }, [baseHeight, elementRef, isContentReady, part, containerRef]);
 
   return dimensions;
 };

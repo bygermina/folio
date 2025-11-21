@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 
 import Row from '../../../components/virtualized-table/row';
 import { DataCard } from '../../../components/virtualized-table/data-card';
@@ -21,15 +21,12 @@ DataRowItem.displayName = 'DataRowItem';
 
 export const DataRow = memo(({ item, style, gap = 8 }: RowComponentProps) => {
   const itemIds = item as number[];
-  const toggleValue = useStore((state) => state?.toggleValue);
 
-  const renderItem = useCallback((itemId: number) => {
-    return <DataRowItem key={itemId} itemId={itemId} />;
-  }, []);
-
-  if (!itemIds?.length || !toggleValue) {
+  if (!itemIds?.length) {
     return <div style={style} />;
   }
+
+  const renderItem = (itemId: number) => <DataRowItem itemId={itemId} />;
 
   return (
     <Row

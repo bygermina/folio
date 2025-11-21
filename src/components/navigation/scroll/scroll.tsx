@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type { ReactNode, MouseEvent } from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
 import { cn } from '@/utils/cn';
 
@@ -9,7 +9,7 @@ interface ScrollProps extends HTMLMotionProps<'div'> {
   label?: string;
   arrow?: boolean;
   className?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const Scroll = ({
@@ -20,15 +20,14 @@ export const Scroll = ({
   children,
   ...props
 }: ScrollProps) => {
-  const scrollToNext = (e: React.MouseEvent<HTMLDivElement>) => {
+  const scrollToNext = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
     const targetSection = document.getElementById(targetSectionId);
     if (targetSection) {
-      const offset = 0;
       const elementPosition = targetSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      const offsetPosition = elementPosition + window.scrollY;
 
       window.scrollTo({
         top: offsetPosition,

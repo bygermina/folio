@@ -18,11 +18,8 @@ export const useElementSize = (ref: React.RefObject<HTMLElement | null>) => {
     const resizeObserver = new ResizeObserver(updateSize);
     resizeObserver.observe(element);
 
-    window.addEventListener('resize', updateSize);
-
     return () => {
       resizeObserver.disconnect();
-      window.removeEventListener('resize', updateSize);
     };
   }, [ref]);
 

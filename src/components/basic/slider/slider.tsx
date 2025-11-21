@@ -15,8 +15,6 @@ import { useElementSize } from '@/hooks/use-element-size';
 
 import styles from './slider.module.scss';
 
-export type SetLinksRefs = (index: number) => (el: HTMLElement | null) => void;
-
 interface SliderProps<T> {
   speed?: number;
   side?: Side;

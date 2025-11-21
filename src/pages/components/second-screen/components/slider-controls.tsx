@@ -11,6 +11,12 @@ import type { IconName } from './slide-content';
 
 import styles from './slider-controls.module.scss';
 
+const SPEED_RANGE = {
+  MIN: 0.1,
+  MAX: 3,
+  STEP: 0.1,
+} as const;
+
 interface SliderControlsProps {
   onUpdate: (config: { slides: LinkData[]; speed: number; side: 'left' | 'right' }) => void;
   initialSlides: LinkData[];
@@ -99,9 +105,9 @@ export const SliderControls = ({
               <LabeledInput
                 label="Speed"
                 type="range"
-                min="0.1"
-                max="3"
-                step="0.1"
+                min={SPEED_RANGE.MIN}
+                max={SPEED_RANGE.MAX}
+                step={SPEED_RANGE.STEP}
                 value={speed}
                 valueDisplay={speed.toFixed(1)}
                 onChange={(e) => setSpeed(Number(e.target.value))}
