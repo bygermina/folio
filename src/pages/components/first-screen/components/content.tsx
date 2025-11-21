@@ -5,7 +5,7 @@ import { TypeText } from '@/components/animations/text/type-text';
 import { Typography } from '@/components/basic/typography/typography';
 import { useScreenSizeContext } from '@/components/providers/use-context';
 import { WithVibration } from '@/components/animations/vibration';
-import { Scroll } from '@/components/navigation/scroll';
+import { Scroll } from '@/components/navigation/scroll/scroll';
 import { Button } from '@/components/basic/button/button';
 import { cn } from '@/utils/cn';
 
