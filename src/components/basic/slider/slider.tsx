@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 
+import { useScreenSize } from '@/hooks/use-screen-size';
+import { useElementSize } from '@/hooks/use-element-size';
+
 import {
   applyTransform,
   getInitialSlides,
@@ -9,9 +12,6 @@ import {
   useAnimation,
   updateInfiniteScrollPositions,
 } from './slider.utils';
-
-import { useScreenSize } from '@/hooks/use-screen-size';
-import { useElementSize } from '@/hooks/use-element-size';
 
 import styles from './slider.module.scss';
 
@@ -64,6 +64,7 @@ export const Slider = <T,>({
     slides: slidesRefs.current,
     translateX,
     updatePositions,
+    containerRef,
   });
 
   const { domActions, stopAnimation } = useSlider({

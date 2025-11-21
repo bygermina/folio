@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { useElementVisible } from '@/hooks/use-element-visible';
+
 export const getInitialSlides = <T>(arr: T[], containerWidth: number, slideWidth: number) => {
   if (containerWidth === 0 || arr.length === 0) {
     return arr;
@@ -62,14 +64,6 @@ export const applyTransform = (slides: (HTMLElement | null)[], translateX: numbe
     }
   });
 };
-
-const EVENTS = {
-  Visibilitychange: 'visibilitychange',
-  TouchMove: 'touchmove',
-  MouseMove: 'mousemove',
-  PointerMove: 'pointermove',
-  PointerUp: 'pointerup',
-} as const;
 
 const FRICTION = 0.95;
 const VELOCITY_STOP_THRESHOLD = 0.5;
@@ -262,6 +256,7 @@ interface UseAnimation {
   slides: (HTMLElement | null)[];
   translateX: React.RefObject<number[]>;
   updatePositions: (prevTranslateX: number[], delta: number) => number[];
+  containerRef: React.RefObject<HTMLElement | null>;
 }
 
 export const useAnimation = ({
@@ -270,20 +265,15 @@ export const useAnimation = ({
   slides,
   translateX,
   updatePositions,
+  containerRef,
 }: UseAnimation): UseAnimationReturn => {
   const [isCircularAnimationPaused, setCircularAnimationPaused] = useState(false);
 
+  const isVisible = useElementVisible(containerRef);
+
   useEffect(() => {
-    const windowVisibilityListener = () => {
-      setCircularAnimationPaused(document.visibilityState === 'hidden');
-    };
-
-    document.addEventListener(EVENTS.Visibilitychange, windowVisibilityListener);
-
-    return () => {
-      document.removeEventListener(EVENTS.Visibilitychange, windowVisibilityListener);
-    };
-  }, [setCircularAnimationPaused]);
+    setCircularAnimationPaused(!isVisible);
+  }, [isVisible]);
 
   useEffect(() => {
     let animationFrameId: number | null = null;
