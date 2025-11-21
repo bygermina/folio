@@ -1,4 +1,4 @@
-import { memo, useState, useCallback } from 'react';
+import { memo, useState, useCallback, useEffect } from 'react';
 
 import { cn } from '@/utils/cn';
 
@@ -13,6 +13,13 @@ export interface DataCardProps {
 export const DataCard = memo(
   ({ value, onToggle, className }: DataCardProps) => {
     const [isSelected, setIsSelected] = useState(false);
+    const [isFlashing, setIsFlashing] = useState(false);
+
+    useEffect(() => {
+      setIsFlashing(true);
+      const timer = setTimeout(() => setIsFlashing(false), 300);
+      return () => clearTimeout(timer);
+    }, [value]);
 
     const handleClick = useCallback(() => {
       setIsSelected(true);
@@ -23,7 +30,12 @@ export const DataCard = memo(
 
     return (
       <div
-        className={cn(styles.dataCard, isSelected && styles.dataCardSelected, className)}
+        className={cn(
+          styles.dataCard,
+          isSelected && styles.dataCardSelected,
+          isFlashing && styles.dataCardFlash,
+          className,
+        )}
         onClick={handleClick}
       >
         {value}
