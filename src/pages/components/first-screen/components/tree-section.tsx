@@ -2,9 +2,9 @@ import { useRef, useImperativeHandle, forwardRef } from 'react';
 
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
 import { pathTree, paths } from '@/constants/svg-paths';
-import desktop from '@/assets/blue circuit tree-large.jpg';
-import mobile from '@/assets/blue circuit tree-500.jpg';
-import tablet from '@/assets/blue circuit tree-932 .jpg';
+import desktop from '@/assets/blue circuit tree-large.webp';
+import mobile from '@/assets/blue circuit tree-500.webp';
+import tablet from '@/assets/blue circuit tree-932.webp';
 import { ImageMask } from '@/components/animations/image/image-mask';
 import { createResponsiveSources } from '@/components/basic/picture/picture.utils';
 import { useScreenSizeContext } from '@/components/providers/use-context';
