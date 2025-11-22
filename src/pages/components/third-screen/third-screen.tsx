@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import { Typography } from '@/components/basic/typography/typography';
 import VirtualizedTable from '@//components/virtualized-table/virtualized-table';
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
+import { useElementVisible } from '@/hooks/use-element-visible';
 
 import { DataRow } from './data-row';
 import { useStore } from './store';
@@ -14,13 +15,28 @@ const ROW_HEIGHT = 56;
 const GAP = 8;
 
 export const ThirdScreen = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const isVisible = useElementVisible(sectionRef);
   const containerRef = useRef<HTMLDivElement>(null);
   const dimensions = useElementDimensions(containerRef, true);
   const rowCount = useStore((state) => state.rows.length);
   const itemsPerRow = useStore((state) => state.itemsPerRow);
   const setItemsPerRow = useStore((state) => state.setItemsPerRow);
+  const triggerRandomFlash = useStore((state) => state.triggerRandomFlash);
 
   useEffect(() => {
+    if (!isVisible) return;
+
+    const flashInterval = setInterval(() => {
+      triggerRandomFlash(3);
+    }, 150);
+
+    return () => {
+      clearInterval(flashInterval);
+    };
+  }, [isVisible, triggerRandomFlash]);
+
+  useLayoutEffect(() => {
     const container = containerRef.current;
 
     if (!container) return;
@@ -45,7 +61,7 @@ export const ThirdScreen = () => {
   }, [dimensions.width, itemsPerRow, setItemsPerRow]);
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} ref={sectionRef}>
       <motion.div
         initial={{ opacity: 0, y: 30, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}

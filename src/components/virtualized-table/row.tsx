@@ -4,11 +4,11 @@ export interface RowProps<T = unknown> {
   items: T[];
   style: React.CSSProperties;
   gap?: number;
-  renderItem: (item: T, index: number) => React.ReactNode;
-  getItemKey?: (item: T, index: number) => string | number;
+  renderItem: (item: T) => React.ReactNode;
+  rowIndex: number;
 }
 
-const Row = <T,>({ items, style, gap = 8, renderItem, getItemKey }: RowProps<T>) => {
+const Row = <T,>({ items, style, gap = 8, renderItem, rowIndex }: RowProps<T>) => {
   if (!items?.length) {
     return <div className={styles.row} style={style} />;
   }
@@ -28,7 +28,7 @@ const Row = <T,>({ items, style, gap = 8, renderItem, getItemKey }: RowProps<T>)
       }
     >
       {items.map((item, index) => (
-        <div key={getItemKey ? getItemKey(item, index) : index}>{renderItem(item, index)}</div>
+        <div key={index + rowIndex}>{renderItem(item)}</div>
       ))}
     </div>
   );

@@ -62,11 +62,18 @@
 }
 
 .dataCardFlash {
-  color: var(--color-white);
-  text-shadow:
-    0 0 4px rgba(from var(--color-cyan-400) r g b / 1),
-    0 0 12px rgba(from var(--color-cyan-400) r g b / 0.8);
-  transition:
-    color 0.1s ease-out,
-    text-shadow 0.1s ease-out;
+  animation: flash 0.3s ease-out;
+}
+
+@keyframes flash {
+  0% {
+    color: var(--color-white);
+    text-shadow:
+      0 0 4px rgba(from var(--color-cyan-400) r g b / 1),
+      0 0 12px rgba(from var(--color-cyan-400) r g b / 0.8);
+  }
+  100% {
+    color: var(--color-cyan-300);
+    text-shadow: none;
+  }
 }

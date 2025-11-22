@@ -1,4 +1,4 @@
-import { memo, useState, useCallback, useEffect } from 'react';
+import { memo, useState, useCallback } from 'react';
 
 import { cn } from '@/utils/cn';
 
@@ -7,19 +7,13 @@ import styles from './row.module.scss';
 export interface DataCardProps {
   value: number;
   onToggle?: () => void;
+  isFlashing?: boolean;
   className?: string;
 }
 
 export const DataCard = memo(
-  ({ value, onToggle, className }: DataCardProps) => {
+  ({ value, onToggle, isFlashing = false, className }: DataCardProps) => {
     const [isSelected, setIsSelected] = useState(false);
-    const [isFlashing, setIsFlashing] = useState(false);
-
-    // useEffect(() => {
-    //   setIsFlashing(true);
-    //   const timer = setTimeout(() => setIsFlashing(false), 300);
-    //   return () => clearTimeout(timer);
-    // }, []);
 
     const handleClick = useCallback(() => {
       setIsSelected(true);
@@ -42,5 +36,4 @@ export const DataCard = memo(
       </div>
     );
   },
-  (prevProps, nextProps) => prevProps.value === nextProps.value,
 );
