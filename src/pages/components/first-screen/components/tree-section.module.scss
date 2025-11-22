@@ -20,12 +20,11 @@
   }
 
   &Landscape {
-    width: 50vw;
     height: 100vh;
     max-width: 960px;
-
     @include respond-to(md) {
       max-height: none;
+      max-width: 50vw;
     }
   }
 

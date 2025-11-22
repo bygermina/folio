@@ -34,4 +34,6 @@ const Row = <T,>({ items, style, gap = 8, renderItem, getItemKey }: RowProps<T>)
   );
 };
 
+Row.displayName = 'Row';
+
 export default Row;
