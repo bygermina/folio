@@ -7,14 +7,9 @@ import { BREAKPOINTS } from '@/constants/breakpoints';
 
 import { SlideContent } from './components/slide-content';
 import { SliderControls } from './components/slider-controls';
-import { LINKS, type LinkData } from './constants';
+import { LINKS, SLIDE_WIDTH, type LinkData } from './constants';
 
 import styles from './second-screen.module.scss';
-
-const SLIDE_WIDTH = {
-  DESKTOP: 244,
-  MOBILE: 200,
-} as const;
 
 const SLIDERS_COUNT = 6;
 
@@ -51,8 +46,7 @@ const TitleSection = () => (
 
 export const SecondScreen = () => {
   const { screenWidth } = useScreenSize();
-  const slideWidth =
-    screenWidth > BREAKPOINTS.MOBILE ? SLIDE_WIDTH.DESKTOP : SLIDE_WIDTH.MOBILE;
+  const slideWidth = screenWidth > BREAKPOINTS.MOBILE ? SLIDE_WIDTH.DESKTOP : SLIDE_WIDTH.MOBILE;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -97,7 +91,17 @@ export const SecondScreen = () => {
           initialSide={DEFAULT_SLIDER_CONFIG.side}
         />
         {SLIDER_INDICES.map((index) => (
-          <div key={index} className={styles.sliderContainer} style={SLIDER_STYLES[index]}>
+          <div
+            key={index}
+            className={styles.sliderContainer}
+            style={
+              {
+                ...SLIDER_STYLES[index],
+                '--slide-width-mobile': `${SLIDE_WIDTH.MOBILE}px`,
+                '--slide-width-desktop': `${SLIDE_WIDTH.DESKTOP}px`,
+              } as React.CSSProperties
+            }
+          >
             <Slider<LinkData>
               slides={sliderConfig.slides}
               speed={isVisible ? sliderConfig.speed : 0}

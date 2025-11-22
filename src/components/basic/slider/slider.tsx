@@ -4,7 +4,6 @@ import { useScreenSize } from '@/hooks/use-screen-size';
 import { useElementSize } from '@/hooks/use-element-size';
 
 import {
-  applyTransform,
   getInitialSlides,
   getStartState,
   type Side,
@@ -12,6 +11,7 @@ import {
   useAnimation,
   updateInfiniteScrollPositions,
 } from './slider.utils';
+import { applyTransform } from './slider-transform.utils';
 
 import styles from './slider.module.scss';
 

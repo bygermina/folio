@@ -1,10 +1,10 @@
 @use '../../../../styles/design-system' as *;
 
 .root {
-  width: 200px;
+  width: var(--slide-width-mobile, 200px);
 
   @include respond-to(md) {
-    width: 244px;
+    width: var(--slide-width-desktop, 244px);
   }
 }
 
