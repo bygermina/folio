@@ -16,9 +16,9 @@ const GAP = 8;
 export const ThirdScreen = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const dimensions = useElementDimensions(containerRef, true);
-  const rows = useStore((state) => state?.rows);
-  const itemsPerRow = useStore((state) => state?.itemsPerRow);
-  const setItemsPerRow = useStore((state) => state?.setItemsPerRow);
+  const rowCount = useStore((state) => state.rows.length);
+  const itemsPerRow = useStore((state) => state.itemsPerRow);
+  const setItemsPerRow = useStore((state) => state.setItemsPerRow);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -65,7 +65,7 @@ export const ThirdScreen = () => {
           <Typography as="span" variant="body" color="primary" weight="medium">
             Issue:
           </Typography>{' '}
-          Rendering {rows.length * itemsPerRow} data points
+          Rendering {rowCount * itemsPerRow} data points
         </Typography>
       </motion.div>
 
@@ -76,13 +76,12 @@ export const ThirdScreen = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1 }}
       >
-        {rows?.length ? (
+        {rowCount > 0 ? (
           <VirtualizedTable
-            rows={rows}
+            rowCount={rowCount}
             rowComponent={DataRow}
             rowHeight={ROW_HEIGHT}
             height={600}
-            gap={GAP}
           />
         ) : (
           <div className={styles.loading}>Loading data...</div>

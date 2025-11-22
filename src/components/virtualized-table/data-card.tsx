@@ -15,11 +15,11 @@ export const DataCard = memo(
     const [isSelected, setIsSelected] = useState(false);
     const [isFlashing, setIsFlashing] = useState(false);
 
-    useEffect(() => {
-      setIsFlashing(true);
-      const timer = setTimeout(() => setIsFlashing(false), 300);
-      return () => clearTimeout(timer);
-    }, [value]);
+    // useEffect(() => {
+    //   setIsFlashing(true);
+    //   const timer = setTimeout(() => setIsFlashing(false), 300);
+    //   return () => clearTimeout(timer);
+    // }, []);
 
     const handleClick = useCallback(() => {
       setIsSelected(true);

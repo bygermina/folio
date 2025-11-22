@@ -90,8 +90,11 @@ export interface StoreState {
   entityIds: number[];
   rows: number[][];
   itemsPerRow: number;
+  gap: number;
   toggleValue: (id: number) => void;
   setItemsPerRow: (itemsPerRow: number) => void;
+  getRowItemIds: (rowIndex: number) => number[];
+  getEntityValue: (itemId: number) => number | undefined;
 }
 
 export const useStore = create<StoreState>((set, get) => {
@@ -110,6 +113,7 @@ export const useStore = create<StoreState>((set, get) => {
     entityIds: entityIds || [],
     rows: rows || [],
     itemsPerRow: currentItemsPerRow,
+    gap: 8,
     toggleValue: (id) =>
       set((state) => {
         const entity = state.entities[id];
@@ -130,6 +134,14 @@ export const useStore = create<StoreState>((set, get) => {
       if (current !== itemsPerRow) {
         updateData(itemsPerRow);
       }
+    },
+    getRowItemIds: (rowIndex: number) => {
+      const state = get();
+      return state.rows[rowIndex] || [];
+    },
+    getEntityValue: (itemId: number) => {
+      const state = get();
+      return state.entities[itemId]?.value;
     },
   };
 });
