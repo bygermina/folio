@@ -45,6 +45,7 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 5.0 }}
+        onAnimationComplete={() => onContentReady?.(true)}
       >
         <Typography
           variant="subheading"
@@ -59,7 +60,6 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 5.2 }}
-        onAnimationComplete={() => onContentReady?.(true)}
       >
         <Scroll targetSectionId="js-animations">
           <WithVibration startEvent="starAnimationComplete">

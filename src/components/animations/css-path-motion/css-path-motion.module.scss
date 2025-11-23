@@ -1,3 +1,5 @@
+@use '../../../styles/design-system' as *;
+
 .container {
   position: absolute;
   top: 0;
@@ -13,7 +15,7 @@
   position: absolute;
   opacity: 0;
   animation:
-    css-path-motion-fade-in 0.1s var(--animation-delay, 0s) forwards,
+    fadeIn 0.1s var(--animation-delay, 0s) forwards,
     css-path-motion-animation var(--animation-duration, 3s) var(--animation-timing, linear)
       var(--animation-delay, 0s) var(--animation-iterations, 1) var(--animation-direction, normal)
       forwards;
@@ -25,7 +27,7 @@
   position: absolute;
   opacity: 0;
   animation:
-    css-path-motion-fade-in 0.1s var(--animation-delay, 0s) forwards,
+    fadeIn 0.1s var(--animation-delay, 0s) forwards,
     css-path-motion-animation var(--animation-duration, 3s) var(--animation-timing, linear)
       var(--animation-delay, 0s) var(--animation-iterations, 1) var(--animation-direction, normal)
       forwards,
@@ -50,14 +52,5 @@
   }
   100% {
     transform: rotate(var(--rotation-degrees, 1080deg));
-  }
-}
-
-@keyframes css-path-motion-fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 }
