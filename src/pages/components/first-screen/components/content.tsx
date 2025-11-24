@@ -59,7 +59,7 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
         className={cn(styles.actions, styles[`actions${screenMode}`])}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 5.2 }}
+        transition={{ duration: 0.8, delay: 8 }}
       >
         <Scroll targetSectionId="js-animations">
           <WithVibration startEvent="starAnimationComplete">
