@@ -1,7 +1,4 @@
-export const applyTransform = (
-  slides: (HTMLElement | null)[],
-  translateX: number[],
-): void => {
+export const applyTransform = (slides: (HTMLElement | null)[], translateX: number[]): void => {
   slides.forEach((el, idx) => {
     if (el) {
       const x = translateX[idx];
@@ -9,4 +6,3 @@ export const applyTransform = (
     }
   });
 };
-
