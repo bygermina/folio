@@ -1,0 +1,16 @@
+.root {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.svgFitX {
+  width: 100%;
+  height: auto;
+}
+
+.svgFitY {
+  width: auto;
+  height: 100%;
+}
