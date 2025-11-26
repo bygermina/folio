@@ -40,6 +40,7 @@ const Index = () => {
             offsetYPercent={0.27}
             strokeWidth={0.5}
             strokeColor="var(--color-blue-400)"
+            showSparkle
           />
           <div id="home">
             <FirstScreen />
