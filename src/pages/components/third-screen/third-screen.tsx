@@ -1,4 +1,4 @@
-import { memo, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { memo, useEffect, useLayoutEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import { Typography } from '@/components/basic/typography/typography';

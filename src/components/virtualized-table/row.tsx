@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import styles from './row.module.scss';
 
 export interface RowProps<T = unknown> {
@@ -8,7 +10,7 @@ export interface RowProps<T = unknown> {
   rowIndex: number;
 }
 
-const Row = <T,>({ items, style, gap = 8, renderItem, rowIndex }: RowProps<T>) => {
+const RowComponent = <T,>({ items, style, gap = 8, renderItem, rowIndex }: RowProps<T>) => {
   if (!items?.length) {
     return <div className={styles.row} style={style} />;
   }
@@ -34,6 +36,26 @@ const Row = <T,>({ items, style, gap = 8, renderItem, rowIndex }: RowProps<T>) =
   );
 };
 
-Row.displayName = 'Row';
+const Row = memo(RowComponent, (prevProps, nextProps) => {
+  // Compare props to prevent unnecessary re-renders
+  if (prevProps.rowIndex !== nextProps.rowIndex) return false;
+  if (prevProps.gap !== nextProps.gap) return false;
+  if (prevProps.items !== nextProps.items) return false;
+  if (prevProps.renderItem !== nextProps.renderItem) return false;
+
+  // Compare style values (not object reference)
+  const prevStyle = prevProps.style;
+  const nextStyle = nextProps.style;
+
+  return (
+    prevStyle.position === nextStyle.position &&
+    prevStyle.top === nextStyle.top &&
+    prevStyle.left === nextStyle.left &&
+    prevStyle.width === nextStyle.width &&
+    prevStyle.height === nextStyle.height
+  );
+}) as typeof RowComponent;
+
+Object.assign(Row, { displayName: 'Row' });
 
 export default Row;

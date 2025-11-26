@@ -1,4 +1,4 @@
-import { memo, useState, useCallback } from 'react';
+import { memo, useState, useCallback, useEffect, useRef } from 'react';
 
 import { cn } from '@/utils/cn';
 
@@ -14,13 +14,28 @@ export interface DataCardProps {
 export const DataCard = memo(
   ({ value, onToggle, isFlashing = false, className }: DataCardProps) => {
     const [isSelected, setIsSelected] = useState(false);
+    const timeoutRef = useRef<number | null>(null);
 
     const handleClick = useCallback(() => {
       setIsSelected(true);
       onToggle?.();
 
-      setTimeout(() => setIsSelected(false), 200);
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = window.setTimeout(() => {
+        setIsSelected(false);
+        timeoutRef.current = null;
+      }, 200);
     }, [onToggle]);
+
+    useEffect(() => {
+      return () => {
+        if (timeoutRef.current !== null) {
+          clearTimeout(timeoutRef.current);
+        }
+      };
+    }, []);
 
     return (
       <div
