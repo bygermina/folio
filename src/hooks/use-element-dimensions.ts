@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 type ViewportPosition = { x: number; y: number };
 
@@ -18,7 +18,7 @@ const getElementDimensions = (
 ): Dimensions | null => {
   if (!element) return null;
 
-  const rect = element?.getBoundingClientRect();
+  const rect = element.getBoundingClientRect();
   const containerRect = container?.getBoundingClientRect();
   const offsetLeft = containerRect ? containerRect.left : 0;
   const offsetTop = containerRect ? containerRect.top : 0;
@@ -37,16 +37,15 @@ const getElementDimensions = (
   return dimensions;
 };
 
-const defaultDimensions = {
+const defaultDimensions: Dimensions = {
   width: 0,
   height: 0,
-  viewport: { x: 0, y: 0 },
   bottomLeft: { x: 0, y: 0 },
   center: { x: 0, y: 0 },
   scale: 0,
 };
 
-const EPSILON = 0.01; // Погрешность для сравнения чисел
+const EPSILON = 0.9; // Tolerance for number comparison
 
 const areDimensionsEqual = (a: Dimensions, b: Dimensions): boolean => {
   if (Math.abs(a.width - b.width) > EPSILON) return false;
@@ -59,6 +58,14 @@ const areDimensionsEqual = (a: Dimensions, b: Dimensions): boolean => {
   return true;
 };
 
+// Check if only size-related properties changed (width, height, scale)
+const areSizesEqual = (a: Dimensions, b: Dimensions): boolean => {
+  if (Math.abs(a.width - b.width) > EPSILON) return false;
+  if (Math.abs(a.height - b.height) > EPSILON) return false;
+  if (Math.abs(a.scale - b.scale) > EPSILON) return false;
+  return true;
+};
+
 export const useElementDimensions = (
   elementRef: React.RefObject<HTMLElement | null>,
   isContentReady?: boolean,
@@ -66,10 +73,14 @@ export const useElementDimensions = (
   part: number = 0.5,
   containerRef?: React.RefObject<HTMLElement | null>,
 ) => {
-  const [dimensions, setDimensions] = useState<Dimensions>(structuredClone(defaultDimensions));
+  const [dimensions, setDimensions] = useState<Dimensions>({ ...defaultDimensions });
+  const prevDimensions = useRef<Dimensions>({ ...defaultDimensions });
+  const isInitialized = useRef(false);
 
   useEffect(() => {
     if (!elementRef.current) return;
+
+    isInitialized.current = false;
 
     const updateDimensions = () => {
       const newDimensions = getElementDimensions(
@@ -78,18 +89,28 @@ export const useElementDimensions = (
         part,
         containerRef?.current ?? undefined,
       );
-      const value = newDimensions ?? structuredClone(defaultDimensions);
+      if (!newDimensions) return;
 
-      setDimensions((prevDimensions) => {
-        if (areDimensionsEqual(prevDimensions, value)) {
-          return prevDimensions;
-        }
+      const value = newDimensions;
 
-        return value;
-      });
+      // If dimensions haven't changed at all, skip update
+      if (areDimensionsEqual(prevDimensions.current, value)) {
+        return;
+      }
+
+      // If only positions changed (not sizes), update prevDimensions but don't trigger state update
+      // This prevents re-renders when only scrolling happens
+      const sizesChanged = !areSizesEqual(prevDimensions.current, value);
+      prevDimensions.current = value;
+
+      // Only update state if sizes changed or this is the first update
+      if (sizesChanged || !isInitialized.current) {
+        isInitialized.current = true;
+        setDimensions(value);
+      }
     };
 
-    if (isContentReady !== false) {
+    if (isContentReady ?? true) {
       updateDimensions();
     }
 

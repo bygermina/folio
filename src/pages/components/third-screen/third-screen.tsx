@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { memo, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import { Typography } from '@/components/basic/typography/typography';
@@ -14,11 +14,11 @@ import styles from './third-screen.module.scss';
 const ROW_HEIGHT = 56;
 const GAP = 8;
 
-export const ThirdScreen = () => {
+export const ThirdScreen = memo(() => {
   const sectionRef = useRef<HTMLElement>(null);
   const isVisible = useElementVisible(sectionRef);
   const containerRef = useRef<HTMLDivElement>(null);
-  const dimensions = useElementDimensions(containerRef, true);
+  const containerWidth = useElementDimensions(containerRef, true).width;
   const rowCount = useStore((state) => state.rows.length);
   const itemsPerRow = useStore((state) => state.itemsPerRow);
   const setItemsPerRow = useStore((state) => state.setItemsPerRow);
@@ -39,10 +39,7 @@ export const ThirdScreen = () => {
   useLayoutEffect(() => {
     const container = containerRef.current;
 
-    if (!container) return;
-
-    const containerWidth = container.clientWidth;
-    if (containerWidth <= 0) return;
+    if (!container || containerWidth <= 0) return;
 
     const computedStyle = window.getComputedStyle(container);
     const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
@@ -58,7 +55,7 @@ export const ThirdScreen = () => {
     );
 
     if (calculatedItemsPerRow !== itemsPerRow) setItemsPerRow(calculatedItemsPerRow);
-  }, [dimensions.width, itemsPerRow, setItemsPerRow]);
+  }, [containerWidth, itemsPerRow, setItemsPerRow]);
 
   return (
     <section className={styles.section} ref={sectionRef}>
@@ -105,4 +102,6 @@ export const ThirdScreen = () => {
       </motion.div>
     </section>
   );
-};
+});
+
+ThirdScreen.displayName = 'ThirdScreen';

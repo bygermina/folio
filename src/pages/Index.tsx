@@ -50,7 +50,7 @@ const Index = () => {
               <SecondScreen />
             </Suspense>
           </div>
-          <div id="js-animations1">
+          <div id="data-intensive">
             <Suspense fallback={null}>
               <ThirdScreen />
             </Suspense>

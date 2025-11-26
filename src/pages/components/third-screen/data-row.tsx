@@ -1,9 +1,12 @@
 import { memo, useCallback } from 'react';
 import type { RowComponentProps } from 'react-window';
 
-import Row from '../../../components/virtualized-table/row';
-import { DataCard } from '../../../components/virtualized-table/data-card';
+import Row from '@/components/virtualized-table/row';
+import { DataCard } from '@/components/virtualized-table/data-card';
+
 import { useStore } from './store';
+
+const EMPTY_ARRAY: number[] = [];
 
 const DataRowItem = memo(({ itemId }: { itemId: number }) => {
   const value = useStore((state) => state.entities[itemId]?.value);
@@ -22,7 +25,7 @@ const DataRowItem = memo(({ itemId }: { itemId: number }) => {
 DataRowItem.displayName = 'DataRowItem';
 
 export const DataRow = memo(({ index, style }: RowComponentProps<object>) => {
-  const itemIds = useStore((state) => state.rows[index]) || [];
+  const itemIds = useStore((state) => state.rows[index]) || EMPTY_ARRAY;
   const gap = useStore((state) => state.gap);
 
   const renderItem = useCallback((itemId: number) => <DataRowItem itemId={itemId} />, []);
