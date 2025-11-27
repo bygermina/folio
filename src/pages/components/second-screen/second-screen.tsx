@@ -33,9 +33,13 @@ const DEFAULT_SLIDER_CONFIG = {
   side: 'left' as const,
 };
 
-const TitleSection = () => (
+interface TitleSectionProps {
+  id?: string;
+}
+
+const TitleSection = ({ id }: TitleSectionProps) => (
   <div className={styles.header}>
-    <Typography variant="h2" size="3xl" weight="bold" className={styles.title}>
+    <Typography id={id} variant="h2" size="3xl" weight="bold" className={styles.title}>
       Reusable components with JS animations
     </Typography>
     <Typography variant="body" className={styles.subtitle} color="muted">
@@ -73,6 +77,8 @@ export const SecondScreen = () => {
     side: 'left' | 'right';
   }>(DEFAULT_SLIDER_CONFIG);
 
+  const headingId = 'js-animations-heading';
+
   const renderSlide = useCallback(
     (item: LinkData, index: number, setRef: (el: HTMLElement | null) => void) => (
       <SlideContent key={index} ref={setRef} {...item} />
@@ -81,9 +87,9 @@ export const SecondScreen = () => {
   );
 
   return (
-    <div ref={containerRef} className={styles.root}>
+    <section ref={containerRef} className={styles.root} aria-labelledby={headingId}>
       <div className={styles.content}>
-        <TitleSection />
+        <TitleSection id={headingId} />
         <SliderControls
           onUpdate={setSliderConfig}
           initialSlides={DEFAULT_SLIDER_CONFIG.slides}
@@ -112,6 +118,6 @@ export const SecondScreen = () => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };

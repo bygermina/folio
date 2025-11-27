@@ -31,7 +31,7 @@ const Index = () => {
       <div className={styles.root}>
         <CodeBackground className={styles.codeBackground} />
         <LightFollowCoursor />
-        <div className={styles.scrollContainer}>
+        <main className={styles.scrollContainer}>
           <SvgScrollDraw
             path={rawPath}
             scrollStart={0}
@@ -42,21 +42,21 @@ const Index = () => {
             strokeColor="var(--color-blue-400)"
             showSparkle
           />
-          <div id="home">
+          <section id="home">
             <FirstScreen />
-          </div>
-          <div id="js-animations">
+          </section>
+          <section id="js-animations">
             <Suspense fallback={null}>
               <SecondScreen />
             </Suspense>
-          </div>
-          <div id="data-intensive">
+          </section>
+          <section id="data-intensive">
             <Suspense fallback={null}>
               <ThirdScreen />
             </Suspense>
-          </div>
+          </section>
           <Footer />
-        </div>
+        </main>
       </div>
     </ScreenSizeProvider>
   );

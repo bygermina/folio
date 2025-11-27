@@ -1,5 +1,6 @@
-import type { ReactNode, MouseEvent } from 'react';
+import type { ReactNode, MouseEvent, KeyboardEvent } from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
+
 import { cn } from '@/utils/cn';
 
 import styles from './scroll.module.scss';
@@ -20,20 +21,24 @@ export const Scroll = ({
   children,
   ...props
 }: ScrollProps) => {
-  const scrollToNext = (e: MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const scrollToNext = (event: MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
 
     const targetSection = document.getElementById(targetSectionId);
-    if (targetSection) {
-      const elementPosition = targetSection.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY;
+    if (!targetSection) return;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
-    }
+    const elementPosition = targetSection.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.scrollY;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth',
+    });
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') scrollToNext(event as unknown as MouseEvent<HTMLDivElement>);
   };
 
   return (
@@ -44,7 +49,13 @@ export const Scroll = ({
       className={cn(styles.root, className)}
       {...props}
     >
-      <div className={styles.buttonWrapper} onClick={scrollToNext}>
+      <div
+        role="button"
+        tabIndex={0}
+        className={styles.buttonWrapper}
+        onClick={scrollToNext}
+        onKeyDown={handleKeyDown}
+      >
         {children}
         {label && <span className={styles.label}>{label}</span>}
         {arrow && (

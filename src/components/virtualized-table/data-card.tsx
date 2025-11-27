@@ -1,4 +1,4 @@
-import { memo, useState, useCallback } from 'react';
+import { memo, useState, useCallback, type KeyboardEvent } from 'react';
 
 import { cn } from '@/utils/cn';
 import { useTimeout } from '@/utils/animation-helpers';
@@ -16,10 +16,17 @@ export const DataCard = memo(
   ({ value, onToggle, isFlashing = false, className }: DataCardProps) => {
     const [isSelected, setIsSelected] = useState(false);
 
-    const handleClick = useCallback(() => {
+    const handleActivate = useCallback(() => {
       setIsSelected(true);
       onToggle?.();
     }, [onToggle]);
+
+    const handleKeyDown = useCallback(
+      (event: KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter' || event.key === ' ') handleActivate();
+      },
+      [handleActivate],
+    );
 
     useTimeout(
       () => {
@@ -36,7 +43,11 @@ export const DataCard = memo(
           isFlashing && styles.dataCardFlash,
           className,
         )}
-        onClick={handleClick}
+        role="button"
+        tabIndex={0}
+        aria-pressed={isSelected}
+        onClick={handleActivate}
+        onKeyDown={handleKeyDown}
       >
         {value}
       </div>

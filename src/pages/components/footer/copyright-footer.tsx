@@ -10,7 +10,7 @@ export const Footer = () => {
   if (isPortrait) return null;
 
   return (
-    <div className={styles.footer}>
+    <footer className={styles.footer}>
       <motion.p
         className={styles.footerText}
         initial={{ opacity: 0 }}
@@ -19,6 +19,6 @@ export const Footer = () => {
       >
         © {new Date().getFullYear()} Xenia Liubachka. All rights reserved.
       </motion.p>
-    </div>
+    </footer>
   );
 };

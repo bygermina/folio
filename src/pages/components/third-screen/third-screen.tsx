@@ -57,14 +57,16 @@ export const ThirdScreen = memo(() => {
     if (calculatedItemsPerRow !== itemsPerRow) setItemsPerRow(calculatedItemsPerRow);
   }, [containerWidth, itemsPerRow, setItemsPerRow]);
 
+  const headingId = 'data-intensive-heading';
+
   return (
-    <section className={styles.section} ref={sectionRef}>
+    <section className={styles.section} ref={sectionRef} aria-labelledby={headingId}>
       <motion.div
         initial={{ opacity: 0, y: 30, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
       >
-        <Typography variant="h1" className={styles.heading}>
+        <Typography id={headingId} variant="h1" className={styles.heading}>
           Data intensive
         </Typography>
       </motion.div>
