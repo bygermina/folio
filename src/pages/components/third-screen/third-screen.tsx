@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Typography } from '@/components/basic/typography/typography';
 import VirtualizedTable from '@//components/virtualized-table/virtualized-table';
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
-import { useElementVisible } from '@/hooks/use-element-visible';
+import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
 import { DataRow } from './data-row';
 import { useStore } from './store';
@@ -16,7 +16,7 @@ const GAP = 8;
 
 export const ThirdScreen = memo(() => {
   const sectionRef = useRef<HTMLElement>(null);
-  const isVisible = useElementVisible(sectionRef);
+  const isVisible = useIntersectionObserver(sectionRef, { threshold: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useElementDimensions(containerRef, true).width;
   const rowCount = useStore((state) => state.rows.length);

@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+
+import { useAnimationFrame } from '@/utils/animation-helpers';
 
 interface CountUpProps {
   end: number;
@@ -8,33 +10,33 @@ interface CountUpProps {
 
 export const CountUp = ({ end, duration = 2000, start = true }: CountUpProps) => {
   const [count, setCount] = useState(0);
+  const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (start) {
+      startTimeRef.current = null;
+      setCount(0);
+    }
+  }, [start, end, duration]);
+
+  useAnimationFrame(() => {
     if (!start) return;
 
-    let startTime: number | null = null;
-    let animationFrame: number;
+    if (startTimeRef.current === null) {
+      startTimeRef.current = performance.now();
+      return;
+    }
 
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = timestamp - startTime;
+    const progress = performance.now() - startTimeRef.current;
+    const percentage = Math.min(progress / duration, 1);
+    const easeOut = percentage === 1 ? 1 : 1 - Math.pow(2, -10 * percentage);
 
-      const percentage = Math.min(progress / duration, 1);
-      const easeOut = percentage === 1 ? 1 : 1 - Math.pow(2, -10 * percentage);
+    setCount(Math.floor(end * easeOut));
 
-      setCount(Math.floor(end * easeOut));
-
-      if (progress < duration) {
-        animationFrame = requestAnimationFrame(animate);
-      } else {
-        setCount(end);
-      }
-    };
-
-    animationFrame = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(animationFrame);
-  }, [end, duration, start]);
+    if (percentage >= 1) {
+      setCount(end);
+    }
+  }, start);
 
   return <>{count.toLocaleString()}</>;
 };

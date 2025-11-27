@@ -1,5 +1,8 @@
 import { memo } from 'react';
 
+import { compareReactWindowStyle } from '@/utils/react-window-helpers';
+import { setDisplayName } from '@/utils/react-helpers';
+
 import styles from './row.module.scss';
 
 export interface RowProps<T = unknown> {
@@ -44,18 +47,9 @@ const Row = memo(RowComponent, (prevProps, nextProps) => {
   if (prevProps.renderItem !== nextProps.renderItem) return false;
 
   // Compare style values (not object reference)
-  const prevStyle = prevProps.style;
-  const nextStyle = nextProps.style;
-
-  return (
-    prevStyle.position === nextStyle.position &&
-    prevStyle.top === nextStyle.top &&
-    prevStyle.left === nextStyle.left &&
-    prevStyle.width === nextStyle.width &&
-    prevStyle.height === nextStyle.height
-  );
+  return compareReactWindowStyle(prevProps.style, nextProps.style);
 }) as typeof RowComponent;
 
-Object.assign(Row, { displayName: 'Row' });
+setDisplayName(Row, 'Row');
 
 export default Row;

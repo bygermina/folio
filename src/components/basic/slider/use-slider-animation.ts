@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { useElementVisible } from '@/hooks/use-element-visible';
+import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
+
 import { applyTransform } from './slider-transform.utils';
 
 export type Side = 'left' | 'right';
@@ -28,7 +29,7 @@ export const useSliderAnimation = ({
 }: UseSliderAnimationParams): UseSliderAnimationReturn => {
   const [isCircularAnimationPaused, setCircularAnimationPaused] = useState(false);
 
-  const isVisible = useElementVisible(containerRef);
+  const isVisible = useIntersectionObserver(containerRef, { threshold: 0 });
 
   useEffect(() => {
     setCircularAnimationPaused(!isVisible);

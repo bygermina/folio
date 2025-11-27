@@ -14,11 +14,3 @@
   width: auto;
   height: 100%;
 }
-
-.sparkle {
-  fill: rgba(59, 130, 246, 0.6); // синий с прозрачностью
-  stroke: none;
-  filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.8)) drop-shadow(0 0 10px rgba(59, 130, 246, 0.6));
-  transform-origin: center;
-  animation: sparklePulse 1.2s ease-in-out infinite;
-}

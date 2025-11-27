@@ -2,6 +2,7 @@ import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { animate, motion, useMotionValue, useScroll, useTransform } from 'framer-motion';
 
 import { Sparkle, SparkleDefs } from './sparkle';
+
 import styles from './scroll-path.module.scss';
 
 interface SvgScrollDrawProps {
