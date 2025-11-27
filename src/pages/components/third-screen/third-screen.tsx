@@ -1,4 +1,4 @@
-import { memo, useEffect, useLayoutEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import { Typography } from '@/components/basic/typography/typography';
@@ -36,7 +36,7 @@ export const ThirdScreen = memo(() => {
     };
   }, [isVisible, triggerRandomFlash]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const container = containerRef.current;
 
     if (!container || containerWidth <= 0) return;

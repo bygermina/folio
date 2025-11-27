@@ -395,7 +395,11 @@ const endColor = [51, 65, 85]; // slate-700
 
 const CodeBackground = ({ className }: { className?: string }) => {
   return (
-    <div className={cn(styles.root, className)}>
+    <div
+      className={cn(styles.root, className)}
+      aria-hidden="true"
+      role="presentation"
+    >
       <div className={styles.container}>
         <div className={styles.grid}>
           {codeColumns.map((column, columnIndex) => (
