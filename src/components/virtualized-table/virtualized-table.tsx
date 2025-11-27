@@ -30,6 +30,7 @@ const VirtualizedTable = ({
         rowCount={rowCount}
         rowHeight={rowHeight}
         rowProps={{}}
+        {...{ role: 'presentation' }}
         style={{ width: '100%', height }}
       />
     </div>

@@ -29,9 +29,14 @@ const Index = () => {
   return (
     <ScreenSizeProvider>
       <div className={styles.root}>
-        <CodeBackground className={styles.codeBackground} />
-        <LightFollowCoursor />
-        <main className={styles.scrollContainer}>
+        <a href="#main-content" className={styles.skipLink}>
+          Skip to main content
+        </a>
+        <div aria-hidden="true">
+          <CodeBackground className={styles.codeBackground} />
+          <LightFollowCoursor />
+        </div>
+        <main id="main-content" className={styles.scrollContainer}>
           <SvgScrollDraw
             path={rawPath}
             scrollStart={0}

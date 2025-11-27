@@ -77,7 +77,13 @@ export const SliderControls = ({
     <>
       <WithVibration>
         <div className={styles.root}>
-          <Button variant="magic" onClick={() => setIsOpen(!isOpen)} className={styles.button}>
+          <Button
+            variant="magic"
+            onClick={() => setIsOpen(!isOpen)}
+            className={styles.button}
+            aria-expanded={isOpen}
+            aria-controls="slider-configuration-panel"
+          >
             {isOpen ? '✕ Close' : '⚙️ Configure Slider'}
           </Button>
         </div>
@@ -90,6 +96,10 @@ export const SliderControls = ({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 300 }}
             className={styles.panel}
+            role="dialog"
+            aria-modal="false"
+            aria-labelledby="slider-configuration-title"
+            id="slider-configuration-panel"
           >
             <Typography
               variant="h3"
@@ -97,6 +107,7 @@ export const SliderControls = ({
               weight="bold"
               color="primary"
               className={styles.title}
+              id="slider-configuration-title"
             >
               Slider Configuration
             </Typography>

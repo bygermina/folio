@@ -1,19 +1,19 @@
-import { memo } from 'react';
+import { memo, type ReactNode, type CSSProperties } from 'react';
 
 import { compareReactWindowStyle } from '@/utils/react-window-helpers';
 import { setDisplayName } from '@/utils/react-helpers';
 
 import styles from './row.module.scss';
 
-export interface RowProps<T = unknown> {
-  items: T[];
-  style: React.CSSProperties;
+export interface RowProps {
+  items: unknown[];
+  style: CSSProperties;
   gap?: number;
-  renderItem: (item: T) => React.ReactNode;
+  renderItem: (item: unknown) => ReactNode;
   rowIndex: number;
 }
 
-const RowComponent = <T,>({ items, style, gap = 8, renderItem, rowIndex }: RowProps<T>) => {
+const RowComponent = ({ items, style, gap = 8, renderItem, rowIndex }: RowProps) => {
   if (!items?.length) {
     return <div className={styles.row} style={style} />;
   }
@@ -29,7 +29,7 @@ const RowComponent = <T,>({ items, style, gap = 8, renderItem, rowIndex }: RowPr
           ...style,
           '--row-gap': `${gap}px`,
           '--card-size': `${cardSize}px`,
-        } as React.CSSProperties
+        } as CSSProperties
       }
     >
       {items.map((item, index) => (
@@ -39,17 +39,15 @@ const RowComponent = <T,>({ items, style, gap = 8, renderItem, rowIndex }: RowPr
   );
 };
 
-const Row = memo(RowComponent, (prevProps, nextProps) => {
-  // Compare props to prevent unnecessary re-renders
+const Row = memo<RowProps>(RowComponent, (prevProps, nextProps) => {
   if (prevProps.rowIndex !== nextProps.rowIndex) return false;
   if (prevProps.gap !== nextProps.gap) return false;
   if (prevProps.items !== nextProps.items) return false;
   if (prevProps.renderItem !== nextProps.renderItem) return false;
 
-  // Compare style values (not object reference)
   return compareReactWindowStyle(prevProps.style, nextProps.style);
-}) as typeof RowComponent;
+});
 
-setDisplayName(Row, 'Row');
+setDisplayName(Row as React.ComponentType<unknown>, 'Row');
 
 export default Row;

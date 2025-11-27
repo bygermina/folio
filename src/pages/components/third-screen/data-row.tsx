@@ -33,7 +33,10 @@ export const DataRow = memo(({ index, style }: RowComponentProps<object>) => {
   const rows = useStore((state) => state.rows);
   const itemIds = useMemo(() => rows[index] ?? EMPTY_ARRAY, [rows, index]);
 
-  const renderItem = useCallback((itemId: number) => <DataRowItem itemId={itemId} />, []);
+  const renderItem = useCallback(
+    (itemId: unknown) => <DataRowItem itemId={itemId as number} />,
+    [],
+  );
 
   if (!itemIds?.length) {
     return <div style={style} />;
