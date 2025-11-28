@@ -1,0 +1,23 @@
+@use '../../../styles/design-system' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: spacing(2);
+}
+
+.item {
+  border-radius: radius(md);
+  background-color: rgba(from var(--color-slate-900) r g b / 0.8);
+  border: 1px solid rgba(from var(--color-slate-700) r g b / 0.8);
+  overflow: hidden;
+}
+
+.headerTitle {
+  font-weight: 600;
+}
+
+.panel {
+  padding: 0 spacing(3) spacing(3);
+  overflow: hidden;
+}
