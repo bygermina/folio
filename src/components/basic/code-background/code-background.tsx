@@ -385,49 +385,18 @@ const codeColumns = [
   ],
 ];
 
-const getColorValue = (startColor: number[], endColor: number[], t: number, channel: number) =>
-  Math.round(startColor[channel] * (1 - t) + endColor[channel] * t);
-
-// Code gradient colors: blue-500 to slate-700
-// Values from design system tokens
-const startColor = [59, 130, 246]; // blue-500
-const endColor = [51, 65, 85]; // slate-700
-
 const CodeBackground = ({ className }: { className?: string }) => {
   return (
-    <div
-      className={cn(styles.root, className)}
-      aria-hidden="true"
-      role="presentation"
-    >
+    <div className={cn(styles.root, className)} aria-hidden="true" role="presentation">
       <div className={styles.container}>
         <div className={styles.grid}>
           {codeColumns.map((column, columnIndex) => (
             <div key={columnIndex} className={styles.column}>
-              {column.map((line, lineIndex) => {
-                const t = (lineIndex + columnIndex * 0.3) / (column.length - 1);
-
-                const r = getColorValue(startColor, endColor, t, 0);
-                const g = getColorValue(startColor, endColor, t, 1);
-                const b = getColorValue(startColor, endColor, t, 2);
-
-                const fontSize = 1.1 - t * 0.3; // from 1.1em to 0.8em
-                const opacity = 0.8 - t * 0.4; // from 0.8 to 0.4
-
-                return (
-                  <div
-                    key={lineIndex}
-                    className={styles.line}
-                    style={{
-                      color: `rgba(${r}, ${g}, ${b}, 0.32)`,
-                      fontSize: `${fontSize}em`,
-                      opacity,
-                    }}
-                  >
-                    {line.text}
-                  </div>
-                );
-              })}
+              {column.map((line, lineIndex) => (
+                <div key={lineIndex} className={styles.line}>
+                  {line.text}
+                </div>
+              ))}
             </div>
           ))}
         </div>
