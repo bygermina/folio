@@ -15,12 +15,12 @@ const positionClasses = {
   'bottom-right': 'bottom-4 right-4',
 };
 
-export const PathControls: React.FC<PathControlsProps> = ({
+export const PathControls = ({
   path,
   pointsCount,
   onClear,
   position = 'top-right',
-}) => {
+}: PathControlsProps) => {
   const [copySuccess, setCopySuccess] = useState(false);
 
   const handleCopy = async () => {

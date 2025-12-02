@@ -58,7 +58,6 @@ export const AccordionItem = ({ title, children, className, defaultOpen }: Accor
         onClick={handleToggle}
         icon="▸"
         isIconRotated={isOpen}
-        className={styles.headerButton}
       >
         <span className={styles.headerTitle}>{title}</span>
       </IconButton>

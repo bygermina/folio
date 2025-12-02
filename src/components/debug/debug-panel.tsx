@@ -24,11 +24,7 @@ const positionClasses = {
   'bottom-right': 'bottom-4 right-4',
 };
 
-export const DebugPanel: React.FC<DebugPanelProps> = ({
-  title,
-  sections,
-  position = 'bottom-left',
-}) => {
+export const DebugPanel = ({ title, sections, position = 'bottom-left' }: DebugPanelProps) => {
   const [copySuccess, setCopySuccess] = useState(false);
 
   const handleCopy = async () => {

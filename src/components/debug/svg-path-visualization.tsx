@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SVGPathVisualizationProps {
   paths?: string[];
   color?: string;
@@ -9,13 +7,13 @@ interface SVGPathVisualizationProps {
   viewBox?: string;
 }
 
-export const SVGPathVisualization: React.FC<SVGPathVisualizationProps> = ({
+export const SVGPathVisualization = ({
   paths,
   color = 'red',
   strokeWidth = 2,
   opacity = 0.5,
   viewBox,
-}) => {
+}: SVGPathVisualizationProps) => {
   if (!paths?.length) return null;
 
   const defaultViewBox = viewBox || `0 0 ${window.innerWidth} ${window.innerHeight}`;

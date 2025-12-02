@@ -1,1 +1,1 @@
-export { WithVibration, type VibrationProps } from './vibration';
+export { WithVibration, type WithVibrationProps } from './vibration';

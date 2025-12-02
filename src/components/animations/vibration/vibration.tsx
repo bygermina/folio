@@ -3,14 +3,12 @@ import { motion } from 'framer-motion';
 
 import { useEvent } from '@/hooks/use-event';
 
-import styles from './vibration.module.scss';
-
-export interface VibrationProps {
+export interface WithVibrationProps {
   children: React.ReactNode;
   startEvent?: string;
 }
 
-export const WithVibration = ({ startEvent, children }: VibrationProps) => {
+export const WithVibration = ({ startEvent, children }: WithVibrationProps) => {
   const [isVibrating, setIsVibrating] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +23,6 @@ export const WithVibration = ({ startEvent, children }: VibrationProps) => {
   return (
     <motion.div
       ref={containerRef}
-      className={styles.container}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       animate={

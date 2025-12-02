@@ -26,7 +26,7 @@ interface CSSPathMotionProps {
   onComplete?: () => void;
 }
 
-export const CSSPathMotion: React.FC<CSSPathMotionProps> = ({
+export const CSSPathMotion = ({
   path,
   children,
   duration = 3,
@@ -40,7 +40,7 @@ export const CSSPathMotion: React.FC<CSSPathMotionProps> = ({
   speed,
   onCompleteEvent,
   onComplete,
-}) => {
+}: CSSPathMotionProps) => {
   const motionRef = useRef<HTMLDivElement>(null);
   const computedDurationRef = useRef<number>(duration);
 
