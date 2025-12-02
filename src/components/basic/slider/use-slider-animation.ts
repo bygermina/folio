@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
+import { useAnimationFrame } from '@/utils/animation-helpers';
 
 import { applyTransform } from './slider-transform.utils';
 
@@ -31,39 +32,13 @@ export const useSliderAnimation = ({
 
   const isVisible = useIntersectionObserver(containerRef, { threshold: 0 });
 
-  useEffect(() => {
-    setCircularAnimationPaused(!isVisible);
-  }, [isVisible]);
+  const isAnimationActive = isVisible && !isCircularAnimationPaused && !!speed;
 
-  useEffect(() => {
-    let animationFrameId: number | null = null;
-
-    const animate = () => {
-      if (isCircularAnimationPaused || !speed) {
-        if (animationFrameId) {
-          cancelAnimationFrame(animationFrameId);
-          animationFrameId = null;
-        }
-        return;
-      }
-
-      const delta = side === 'left' ? -speed : speed;
-      translateX.current = updatePositions(translateX.current, delta);
-      applyTransform(slides, translateX.current);
-
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    if (!isCircularAnimationPaused && speed) {
-      animationFrameId = requestAnimationFrame(animate);
-    }
-
-    return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-    };
-  }, [isCircularAnimationPaused, side, speed, translateX, slides, updatePositions]);
+  useAnimationFrame(() => {
+    const delta = side === 'left' ? -speed! : speed!;
+    translateX.current = updatePositions(translateX.current, delta);
+    applyTransform(slides, translateX.current);
+  }, isAnimationActive);
 
   return { setCircularAnimationPaused };
 };

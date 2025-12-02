@@ -26,6 +26,7 @@ export const RouteDrawer = ({ predefinedPath, onRouteDrawn }: RouteDrawerProps) 
 
     window.addEventListener('keydown', handleKey);
     window.addEventListener('keyup', handleKey);
+
     return () => {
       window.removeEventListener('keydown', handleKey);
       window.removeEventListener('keyup', handleKey);
