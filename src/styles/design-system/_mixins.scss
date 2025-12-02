@@ -98,3 +98,8 @@
     }
   }
 }
+
+@mixin fade-in($duration: 0.8s, $delay: 0s) {
+  opacity: 0;
+  animation: fadeIn $duration $delay forwards;
+}

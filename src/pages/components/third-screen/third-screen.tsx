@@ -1,10 +1,10 @@
 import { memo, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 
 import { Typography } from '@/components/basic/typography/typography';
 import VirtualizedTable from '@//components/virtualized-table/virtualized-table';
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
+import { Card } from '@/components/basic/card/card';
 
 import { DataRow } from './data-row';
 import { useStore } from './store';
@@ -60,49 +60,37 @@ export const ThirdScreen = memo(() => {
   const headingId = 'data-intensive-heading';
 
   return (
-    <section className={styles.section} ref={sectionRef} aria-labelledby={headingId}>
-      <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.9 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-      >
+    <div className={styles.section} ref={sectionRef} aria-labelledby={headingId}>
+      <div className={styles.headingWrapper}>
         <Typography id={headingId} variant="h1" className={styles.heading}>
           Data intensive
         </Typography>
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 3.5 }}
-      >
+      <div className={styles.subheadingWrapper}>
         <Typography variant="subheading" className={styles.subheading} color="muted">
           <Typography as="span" variant="body" color="primary" weight="medium">
             Issue:
           </Typography>{' '}
           Rendering {rowCount * itemsPerRow} data points
         </Typography>
-      </motion.div>
+      </div>
 
-      <motion.div
-        ref={containerRef}
-        className={styles.dataContainer}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-      >
-        {rowCount > 0 ? (
-          <VirtualizedTable
-            rowCount={rowCount}
-            rowComponent={DataRow}
-            rowHeight={ROW_HEIGHT}
-            height={600}
-          />
-        ) : (
-          <div className={styles.loading}>Loading data...</div>
-        )}
-      </motion.div>
-    </section>
+      <Card>
+        <div ref={containerRef} className={`${styles.dataContainer} ${styles.dataContainerWrapper}`}>
+          {rowCount > 0 ? (
+            <VirtualizedTable
+              rowCount={rowCount}
+              rowComponent={DataRow}
+              rowHeight={ROW_HEIGHT}
+              height={600}
+            />
+          ) : (
+            <div className={styles.loading}>Loading data...</div>
+          )}
+        </div>
+      </Card>
+    </div>
   );
 });
 

@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
 import { TypeText } from '@/components/animations/text/type-text';
@@ -20,8 +19,15 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
   const { screenMode, containerScreenMode } = useScreenSizeContext();
 
   useEffect(() => {
-    return () => onContentReady?.(false);
-  }, []);
+    const timer = setTimeout(() => {
+      onContentReady?.(true);
+    }, 5800); // 5s delay + 0.8s duration
+
+    return () => {
+      clearTimeout(timer);
+      onContentReady?.(false);
+    };
+  }, [onContentReady]);
 
   return (
     <div className={cn(styles.container, styles[`container${containerScreenMode}`])}>
@@ -41,12 +47,7 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
           delay={3.0}
         />
       </Typography>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 5.0 }}
-        onAnimationComplete={() => onContentReady?.(true)}
-      >
+      <div className={styles.subtitleWrapper}>
         <Typography
           variant="subheading"
           className={cn(styles.subtitle, styles[`subheading${screenMode}`])}
@@ -54,19 +55,14 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
         >
           Xenia Liubachka • interactive portfolio
         </Typography>
-      </motion.div>
-      <motion.div
-        className={cn(styles.actions, styles[`actions${screenMode}`])}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 8 }}
-      >
+      </div>
+      <div className={cn(styles.actions, styles[`actions${screenMode}`], styles.actionsWrapper)}>
         <Scroll targetSectionId="js-animations">
           <WithVibration startEvent="starAnimationComplete">
             <Button variant="magic">Explore what I can do for your project</Button>
           </WithVibration>
         </Scroll>
-      </motion.div>
+      </div>
     </div>
   );
 };

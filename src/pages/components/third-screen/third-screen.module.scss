@@ -32,10 +32,26 @@
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: spacing(4);
-  border-radius: radius(lg);
-  background-color: rgba(from var(--color-slate-800) r g b / 0.3);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(from var(--color-slate-600) r g b / 0.2);
-  box-sizing: border-box;
+}
+
+.headingWrapper {
+  @include fade-in(0.8s, 0.3s);
+  transform: translateY(30px) scale(0.9);
+  animation:
+    fadeIn 0.8s 0.3s forwards,
+    slideUpScale 0.8s 0.3s forwards;
+}
+
+.subheadingWrapper {
+  @include fade-in(0.8s, 3.5s);
+}
+
+.dataContainerWrapper {
+  @include fade-in(1s, 1s);
+}
+
+@keyframes slideUpScale {
+  to {
+    transform: translateY(0) scale(1);
+  }
 }

@@ -9,5 +9,6 @@
   &Text {
     @include typography(sm);
     color: var(--color-slate-500);
+    @include fade-in(0.8s, 1s);
   }
 }

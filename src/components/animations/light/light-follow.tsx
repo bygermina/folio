@@ -21,7 +21,6 @@ const LightFollowCoursor = () => {
       lastY.current = e.clientY;
     };
 
-    // Initial position
     if (typeof window !== 'undefined') {
       lastX.current = window.innerWidth / 2;
       lastY.current = window.innerHeight / 2;

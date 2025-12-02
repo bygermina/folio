@@ -6,10 +6,7 @@ import { useScreenSize } from '@/hooks/use-screen-size';
 import styles from './particles.module.scss';
 
 export const Particles = () => {
-  const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const { isMobile } = useScreenSize();
 

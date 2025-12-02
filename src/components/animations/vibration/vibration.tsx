@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
-import { useEvent } from '@/hooks/use-event';
 import { motion } from 'framer-motion';
+
+import { useEvent } from '@/hooks/use-event';
 
 import styles from './vibration.module.scss';
 
