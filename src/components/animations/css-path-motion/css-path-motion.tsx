@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 
 import { getPathLength } from '@/utils/svg';
+
 import styles from './css-path-motion.module.scss';
 
 const getDurationFromSpeed = (fallbackSeconds: number, speed?: number, length?: number): number => {

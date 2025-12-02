@@ -22,8 +22,8 @@ const LightFollowCoursor = () => {
     };
 
     if (typeof window !== 'undefined') {
-      lastX.current = window.innerWidth / 2;
-      lastY.current = window.innerHeight / 2;
+      lastX.current = window.innerWidth + SIZE;
+      lastY.current = window.innerHeight + SIZE;
     }
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
