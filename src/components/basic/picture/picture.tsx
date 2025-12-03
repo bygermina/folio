@@ -36,12 +36,12 @@ export const Picture = forwardRef<HTMLImageElement, PictureProps>(
               sizes={source.sizes}
             />
           ))}
-          <img {...imgCommonProps} />
+          <img {...imgCommonProps} alt={alt} />
         </picture>
       );
     }
 
-    return <img {...imgCommonProps} srcSet={srcSet} sizes={sizes} />;
+    return <img {...imgCommonProps} alt={alt} srcSet={srcSet} sizes={sizes} />;
   },
 );
 
