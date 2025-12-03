@@ -3,6 +3,7 @@ export { BarChart } from './bar-chart';
 export { PieChart } from './pie-chart';
 export { ScatterChart } from './scatter-chart';
 export { MultiLineChart } from './multi-line-chart';
+export { ChartContainer } from './chart-container';
 export type {
   DataPoint,
   BarDataPoint,

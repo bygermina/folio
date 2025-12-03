@@ -1,12 +1,10 @@
 @import './styles/design-system/_css-variables.scss';
 @import './styles/glass-text.css';
 
-/* Custom styles */
 html {
   scroll-behavior: smooth;
 }
 
-/* Surface transparent - переиспользуемый класс для рамок */
 .surface-transparent {
   border: 1px solid rgba(from var(--color-blue-500) r g b / 0.5);
   border-radius: var(--radius-sm);
@@ -30,7 +28,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Кастомный скроллбар в темном стиле */
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(from var(--color-slate-600) r g b / 0.6)
@@ -59,18 +56,4 @@ body {
 
 *::-webkit-scrollbar-thumb:active {
   background: rgba(from var(--color-cyan-400) r g b / 0.6);
-}
-
-/* Animations */
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 30s linear infinite;
 }
