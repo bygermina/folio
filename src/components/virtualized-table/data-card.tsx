@@ -39,8 +39,8 @@ export const DataCard = memo(
       <div
         className={cn(
           styles.dataCard,
-          isSelected && styles.dataCardSelected,
-          isFlashing && styles.dataCardFlash,
+          { [styles.dataCardSelected]: isSelected },
+          { [styles.dataCardFlash]: isFlashing },
           className,
         )}
         role="button"
