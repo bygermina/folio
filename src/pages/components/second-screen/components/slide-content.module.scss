@@ -20,7 +20,7 @@
     box-shadow transition(base);
   padding: spacing(1);
   cursor: grab;
-  color: var(--slider-color, var(--color-blue-500));
+  color: var(--slider-color, var(--color-blue-400));
   box-sizing: border-box;
   border-radius: radius(md);
   position: relative;
@@ -70,13 +70,13 @@
 
 .icon {
   display: block;
-  color: var(--slider-color, var(--color-blue-500));
+  color: var(--slider-color, var(--color-blue-400));
 }
 
 .text {
   flex-basis: 200px;
   flex-shrink: 1;
-  color: var(--slider-color, var(--color-blue-500));
+  color: var(--slider-color, var(--color-blue-400));
   word-wrap: break-word;
   overflow-wrap: break-word;
   transition: text-shadow transition(base);

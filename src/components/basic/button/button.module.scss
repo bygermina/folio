@@ -45,25 +45,25 @@
 .magic {
   border: 1px solid var(--color-cyan-400-40);
   box-shadow:
-    0 10px 15px -3px var(--color-cyan-500-25),
-    0 4px 6px -2px var(--color-cyan-500-5);
+    0 10px 15px -3px var(--color-cyan-400-25),
+    0 4px 6px -2px var(--color-cyan-400-5);
 
   &:hover {
     transform: scale(1.05);
     border-color: var(--color-cyan-300-60);
-    background-color: var(--color-cyan-500-5);
+    background-color: var(--color-cyan-400-5);
     box-shadow:
       0 20px 25px -5px var(--color-cyan-400-35),
-      0 10px 10px -5px var(--color-cyan-500-5);
+      0 10px 10px -5px var(--color-cyan-400-5);
   }
 }
 
 .transparent {
-  border: 1px solid var(--color-blue-500-50);
+  border: 1px solid var(--color-blue-400-50);
 
   &:hover {
-    border-color: var(--color-blue-500);
-    background-color: var(--color-blue-500-10);
+    border-color: var(--color-blue-400);
+    background-color: var(--color-blue-400-10);
   }
 
   &:focus-visible {
@@ -84,7 +84,7 @@
   @include transition-properties(color, background-color, border-color);
 
   &Active {
-    background-color: var(--color-cyan-500-20);
+    background-color: var(--color-cyan-400-20);
     border-color: var(--color-cyan-400);
     color: var(--color-cyan-300);
   }

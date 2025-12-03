@@ -6,7 +6,7 @@ html {
 }
 
 .surface-transparent {
-  border: 1px solid rgba(from var(--color-blue-500) r g b / 0.5);
+  border: 1px solid rgba(from var(--color-blue-400) r g b / 0.5);
   border-radius: var(--radius-sm);
   transition:
     border-color var(--transition-base),
@@ -14,8 +14,8 @@ html {
 }
 
 .surface-transparent:hover {
-  border-color: var(--color-blue-500);
-  background-color: rgba(from var(--color-blue-500) r g b / 0.1);
+  border-color: var(--color-blue-400);
+  background-color: rgba(from var(--color-blue-400) r g b / 0.1);
 }
 
 .surface-transparent:focus-visible {

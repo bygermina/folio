@@ -4,6 +4,7 @@ import Index from './pages/Index';
 
 const App = () => {
   const basename = import.meta.env.BASE_URL.replace(/\/$/, '');
+
   return (
     <BrowserRouter basename={basename}>
       <Routes>

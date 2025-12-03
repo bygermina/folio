@@ -2,7 +2,7 @@
   background: linear-gradient(
     135deg,
     rgba(from var(--color-white) r g b / 0.8) 0%,
-    rgba(from var(--color-blue-500) r g b / 0.9) 25%,
+    rgba(from var(--color-blue-400) r g b / 0.9) 25%,
     rgba(from var(--color-cyan-400) r g b / 0.8) 35%,
     rgba(from var(--color-white) r g b / 1) 50%,
     rgba(from var(--color-cyan-400) r g b / 0.8) 65%,
@@ -13,7 +13,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(from var(--color-blue-500) r g b / 0.4))
+  filter: drop-shadow(0 0 10px rgba(from var(--color-blue-400) r g b / 0.4))
     drop-shadow(0 0 20px rgba(from var(--color-cyan-400) r g b / 0.3));
   -webkit-text-stroke: 0.5px rgba(from var(--color-white) r g b / 0.2);
   animation: glass-shine 7s ease-in-out infinite;
@@ -24,7 +24,7 @@
   background: linear-gradient(
     135deg,
     rgba(from var(--color-white) r g b / 0.8) 0%,
-    rgba(from var(--color-blue-500) r g b / 0.9) 25%,
+    rgba(from var(--color-blue-400) r g b / 0.9) 25%,
     rgba(from var(--color-cyan-400) r g b / 0.8) 50%,
     rgba(from var(--color-purple-500) r g b / 0.9) 75%,
     rgba(from var(--color-white) r g b / 0.7) 100%
@@ -32,7 +32,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(from var(--color-blue-500) r g b / 0.4))
+  filter: drop-shadow(0 0 10px rgba(from var(--color-blue-400) r g b / 0.4))
     drop-shadow(0 0 20px rgba(from var(--color-cyan-400) r g b / 0.3));
   -webkit-text-stroke: 0.5px rgba(from var(--color-white) r g b / 0.2);
   position: relative;

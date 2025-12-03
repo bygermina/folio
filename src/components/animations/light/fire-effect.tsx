@@ -11,7 +11,7 @@ interface FireEffectProps {
 }
 
 const colors = {
-  blue: 'var(--color-blue-500)',
+  blue: 'var(--color-blue-400)',
   cyan: 'var(--color-cyan-400)',
   purple: 'var(--color-purple-500)',
   indigo: 'var(--color-indigo-500)',
