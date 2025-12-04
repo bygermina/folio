@@ -6,13 +6,9 @@
 }
 
 // ============================================
-// ТИПОГРАФИЧЕСКАЯ ИЕРАРХИЯ
+// TYPOGRAPHY HIERARCHY
 // ============================================
 // h1 > h2 > h3 > subheading > body > caption > label
-//
-// Размеры основаны на design-system tokens с последовательным масштабированием
-// Глобальные классы heading-${screenMode} могут переопределять размеры
-// для специфичных случаев (например, hero-секции)
 
 .typography-h1 {
   font-size: clamp(2rem, 8vw, 3.5rem);
@@ -63,7 +59,7 @@
 }
 
 // ============================================
-// ТЕКСТОВЫЕ ВАРИАНТЫ
+// TEXT VARIANTS
 // ============================================
 
 .typography-body {
@@ -84,111 +80,61 @@
   margin-bottom: spacing(1);
 }
 
-.typography-size-xs {
-  @include typography(xs);
+$sizes: xs, sm, base, lg, xl, 2xl, 3xl, 4xl, 5xl;
+
+@each $size in $sizes {
+  .typography-size-#{$size} {
+    @include typography($size);
+  }
 }
 
-.typography-size-sm {
-  @include typography(sm);
+$weights: (
+  normal: normal,
+  medium: medium,
+  bold: bold,
+  extrabold: extrabold,
+);
+
+@each $key, $value in $weights {
+  .typography-weight-#{$key} {
+    font-weight: font-weight($value);
+  }
 }
 
-.typography-size-base {
-  @include typography(base);
+// Colors
+$colors: (
+  default: var(--color-white),
+  muted: var(--color-slate-300),
+  primary: var(--color-cyan-400),
+  secondary: var(--color-slate-400),
+  accent: var(--color-cyan-300),
+);
+
+@each $key, $value in $colors {
+  .typography-color-#{$key} {
+    color: $value;
+  }
 }
 
-.typography-size-lg {
-  @include typography(lg);
-}
+$alignments: (
+  left: left,
+  center: center,
+  right: right,
+  justify: justify,
+);
 
-.typography-size-xl {
-  @include typography(xl);
-}
-
-.typography-size-2xl {
-  @include typography(2xl);
-}
-
-.typography-size-3xl {
-  @include typography(3xl);
-}
-
-.typography-size-4xl {
-  @include typography(4xl);
-}
-
-.typography-size-5xl {
-  @include typography(5xl);
-}
-
-.typography-weight-normal {
-  font-weight: font-weight(normal);
-}
-
-.typography-weight-medium {
-  font-weight: font-weight(medium);
-}
-
-.typography-weight-bold {
-  font-weight: font-weight(bold);
-}
-
-.typography-weight-extrabold {
-  font-weight: font-weight(extrabold);
-}
-
-// Цвета
-.typography-color-default {
-  color: var(--color-white);
-}
-
-.typography-color-muted {
-  color: var(--color-slate-300);
-}
-
-.typography-color-primary {
-  color: var(--color-cyan-400);
-}
-
-.typography-color-secondary {
-  color: var(--color-slate-400);
-}
-
-.typography-color-accent {
-  color: var(--color-cyan-300);
-}
-
-.typography-align-left {
-  text-align: left;
-}
-
-.typography-align-center {
-  text-align: center;
-}
-
-.typography-align-right {
-  text-align: right;
-}
-
-.typography-align-justify {
-  text-align: justify;
+@each $key, $value in $alignments {
+  .typography-align-#{$key} {
+    text-align: $value;
+  }
 }
 
 .typographyTruncate {
   @include truncate;
 }
 
-.typographyLineClamp-1 {
-  @include line-clamp(1);
-}
-
-.typographyLineClamp-2 {
-  @include line-clamp(2);
-}
-
-.typographyLineClamp-3 {
-  @include line-clamp(3);
-}
-
-.typographyLineClamp-4 {
-  @include line-clamp(4);
+@for $i from 1 through 4 {
+  .typographyLineClamp-#{$i} {
+    @include line-clamp($i);
+  }
 }

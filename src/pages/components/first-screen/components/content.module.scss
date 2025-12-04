@@ -48,8 +48,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
 
   &Landscape {
     margin-bottom: spacing(12);
@@ -66,8 +65,7 @@
   z-index: z-index(content);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   text-align: center;
   width: 100%;
 

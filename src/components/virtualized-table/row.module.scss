@@ -11,9 +11,7 @@
 }
 
 .dataCard {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   width: var(--card-size, 32px);
   height: var(--card-size, 32px);
   border-radius: radius(sm);
@@ -31,14 +29,13 @@
   overflow: hidden;
   flex: 0 0 auto;
   box-sizing: border-box;
-  font-size: 0.875rem;
-  font-weight: font-weight(bold);
+  @include typography(sm, bold);
   color: var(--color-cyan-300);
   line-height: 1;
   text-align: center;
 
   @include respond-to(md) {
-    font-size: 1rem;
+    @include typography(base, bold);
   }
 
   &:hover {

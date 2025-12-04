@@ -19,6 +19,7 @@
   --color-indigo-500: #{ds-color('indigo', 500)};
 
   // Slate
+  --color-slate-200: #{ds-color('slate', 200)};
   --color-slate-300: #{ds-color('slate', 300)};
   --color-slate-400: #{ds-color('slate', 400)};
   --color-slate-500: #{ds-color('slate', 500)};
@@ -26,6 +27,9 @@
   --color-slate-700: #{ds-color('slate', 700)};
   --color-slate-800: #{ds-color('slate', 800)};
   --color-slate-900: #{ds-color('slate', 900)};
+
+  // Sky
+  --color-sky-500: #{ds-color('sky', 500)};
 
   // Special colors
   --color-dark: #{ds-color('dark')};
