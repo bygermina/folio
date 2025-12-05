@@ -94,7 +94,9 @@
 .actionsWrapper {
   @include fade-in(0.8s, 8s);
   transform: translateY(20px);
-  animation: fadeIn 0.8s 8s forwards, slideUp 0.8s 8s forwards;
+  animation:
+    fadeIn 0.8s 8s forwards,
+    slideUp 0.8s 8s forwards;
 }
 
 @keyframes slideUp {

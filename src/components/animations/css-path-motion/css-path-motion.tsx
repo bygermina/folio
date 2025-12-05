@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 
 import { getPathLength } from '@/utils/svg';
+import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
 import styles from './css-path-motion.module.scss';
 
@@ -24,6 +25,7 @@ interface CSSPathMotionProps {
   speed?: number; //px/sec
   onCompleteEvent?: string;
   onComplete?: () => void;
+  containerRef?: React.RefObject<HTMLElement | null>;
 }
 
 export const CSSPathMotion = ({
@@ -40,9 +42,16 @@ export const CSSPathMotion = ({
   speed,
   onCompleteEvent,
   onComplete,
+  containerRef,
 }: CSSPathMotionProps) => {
   const motionRef = useRef<HTMLDivElement>(null);
   const computedDurationRef = useRef<number>(duration);
+
+  const visibilityRef = containerRef || motionRef;
+  const isVisible = useIntersectionObserver(visibilityRef, {
+    threshold: 0,
+    rootMargin: '0px',
+  });
 
   useEffect(() => {
     if (!speed || speed <= 0 || !path) {
@@ -87,6 +96,12 @@ export const CSSPathMotion = ({
     onCompleteEvent,
     onComplete,
   ]);
+
+  useEffect(() => {
+    if (motionRef.current) {
+      motionRef.current.style.animationPlayState = isVisible ? 'running' : 'paused';
+    }
+  }, [isVisible]);
 
   return (
     <div className={styles.container}>

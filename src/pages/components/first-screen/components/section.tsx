@@ -113,11 +113,18 @@ const PathEffectsSection = ({
         path={path}
         delay={scaledPathTree.delay}
         onCompleteEvent="starAnimationComplete"
+        containerRef={containerRef}
       >
         <FireEffect />
       </CSSPathMotion>
       {scaledPaths?.map((path) => (
-        <CSSPathMotion key={path.path} {...commonMotionProps} path={path.path} delay={path.delay}>
+        <CSSPathMotion
+          key={path.path}
+          {...commonMotionProps}
+          path={path.path}
+          delay={path.delay}
+          containerRef={containerRef}
+        >
           <FireEffect />
         </CSSPathMotion>
       ))}

@@ -23,7 +23,6 @@ export function createResponsiveSources(
 
   const sources: PictureSource[] = [];
 
-  // Order matters: browser selects the first matching <source> from top to bottom
   if (images.desktop) {
     sources.push({
       srcSet: images.desktop,
