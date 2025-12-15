@@ -4,7 +4,9 @@ import { Typography } from '@/components/basic/typography/typography';
 import VirtualizedTable from '@//components/virtualized-table/virtualized-table';
 import { useElementDimensions } from '@/hooks/use-element-dimensions';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
+import { useScreenSize } from '@/hooks/use-screen-size';
 import { Card } from '@/components/basic/card/card';
+import { BREAKPOINTS } from '@/constants/breakpoints';
 
 import { DataRow } from './data-row';
 import { useStore } from './store';
@@ -16,24 +18,19 @@ const ROW_HEIGHT = 56;
 const GAP = 8;
 
 interface ItemsPerRowParams {
-  container: HTMLDivElement | null;
   containerWidth: number;
 }
 
-const calculateItemsPerRow = ({ container, containerWidth }: ItemsPerRowParams): number => {
-  if (!container || containerWidth <= 0) return 0;
+const calculateItemsPerRow = ({ containerWidth }: ItemsPerRowParams): number => {
+  if (containerWidth <= GAP) return 0;
 
-  const computedStyle = window.getComputedStyle(container);
-  const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
-  const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+  const cardSize = ROW_HEIGHT - GAP * 2;
+  if (cardSize <= 0) return 0;
 
-  const contentWidth = containerWidth - paddingLeft - paddingRight - GAP * 2;
+  const totalPerItem = cardSize + GAP;
+  const effectiveWidth = containerWidth - GAP;
 
-  if (contentWidth <= 0) return 0;
-
-  const perItemWidth = ROW_HEIGHT - GAP;
-
-  return Math.max(1, Math.floor((contentWidth + GAP) / perItemWidth));
+  return Math.max(1, Math.floor(effectiveWidth / totalPerItem));
 };
 
 export const ThirdScreen = memo(() => {
@@ -41,6 +38,8 @@ export const ThirdScreen = memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useElementDimensions(containerRef, true).width;
   const isInViewport = useIntersectionObserver(sectionRef, { threshold: 0 });
+  const { screenHeight, screenWidth } = useScreenSize();
+  const viewportHeight = screenHeight || 600;
   const rowCount = useStore((state) => state.rows.length);
   const itemsPerRow = useStore((state) => state.itemsPerRow);
   const setItemsPerRow = useStore((state) => state.setItemsPerRow);
@@ -52,7 +51,6 @@ export const ThirdScreen = memo(() => {
 
   useEffect(() => {
     const calculatedItemsPerRow = calculateItemsPerRow({
-      container: containerRef.current,
       containerWidth,
     });
 
@@ -90,7 +88,7 @@ export const ThirdScreen = memo(() => {
               rowCount={rowCount}
               rowComponent={DataRow}
               rowHeight={ROW_HEIGHT}
-              height={600}
+              height={screenWidth < BREAKPOINTS.MOBILE ? viewportHeight * 0.6 : 600}
             />
           ) : (
             <div className={styles.loading}>Loading data...</div>
