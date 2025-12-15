@@ -1,4 +1,4 @@
-import { useState, useCallback, type KeyboardEvent } from 'react';
+import { useState, useCallback, useEffect, type KeyboardEvent } from 'react';
 
 import { cn } from '@/utils/cn';
 import { useTimeout } from '@/utils/animation-helpers';
@@ -13,6 +13,11 @@ export interface DataCardProps {
 
 export const DataCard = ({ value, onToggle, className }: DataCardProps) => {
   const [isSelected, setIsSelected] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
+
+  useEffect(() => {
+    setHasEntered(true);
+  }, []);
 
   const handleActivate = useCallback(() => {
     setIsSelected(true);
@@ -35,7 +40,14 @@ export const DataCard = ({ value, onToggle, className }: DataCardProps) => {
 
   return (
     <div
-      className={cn(styles.dataCard, { [styles.dataCardSelected]: isSelected }, className)}
+      className={cn(
+        styles.dataCard,
+        {
+          [styles.dataCardSelected]: isSelected,
+          [styles.dataCardEntered]: hasEntered,
+        },
+        className,
+      )}
       role="button"
       tabIndex={0}
       aria-pressed={isSelected}

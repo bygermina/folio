@@ -13,6 +13,7 @@ interface VirtualizedTableProps {
   height?: number;
   className?: string;
   onVisibleRowsChange?: (startIndex: number, stopIndex: number) => void;
+  overscanCount?: number;
 }
 
 const VirtualizedTable = ({
@@ -22,6 +23,7 @@ const VirtualizedTable = ({
   height = 600,
   className = '',
   onVisibleRowsChange,
+  overscanCount = 20,
 }: VirtualizedTableProps) => {
   const rowComponent = (props: CustomRowComponentProps) => <RowComponent {...props} />;
 
@@ -32,6 +34,7 @@ const VirtualizedTable = ({
         rowCount={rowCount}
         rowHeight={rowHeight}
         rowProps={{}}
+        overscanCount={overscanCount}
         onRowsRendered={({ startIndex, stopIndex }) => {
           if (!onVisibleRowsChange) return;
 
