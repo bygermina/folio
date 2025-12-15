@@ -1,19 +1,14 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 
-export interface DataItem {
-  id: number;
-  value: number;
+import type { DataItem } from './types';
+
+interface InitCompletePayload {
+  entities: Record<number, DataItem>;
+  entityIds: number[];
+  rows: number[][];
+  itemsPerRow: number;
 }
-
-let globalIdCounter = 0;
-
-const generateData = (count: number): DataItem[] => {
-  return Array.from({ length: count }, () => ({
-    id: globalIdCounter++,
-    value: Math.random() > 0.5 ? 1 : 0,
-  }));
-};
 
 let normalizedEntities: Record<number, DataItem> | null = null;
 let entityIds: number[] | null = null;
@@ -21,19 +16,24 @@ let rows: number[][] | null = null;
 let initPromise: Promise<void> | null = null;
 let currentItemsPerRow = 0;
 
-const CHUNK_SIZE = 100;
 const TOTAL_ITEMS = 10000;
 
-const scheduleNext = (callback: () => void) => {
-  if (typeof requestIdleCallback !== 'undefined') {
-    requestIdleCallback(callback, { timeout: 5 });
-  } else {
-    setTimeout(callback, 0);
+const createDataWorker = () => {
+  if (typeof window === 'undefined') return null;
+  if (typeof Worker === 'undefined') return null;
+
+  try {
+    return new Worker(new URL('./data-worker.ts', import.meta.url), { type: 'module' });
+  } catch {
+    return null;
   }
 };
 
+const dataWorker = createDataWorker();
+
 const initializeData = async (itemsPerRow: number) => {
   if (itemsPerRow === 0) return Promise.resolve();
+
   if (normalizedEntities && entityIds && currentItemsPerRow === itemsPerRow) {
     return initPromise;
   }
@@ -45,42 +45,41 @@ const initializeData = async (itemsPerRow: number) => {
   entityIds = null;
   rows = null;
   initPromise = null;
-  globalIdCounter = 0;
 
-  const TOTAL_CHUNKS = Math.ceil(TOTAL_ITEMS / CHUNK_SIZE);
+  if (!dataWorker) {
+    return Promise.resolve();
+  }
 
   initPromise = new Promise<void>((resolve) => {
-    const dataArray: DataItem[] = [];
-    let chunkIndex = 0;
+    const handleMessage = (event: MessageEvent<{ type: string; payload: InitCompletePayload }>) => {
+      if (!event?.data || event.data.type !== 'INIT_COMPLETE') return;
 
-    const processChunk = () => {
-      const start = chunkIndex * CHUNK_SIZE;
-      const end = Math.min(start + CHUNK_SIZE, TOTAL_ITEMS);
+      const {
+        entities,
+        entityIds: ids,
+        rows: workerRows,
+        itemsPerRow: returnedItemsPerRow,
+      } = event.data.payload;
 
-      const chunkSize = end - start;
-      const chunkItems = generateData(chunkSize);
-      dataArray.push(...chunkItems);
+      if (returnedItemsPerRow !== currentItemsPerRow) return;
 
-      chunkIndex++;
+      normalizedEntities = entities;
+      entityIds = ids;
+      rows = workerRows;
 
-      if (chunkIndex < TOTAL_CHUNKS) {
-        scheduleNext(processChunk);
-      } else {
-        normalizedEntities = Object.fromEntries(dataArray.map((item) => [item.id, item])) as Record<
-          number,
-          DataItem
-        >;
-        entityIds = dataArray.map((item) => item.id);
-
-        rows = Array.from({ length: Math.ceil(entityIds.length / itemsPerRow) }, (_, i) =>
-          entityIds!.slice(i * itemsPerRow, (i + 1) * itemsPerRow),
-        );
-
-        resolve();
-      }
+      dataWorker.removeEventListener('message', handleMessage);
+      resolve();
     };
 
-    scheduleNext(processChunk);
+    dataWorker.addEventListener('message', handleMessage);
+
+    dataWorker.postMessage({
+      type: 'INIT',
+      payload: {
+        itemsPerRow,
+        totalItems: TOTAL_ITEMS,
+      },
+    });
   });
 
   return initPromise;
