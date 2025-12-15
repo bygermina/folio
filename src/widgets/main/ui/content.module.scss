@@ -1,0 +1,111 @@
+@use '@/shared/styles/design-system' as *;
+
+.heading {
+  margin-bottom: spacing(8);
+
+  &Portrait {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    line-height: 1.2 !important;
+  }
+
+  &Landscape {
+    font-size: 3rem;
+    line-height: 1.15 !important;
+
+    @include respond-to(sm) {
+      font-size: 3.75rem;
+      line-height: 1.1 !important;
+    }
+
+    @include respond-to(md) {
+      font-size: 4.5rem;
+      line-height: 1.05 !important;
+    }
+  }
+}
+
+.titleMain {
+  margin-right: spacing(4);
+}
+
+.subtitle {
+  margin: 0 auto spacing(8);
+  max-width: 42rem;
+}
+
+.subheading {
+  &Landscape {
+    margin-bottom: spacing(8);
+  }
+
+  &Portrait {
+    font-size: clamp(0.875rem, 3.5vw, 1.25rem);
+    margin-bottom: spacing(4);
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  @include flex-center;
+
+  &Landscape {
+    margin-bottom: spacing(12);
+    gap: spacing(4);
+  }
+
+  &Portrait {
+    gap: spacing(3);
+  }
+}
+
+.container {
+  position: relative;
+  z-index: z-index(content);
+  display: flex;
+  flex-direction: column;
+  @include flex-center;
+  text-align: center;
+  width: 100%;
+
+  &Landscape {
+    max-width: 1280px;
+    margin: 0 auto 0 30vw;
+    min-height: 100vh;
+  }
+
+  &Square {
+    margin-top: 70vw;
+    height: calc(100vh - 70vw);
+  }
+
+  &Portrait {
+    padding: 0 spacing(4);
+    margin-top: 100vw;
+    height: calc(100vh - 100vw);
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+  }
+}
+
+.subtitleWrapper {
+  @include fade-in(0.8s, 5s);
+  margin-top: spacing(8);
+}
+
+.actionsWrapper {
+  @include fade-in(0.8s, 8s);
+  transform: translateY(20px);
+  margin-top: spacing(8);
+  animation:
+    fadeIn 0.8s 8s forwards,
+    slideUp 0.8s 8s forwards;
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+  }
+}

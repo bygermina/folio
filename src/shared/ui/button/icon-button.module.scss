@@ -1,0 +1,50 @@
+@use '@/shared/styles/design-system' as *;
+
+.root {
+  width: 100%;
+  @include flex-between;
+  gap: spacing(2);
+  padding: spacing(2) spacing(3);
+  background: transparent;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: var(--transition-base);
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-blue-400);
+    outline-offset: 2px;
+  }
+}
+
+.content {
+  flex: 1;
+}
+
+.icon {
+  transition: transform var(--transition-base);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconLeft {
+  order: -1;
+}
+
+.iconRight {
+  order: 1;
+}
+
+.iconRotated {
+  transform: rotate(90deg);
+}
+
+

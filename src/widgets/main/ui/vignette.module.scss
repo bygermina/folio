@@ -1,0 +1,14 @@
+@use '@/shared/styles/design-system' as *;
+
+.root {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--color-dark-25) 0%,
+    var(--color-dark-12) 25%,
+    var(--color-dark-12) 75%,
+    var(--color-dark-25) 100%
+  );
+}

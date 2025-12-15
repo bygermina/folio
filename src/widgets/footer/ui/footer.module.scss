@@ -1,0 +1,16 @@
+@use '@/shared/styles/design-system' as *;
+
+.footer {
+  position: relative;
+  padding: spacing(4);
+  text-align: center;
+  overflow: hidden;
+}
+
+.footerText {
+  @include typography(sm);
+  color: var(--color-slate-500);
+  @include fade-in(0.8s, 1s);
+}
+
+

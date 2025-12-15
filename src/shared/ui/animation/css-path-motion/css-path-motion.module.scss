@@ -1,0 +1,55 @@
+@use '@/shared/styles/design-system' as *;
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 5;
+}
+
+$base-animation:
+  fadeIn 0.1s var(--animation-delay, 0s) forwards,
+  css-path-motion-animation var(--animation-duration, 3s) var(--animation-timing, linear)
+    var(--animation-delay, 0s) var(--animation-iterations, 1) var(--animation-direction, normal)
+    forwards;
+
+@mixin base-motion {
+  position: absolute;
+  opacity: 0;
+  animation: $base-animation;
+  will-change: offset-distance, opacity;
+}
+
+.motion {
+  @include base-motion;
+}
+
+.motionWithRotation {
+  @include base-motion;
+  animation:
+    $base-animation,
+    css-path-motion-rotation var(--animation-duration, 3s) linear var(--animation-delay, 0s) 1;
+  will-change: offset-distance, transform, opacity;
+}
+
+@keyframes css-path-motion-animation {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes css-path-motion-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(var(--rotation-degrees, 1080deg));
+  }
+}

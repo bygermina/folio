@@ -1,0 +1,59 @@
+@import '../shared/styles/design-system/_css-variables.scss';
+@import '../shared/styles/glass-text.css';
+
+html {
+  scroll-behavior: smooth;
+}
+
+.surface-transparent {
+  border: 1px solid rgba(from var(--color-blue-400) r g b / 0.5);
+  border-radius: var(--radius-sm);
+  transition:
+    border-color var(--transition-base),
+    background-color var(--transition-base);
+}
+
+.surface-transparent:hover {
+  border-color: var(--color-blue-400);
+  background-color: rgba(from var(--color-blue-400) r g b / 0.1);
+}
+
+.surface-transparent:focus-visible {
+  outline-color: rgba(from var(--color-blue-400) r g b / 0.6);
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background-color: hsl(220, 20%, 8%);
+  overflow-x: hidden;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(from var(--color-slate-600) r g b / 0.6)
+    rgba(from var(--color-slate-800) r g b / 0.3);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(from var(--color-slate-800) r g b / 0.3);
+  border-radius: var(--radius-sm, 0.125rem);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(from var(--color-slate-600) r g b / 0.6);
+  border-radius: var(--radius-sm, 0.125rem);
+  transition: background 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(from var(--color-slate-500) r g b / 0.8);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: rgba(from var(--color-cyan-400) r g b / 0.6);
+}

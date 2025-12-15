@@ -1,0 +1,21 @@
+@use '@/shared/styles/design-system' as *;
+
+.container {
+  position: relative;
+  width: 100vw;
+  margin-top: -0.625rem;
+  margin-bottom: -0.625rem;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  overflow: hidden;
+  touch-action: pan-x;
+}
+
+.slidesContainer {
+  display: flex;
+  flex-direction: row;
+  gap: spacing(4);
+  width: fit-content;
+}
+
+
