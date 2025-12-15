@@ -8,53 +8,57 @@ import { Card } from '@/components/basic/card/card';
 
 import { DataRow } from './data-row';
 import { useStore } from './store';
+import { useRandomCardFlash } from './use-random-card-flash';
 
 import styles from './third-screen.module.scss';
 
 const ROW_HEIGHT = 56;
 const GAP = 8;
 
+interface ItemsPerRowParams {
+  container: HTMLDivElement | null;
+  containerWidth: number;
+}
+
+const calculateItemsPerRow = ({ container, containerWidth }: ItemsPerRowParams): number => {
+  if (!container || containerWidth <= 0) return 0;
+
+  const computedStyle = window.getComputedStyle(container);
+  const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+  const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+
+  const contentWidth = containerWidth - paddingLeft - paddingRight - GAP * 2;
+
+  if (contentWidth <= 0) return 0;
+
+  const perItemWidth = ROW_HEIGHT - GAP;
+
+  return Math.max(1, Math.floor((contentWidth + GAP) / perItemWidth));
+};
+
 export const ThirdScreen = memo(() => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const isVisible = useIntersectionObserver(sectionRef, { threshold: 0 });
+  const sectionRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = useElementDimensions(containerRef, true).width;
+  const isInViewport = useIntersectionObserver(sectionRef, { threshold: 0 });
   const rowCount = useStore((state) => state.rows.length);
   const itemsPerRow = useStore((state) => state.itemsPerRow);
   const setItemsPerRow = useStore((state) => state.setItemsPerRow);
-  const triggerRandomFlash = useStore((state) => state.triggerRandomFlash);
+
+  useRandomCardFlash({
+    container: containerRef.current,
+    isEnabled: rowCount > 0 && itemsPerRow > 0 && isInViewport,
+  });
 
   useEffect(() => {
-    if (!isVisible) return;
+    const calculatedItemsPerRow = calculateItemsPerRow({
+      container: containerRef.current,
+      containerWidth,
+    });
 
-    const flashInterval = setInterval(() => {
-      triggerRandomFlash(3);
-    }, 150);
+    if (!calculatedItemsPerRow || calculatedItemsPerRow === itemsPerRow) return;
 
-    return () => {
-      clearInterval(flashInterval);
-    };
-  }, [isVisible, triggerRandomFlash]);
-
-  useEffect(() => {
-    const container = containerRef.current;
-
-    if (!container || containerWidth <= 0) return;
-
-    const computedStyle = window.getComputedStyle(container);
-    const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
-    const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
-
-    const rowWidth = containerWidth - paddingLeft - paddingRight;
-    const availableWidth = rowWidth - GAP * 2;
-    const cardSize = ROW_HEIGHT - GAP * 2;
-
-    const calculatedItemsPerRow = Math.max(
-      1,
-      Math.floor((availableWidth + GAP) / (cardSize + GAP)),
-    );
-
-    if (calculatedItemsPerRow !== itemsPerRow) setItemsPerRow(calculatedItemsPerRow);
+    setItemsPerRow(calculatedItemsPerRow);
   }, [containerWidth, itemsPerRow, setItemsPerRow]);
 
   const headingId = 'data-intensive-heading';
@@ -77,7 +81,10 @@ export const ThirdScreen = memo(() => {
       </div>
 
       <Card>
-        <div ref={containerRef} className={`${styles.dataContainer} ${styles.dataContainerWrapper}`}>
+        <div
+          ref={containerRef}
+          className={`${styles.dataContainer} ${styles.dataContainerWrapper}`}
+        >
           {rowCount > 0 ? (
             <VirtualizedTable
               rowCount={rowCount}

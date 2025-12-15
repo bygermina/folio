@@ -14,7 +14,6 @@ const DataRowItem = memo(
   ({ itemId }: { itemId: number }) => {
     const value = useStore((state) => state.entities[itemId]?.value);
     const toggleValue = useStore((state) => state.toggleValue);
-    const isFlashing = useStore((state) => state.flashingItemIds[itemId] === true);
 
     const onToggle = useCallback(() => {
       toggleValue(itemId);
@@ -22,7 +21,7 @@ const DataRowItem = memo(
 
     if (value === undefined) return null;
 
-    return <DataCard value={value} onToggle={onToggle} isFlashing={isFlashing} />;
+    return <DataCard value={value} onToggle={onToggle} />;
   },
   (prevProps, nextProps) => prevProps.itemId === nextProps.itemId,
 );

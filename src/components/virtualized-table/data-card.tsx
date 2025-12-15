@@ -8,12 +8,11 @@ import styles from './row.module.scss';
 export interface DataCardProps {
   value: number;
   onToggle?: () => void;
-  isFlashing?: boolean;
   className?: string;
 }
 
 export const DataCard = memo(
-  ({ value, onToggle, isFlashing = false, className }: DataCardProps) => {
+  ({ value, onToggle, className }: DataCardProps) => {
     const [isSelected, setIsSelected] = useState(false);
 
     const handleActivate = useCallback(() => {
@@ -37,15 +36,11 @@ export const DataCard = memo(
 
     return (
       <div
-        className={cn(
-          styles.dataCard,
-          { [styles.dataCardSelected]: isSelected },
-          { [styles.dataCardFlash]: isFlashing },
-          className,
-        )}
+        className={cn(styles.dataCard, { [styles.dataCardSelected]: isSelected }, className)}
         role="button"
         tabIndex={0}
         aria-pressed={isSelected}
+        data-role="data-card"
         onClick={handleActivate}
         onKeyDown={handleKeyDown}
       >

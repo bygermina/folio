@@ -12,6 +12,7 @@ interface VirtualizedTableProps {
   rowHeight?: number;
   height?: number;
   className?: string;
+  onVisibleRowsChange?: (startIndex: number, stopIndex: number) => void;
 }
 
 const VirtualizedTable = ({
@@ -20,6 +21,7 @@ const VirtualizedTable = ({
   rowHeight = 48,
   height = 600,
   className = '',
+  onVisibleRowsChange,
 }: VirtualizedTableProps) => {
   const rowComponent = (props: CustomRowComponentProps) => <RowComponent {...props} />;
 
@@ -30,6 +32,11 @@ const VirtualizedTable = ({
         rowCount={rowCount}
         rowHeight={rowHeight}
         rowProps={{}}
+        onRowsRendered={({ startIndex, stopIndex }) => {
+          if (!onVisibleRowsChange) return;
+
+          onVisibleRowsChange(startIndex, stopIndex);
+        }}
         {...{ role: 'presentation' }}
         style={{ width: '100%', height }}
       />
