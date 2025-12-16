@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -31,6 +31,7 @@ export const SliderControls = ({
   initialSpeed,
   initialSide,
 }: SliderControlsProps) => {
+  const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
   const [speed, setSpeed] = useState(initialSpeed);
   const [side, setSide] = useState<'left' | 'right'>(initialSide);
@@ -64,10 +65,12 @@ export const SliderControls = ({
   };
 
   const handleApply = () => {
-    onUpdate({
-      slides,
-      speed,
-      side,
+    startTransition(() => {
+      onUpdate({
+        slides,
+        speed,
+        side,
+      });
     });
     setIsOpen(false);
   };
@@ -178,8 +181,13 @@ export const SliderControls = ({
                 </div>
               </div>
 
-              <Button onClick={handleApply} variant="primary" className={styles.applyButton}>
-                Apply Changes
+              <Button
+                onClick={handleApply}
+                variant="primary"
+                className={styles.applyButton}
+                disabled={isPending}
+              >
+                {isPending ? 'Applying...' : 'Apply Changes'}
               </Button>
             </div>
           </motion.div>

@@ -1,14 +1,14 @@
-import { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useRef, useDeferredValue } from 'react';
 
 import { Card } from '@/shared/ui/card/card';
 import { VirtualizedTable } from '@/shared/ui/virtualized-table/virtualized-table';
 import { Typography } from '@/shared/ui/typography/typography';
-import { BREAKPOINTS } from '@/shared/lib/breakpoints';
 import { cn } from '@/shared/lib/cn';
 import { DataRow, useDataIntenseStore, useRandomCardFlash } from '@/features/data-intensive';
 import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions';
 import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer';
 import { useScreenSize } from '@/shared/lib/hooks/use-screen-size';
+import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 import styles from './data-intensive.module.scss';
 
@@ -35,9 +35,11 @@ const DataIntensiveWidgetComponent = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const containerWidth = useElementDimensions(containerRef, true).width;
+  const deferredContainerWidth = useDeferredValue(containerWidth);
   const isInViewport = useIntersectionObserver(sectionRef, { threshold: 0 });
-  const { screenHeight, screenWidth } = useScreenSize();
-  const viewportHeight = screenHeight || 600;
+  const { screenHeight } = useScreenSize();
+  const { isMobile } = useScreenSizeContext();
+  const viewportHeight = screenHeight ?? 600;
   const rowCount = useDataIntenseStore((state) => state.rows.length);
   const itemsPerRow = useDataIntenseStore((state) => state.itemsPerRow);
   const setItemsPerRow = useDataIntenseStore((state) => state.setItemsPerRow);
@@ -48,14 +50,12 @@ const DataIntensiveWidgetComponent = () => {
   });
 
   useEffect(() => {
-    const calculatedItemsPerRow = calculateItemsPerRow({
-      containerWidth,
-    });
+    const calculatedItemsPerRow = calculateItemsPerRow({ containerWidth: deferredContainerWidth });
 
-    if (!calculatedItemsPerRow || calculatedItemsPerRow === itemsPerRow) return;
-
-    setItemsPerRow(calculatedItemsPerRow);
-  }, [containerWidth, itemsPerRow, setItemsPerRow]);
+    if (calculatedItemsPerRow && calculatedItemsPerRow !== itemsPerRow) {
+      setItemsPerRow(calculatedItemsPerRow);
+    }
+  }, [deferredContainerWidth, itemsPerRow, setItemsPerRow]);
 
   const headingId = 'data-intensive-heading';
 
@@ -83,7 +83,7 @@ const DataIntensiveWidgetComponent = () => {
               rowCount={rowCount}
               rowComponent={DataRow}
               rowHeight={ROW_HEIGHT}
-              height={screenWidth < BREAKPOINTS.MOBILE ? viewportHeight * 0.6 : 600}
+              height={isMobile ? viewportHeight * 0.6 : 600}
             />
           ) : (
             <div className={styles.loading}>Loading data...</div>

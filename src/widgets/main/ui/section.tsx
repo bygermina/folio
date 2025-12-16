@@ -36,7 +36,7 @@ export const Section = () => {
     <section ref={sectionRef} className={cn(styles.root, styles[`root${screenMode}`])}>
       <TreeSection ref={treeRef} isContentReady={isContentReady} containerRef={sectionRef} />
       <Content
-        key={screenWidth + screenHeight}
+        key={`${screenWidth}-${screenHeight}`}
         letterRef={letterIRef}
         onContentReady={setIsContentReady}
       />
@@ -88,15 +88,15 @@ const PathEffectsSection = ({
     return createSvgArc(lastPoint.x, lastPoint.y, targetPosition.x, targetPosition.y, ARC_RADIUS);
   }, [scaledPathTree, letterIDimensions, isPortrait]);
 
-  const path = scaledPathTree?.path ? scaledPathTree.path + curve : '';
+  if (!scaledPathTree || !isContentReady) return null;
+
+  const path = `${scaledPathTree.path}${curve}`;
 
   const screenSpeedMultiplier = isMobile
     ? SPEED_MULTIPLIERS.MOBILE
     : screenWidth < BREAKPOINTS.TABLET
       ? SPEED_MULTIPLIERS.TABLET
       : SPEED_MULTIPLIERS.DESKTOP;
-
-  if (!scaledPathTree || !isContentReady) return null;
 
   const speed = BASE_SPEED * screenSpeedMultiplier;
   const commonMotionProps = {

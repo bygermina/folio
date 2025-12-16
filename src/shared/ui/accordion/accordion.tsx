@@ -1,4 +1,4 @@
-import { useId, useState, type ReactNode } from 'react';
+import { useId, useState, useTransition, type ReactNode } from 'react';
 
 import { AnimatePresence, motion, type Variants } from 'framer-motion';
 
@@ -43,12 +43,17 @@ interface AccordionItemProps {
 }
 
 export const AccordionItem = ({ title, children, className, defaultOpen }: AccordionItemProps) => {
+  const [, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(Boolean(defaultOpen));
   const baseId = useId();
   const buttonId = `${baseId}-button`;
   const panelId = `${baseId}-panel`;
 
-  const handleToggle = () => setIsOpen((prev) => !prev);
+  const handleToggle = () => {
+    startTransition(() => {
+      setIsOpen((prev) => !prev);
+    });
+  };
 
   return (
     <div className={cn(styles.item, className)}>

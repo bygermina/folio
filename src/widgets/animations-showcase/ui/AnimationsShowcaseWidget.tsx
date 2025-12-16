@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useTransition, useDeferredValue } from 'react';
 
 import { Slider } from '@/shared/ui/slider/slider';
 import { Typography } from '@/shared/ui/typography/typography';
-import { useScreenSize } from '@/shared/lib/hooks/use-screen-size';
-import { BREAKPOINTS } from '@/shared/lib/breakpoints';
+import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 import { SlideContent } from './slide-content';
 import { SliderControls } from './slider-controls';
@@ -33,15 +32,15 @@ const SLIDER_STYLES = SLIDER_COLORS.map(
     }) as React.CSSProperties,
 );
 
-const DEFAULT_SLIDER_CONFIG = {
-  slides: LINKS,
-  speed: 0.6,
-  side: 'left' as const,
+type SliderConfig = {
+  slides: LinkData[];
+  speed: number;
+  side: 'left' | 'right';
 };
 
 export const AnimationsShowcaseWidget = () => {
-  const { screenWidth } = useScreenSize();
-  const slideWidth = screenWidth > BREAKPOINTS.MOBILE ? SLIDE_WIDTH.DESKTOP : SLIDE_WIDTH.MOBILE;
+  const { isMobile } = useScreenSizeContext();
+  const slideWidth = isMobile ? SLIDE_WIDTH.MOBILE : SLIDE_WIDTH.DESKTOP;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -62,11 +61,20 @@ export const AnimationsShowcaseWidget = () => {
     };
   }, []);
 
-  const [sliderConfig, setSliderConfig] = useState<{
-    slides: LinkData[];
-    speed: number;
-    side: 'left' | 'right';
-  }>(DEFAULT_SLIDER_CONFIG);
+  const [, startTransition] = useTransition();
+  const [sliderConfig, setSliderConfig] = useState<SliderConfig>({
+    slides: LINKS,
+    speed: 0.6,
+    side: 'left',
+  });
+
+  const handleSliderConfigUpdate = (config: SliderConfig) => {
+    startTransition(() => {
+      setSliderConfig(config);
+    });
+  };
+
+  const deferredSliderConfig = useDeferredValue(sliderConfig);
 
   const headingId = 'js-animations-heading';
 
@@ -82,17 +90,17 @@ export const AnimationsShowcaseWidget = () => {
           </Typography>
         </div>
         <SliderControls
-          onUpdate={setSliderConfig}
-          initialSlides={DEFAULT_SLIDER_CONFIG.slides}
-          initialSpeed={DEFAULT_SLIDER_CONFIG.speed}
-          initialSide={DEFAULT_SLIDER_CONFIG.side}
+          onUpdate={handleSliderConfigUpdate}
+          initialSlides={LINKS}
+          initialSpeed={0.6}
+          initialSide="left"
         />
         {SLIDER_INDICES.map((index) => (
           <div key={index} className={styles.sliderContainer} style={SLIDER_STYLES[index]}>
             <Slider<LinkData>
-              slides={sliderConfig.slides}
-              speed={isVisible ? sliderConfig.speed : 0}
-              side={sliderConfig.side}
+              slides={deferredSliderConfig.slides}
+              speed={isVisible ? deferredSliderConfig.speed : 0}
+              side={deferredSliderConfig.side}
               slideWidth={slideWidth}
               renderSlide={(item, index, setRef) => (
                 <SlideContent key={index} ref={setRef} {...item} />
