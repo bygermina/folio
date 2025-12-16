@@ -29,15 +29,11 @@
 }
 
 .subtitle {
-  margin: 0 auto spacing(8);
+  margin: 0 auto;
   max-width: 42rem;
 }
 
 .subheading {
-  &Landscape {
-    margin-bottom: spacing(8);
-  }
-
   &Portrait {
     font-size: clamp(0.875rem, 3.5vw, 1.25rem);
     margin-bottom: spacing(4);
@@ -92,7 +88,7 @@
 
 .subtitleWrapper {
   @include fade-in(0.8s, 5s);
-  margin-top: spacing(8);
+  //margin-top: spacing(8);
 }
 
 .actionsWrapper {
