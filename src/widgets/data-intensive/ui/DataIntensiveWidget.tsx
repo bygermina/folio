@@ -3,7 +3,6 @@ import { memo, useEffect, useRef, useDeferredValue } from 'react';
 import { Card } from '@/shared/ui/card/card';
 import { VirtualizedTable } from '@/shared/ui/virtualized-table/virtualized-table';
 import { Typography } from '@/shared/ui/typography/typography';
-import { cn } from '@/shared/lib/cn';
 import { DataRow, useDataIntenseStore, useRandomCardFlash } from '@/features/data-intensive';
 import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions';
 import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer';
@@ -77,7 +76,7 @@ const DataIntensiveWidgetComponent = () => {
       </div>
 
       <Card>
-        <div ref={containerRef} className={cn(styles.dataContainer, styles.dataContainerWrapper)}>
+        <div ref={containerRef} className={styles.dataContainer}>
           {rowCount > 0 ? (
             <VirtualizedTable
               rowCount={rowCount}

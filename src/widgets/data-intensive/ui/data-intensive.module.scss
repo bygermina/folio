@@ -31,6 +31,7 @@
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  @include fade-in(1s, 1s);
 }
 
 .headingWrapper {
@@ -43,10 +44,6 @@
 
 .subheadingWrapper {
   @include fade-in(0.8s, 3.5s);
-}
-
-.dataContainerWrapper {
-  @include fade-in(1s, 1s);
 }
 
 @keyframes slideUpScale {
