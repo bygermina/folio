@@ -1,2 +1,1 @@
-export { FooterWidget } from './ui/FooterWidget';
-
+export { FooterWidget } from './ui/footer-widget';

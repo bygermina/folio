@@ -1,2 +1,1 @@
-export { AnimationsShowcaseWidget } from './ui/AnimationsShowcaseWidget';
-
+export { AnimationsShowcaseWidget } from './ui/animations-showcase-widget';

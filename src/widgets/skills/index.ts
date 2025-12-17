@@ -1,2 +1,1 @@
-export { SkillsWidget } from './ui/SkillsWidget';
-
+export { SkillsWidget } from './ui/skills-widget';

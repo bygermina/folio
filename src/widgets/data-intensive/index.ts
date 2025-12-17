@@ -1,2 +1,2 @@
-export { DataIntensiveWidget } from './ui/DataIntensiveWidget';
+export { DataIntensiveWidget } from './ui/data-intensive-widget';
 

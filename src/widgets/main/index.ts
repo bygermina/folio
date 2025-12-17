@@ -1,2 +1,1 @@
-export { MainWidget } from './ui/MainWidget';
-
+export { MainWidget } from './ui/main-widget';
