@@ -4,7 +4,6 @@ import { TypeText } from '@/shared/ui/animation/text/type-text';
 import { Typography } from '@/shared/ui/typography/typography';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 import { WithVibration } from '@/shared/ui/animation/vibration';
-import { Scroll } from '@/shared/ui/scroll/scroll';
 import { Button } from '@/shared/ui/button/button';
 import { cn } from '@/shared/lib/cn';
 
@@ -13,9 +12,10 @@ import styles from './content.module.scss';
 interface ContentProps {
   letterRef?: RefObject<HTMLSpanElement | null>;
   onContentReady?: (isReady: boolean) => void;
+  onExploreClick?: () => void;
 }
 
-export const Content = ({ letterRef, onContentReady }: ContentProps) => {
+export const Content = ({ letterRef, onContentReady, onExploreClick }: ContentProps) => {
   const { screenMode, containerScreenMode } = useScreenSizeContext();
 
   useEffect(() => {
@@ -53,17 +53,16 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
           className={cn(styles.subtitle, styles[`subheading${screenMode}`])}
           color="muted"
         >
-          Xenia Liubachka • interactive portfolio
+          Xenia Liubachka • Production UI Scenarios
         </Typography>
       </div>
       <div className={cn(styles.actions, styles[`actions${screenMode}`], styles.actionsWrapper)}>
-        <Scroll targetSectionId="js-animations">
-          <WithVibration startEvent="starAnimationComplete">
-            <Button variant="magic">Explore what I can do for your project</Button>
-          </WithVibration>
-        </Scroll>
+        <WithVibration startEvent="starAnimationComplete">
+          <Button variant="magic" onClick={onExploreClick}>
+            Explore what I can do for your project
+          </Button>
+        </WithVibration>
       </div>
     </div>
   );
 };
-

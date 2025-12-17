@@ -26,6 +26,8 @@ body {
   font-family: var(--font-family-sans);
   background-color: hsl(220, 20%, 8%);
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 * {

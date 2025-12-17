@@ -7,20 +7,6 @@
   line-height: $line-height;
 }
 
-@mixin transition-properties($properties...) {
-  $transitions: ();
-  @each $property in $properties {
-    $transition-item: #{$property} var(--transition-base);
-    @if $transitions == () {
-      $transitions: $transition-item;
-    } @else {
-      $transitions: $transitions, $transition-item;
-    }
-  }
-  transition: $transitions;
-}
-
-/* Base styles */
 .root {
   @include button-base;
   background-color: transparent;
@@ -81,7 +67,10 @@
 
 .toggle {
   border: 1px solid;
-  @include transition-properties(color, background-color, border-color);
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base);
 
   &Active {
     background-color: var(--color-cyan-400-20);
@@ -116,4 +105,32 @@
   }
 }
 
+.tab {
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base);
 
+  &Active {
+    background-color: var(--color-cyan-400-20);
+    border-color: var(--color-cyan-400);
+    color: var(--color-cyan-300);
+
+    &:hover {
+      background-color: var(--color-cyan-400-25);
+      border-color: var(--color-cyan-300);
+    }
+  }
+
+  &Inactive {
+    background-color: transparent;
+    color: var(--color-slate-400);
+
+    &:hover {
+      color: var(--color-cyan-300);
+      background-color: var(--color-cyan-400-5);
+    }
+  }
+}

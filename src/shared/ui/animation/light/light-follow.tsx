@@ -7,7 +7,7 @@ import styles from './light-follow.module.scss';
 
 const SIZE = 360;
 const OFFSET = SIZE / 2;
-const FRAME_THROTTLE_MS = 100;
+const FRAME_THROTTLE_MS = 50;
 
 export const LightFollowCoursor = () => {
   const { isMobile } = useScreenSizeContext();

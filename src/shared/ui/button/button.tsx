@@ -5,7 +5,7 @@ import { cn } from '@/shared/lib/cn';
 import styles from './button.module.scss';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'magic' | 'transparent' | 'toggle' | 'primary' | 'nav';
+  variant?: 'default' | 'magic' | 'transparent' | 'toggle' | 'primary' | 'nav' | 'tab';
   size?: 'default' | 'sm' | 'lg';
   isActive?: boolean;
 }
@@ -28,5 +28,3 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = 'Button';
-
-

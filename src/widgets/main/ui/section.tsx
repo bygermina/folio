@@ -23,7 +23,11 @@ const SPEED_MULTIPLIERS = {
   DESKTOP: 1.2,
 } as const;
 
-export const Section = () => {
+interface SectionProps {
+  onExploreClick?: () => void;
+}
+
+export const Section = ({ onExploreClick }: SectionProps) => {
   const { screenMode, screenWidth, screenHeight } = useScreenSizeContext();
 
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -39,6 +43,7 @@ export const Section = () => {
         key={`${screenWidth}-${screenHeight}`}
         letterRef={letterIRef}
         onContentReady={setIsContentReady}
+        onExploreClick={onExploreClick}
       />
 
       <PathEffectsSection

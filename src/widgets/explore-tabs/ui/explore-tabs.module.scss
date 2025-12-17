@@ -1,0 +1,21 @@
+@use '@/shared/styles/design-system' as *;
+
+.tabs {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tabContent {
+  padding: spacing(4);
+}
+
+.description {
+  color: var(--color-slate-300);
+  line-height: 1.6;
+}
+
+.loading {
+  padding: spacing(4);
+  text-align: center;
+  color: var(--color-slate-400);
+}

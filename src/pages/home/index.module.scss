@@ -2,10 +2,11 @@
 
 .root {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   @supports (height: 100dvh) {
-    min-height: 100dvh;
+    height: 100dvh;
   }
+  overflow: hidden;
 }
 
 .skipLink {
@@ -37,5 +38,30 @@
   position: relative;
   z-index: 1;
   overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
   isolation: isolate;
+}
+
+.tabsContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: spacing(4) spacing(4) 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

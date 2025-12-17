@@ -25,5 +25,3 @@ export const cn = (...classes: ClassValue[]): string => {
     .filter(Boolean)
     .join(' ');
 };
-
-

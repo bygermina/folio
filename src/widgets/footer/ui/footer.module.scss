@@ -1,16 +1,22 @@
 @use '@/shared/styles/design-system' as *;
 
 .footer {
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
   padding: spacing(4);
   text-align: center;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .footerText {
   @include typography(sm);
   color: var(--color-slate-500);
   @include fade-in(0.8s, 1s);
+  pointer-events: auto;
 }
 
 
