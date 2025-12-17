@@ -78,11 +78,11 @@
   flex-shrink: 1;
   color: var(--slider-color, var(--color-blue-400));
   word-wrap: break-word;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   transition: text-shadow transition(base);
 
   .content:hover & {
     text-shadow: 0 0 8px color-mix(in srgb, var(--slider-color, #3b82f6) 50%, transparent);
   }
 }
-
