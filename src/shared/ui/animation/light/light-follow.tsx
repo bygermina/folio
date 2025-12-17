@@ -7,6 +7,7 @@ import styles from './light-follow.module.scss';
 
 const SIZE = 360;
 const OFFSET = SIZE / 2;
+const FRAME_THROTTLE_MS = 100;
 
 export const LightFollowCoursor = () => {
   const { isMobile } = useScreenSizeContext();
@@ -16,6 +17,7 @@ export const LightFollowCoursor = () => {
   const lastY = useRef<number>(0);
   const prevX = useRef<number>(0);
   const prevY = useRef<number>(0);
+  const lastUpdateTime = useRef<number>(0);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -38,6 +40,10 @@ export const LightFollowCoursor = () => {
   useAnimationFrame(() => {
     const el = ref.current;
     if (!el) return;
+
+    const now = performance.now();
+    if (now - lastUpdateTime.current < FRAME_THROTTLE_MS) return;
+    lastUpdateTime.current = now;
 
     const nextX = lastX.current - OFFSET;
     const nextY = lastY.current - OFFSET;
