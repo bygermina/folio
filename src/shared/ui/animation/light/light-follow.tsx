@@ -8,12 +8,14 @@ import styles from './light-follow.module.scss';
 const SIZE = 360;
 const OFFSET = SIZE / 2;
 
-const LightFollowCoursor = () => {
+export const LightFollowCoursor = () => {
   const { isMobile } = useScreenSizeContext();
 
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const lastX = useRef<number>(0);
   const lastY = useRef<number>(0);
+  const prevX = useRef<number>(0);
+  const prevY = useRef<number>(0);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -35,15 +37,20 @@ const LightFollowCoursor = () => {
 
   useAnimationFrame(() => {
     const el = ref.current;
-    if (el) {
-      el.style.left = `${lastX.current - OFFSET}px`;
-      el.style.top = `${lastY.current - OFFSET}px`;
-    }
+    if (!el) return;
+
+    const nextX = lastX.current - OFFSET;
+    const nextY = lastY.current - OFFSET;
+
+    if (nextX === prevX.current && nextY === prevY.current) return;
+
+    prevX.current = nextX;
+    prevY.current = nextY;
+
+    el.style.transform = `translate3d(${nextX}px, ${nextY}px, 0)`;
   }, !isMobile);
 
   if (isMobile) return null;
 
   return <div ref={ref} className={styles.root} />;
 };
-
-export { LightFollowCoursor };
