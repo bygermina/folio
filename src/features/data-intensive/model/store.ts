@@ -5,13 +5,11 @@ import type { DataItem } from './types';
 
 interface InitCompletePayload {
   entities: Record<number, DataItem>;
-  entityIds: number[];
   rows: number[][];
   itemsPerRow: number;
 }
 
 let normalizedEntities: Record<number, DataItem> | null = null;
-let entityIds: number[] | null = null;
 let rows: number[][] | null = null;
 let initPromise: Promise<void> | null = null;
 let currentItemsPerRow = 0;
@@ -34,7 +32,7 @@ const dataWorker = createDataWorker();
 const initializeData = async (itemsPerRow: number) => {
   if (itemsPerRow === 0) return Promise.resolve();
 
-  if (normalizedEntities && entityIds && currentItemsPerRow === itemsPerRow) {
+  if (normalizedEntities && rows && currentItemsPerRow === itemsPerRow) {
     return initPromise;
   }
 
@@ -42,7 +40,6 @@ const initializeData = async (itemsPerRow: number) => {
 
   currentItemsPerRow = itemsPerRow;
   normalizedEntities = null;
-  entityIds = null;
   rows = null;
   initPromise = null;
 
@@ -56,7 +53,6 @@ const initializeData = async (itemsPerRow: number) => {
 
       const {
         entities,
-        entityIds: ids,
         rows: workerRows,
         itemsPerRow: returnedItemsPerRow,
       } = event.data.payload;
@@ -64,7 +60,6 @@ const initializeData = async (itemsPerRow: number) => {
       if (returnedItemsPerRow !== currentItemsPerRow) return;
 
       normalizedEntities = entities;
-      entityIds = ids;
       rows = workerRows;
 
       dataWorker.removeEventListener('message', handleMessage);
@@ -86,8 +81,7 @@ const initializeData = async (itemsPerRow: number) => {
 };
 
 export interface StoreState {
-  entities: Record<number, { id: number; value: number }>;
-  entityIds: number[];
+  entities: Record<number, DataItem>;
   rows: number[][];
   itemsPerRow: number;
   gap: number;
@@ -104,14 +98,13 @@ export const useDataIntenseStore = create<StoreState>()(
 
       await initializeData(itemsPerRow);
 
-      if (normalizedEntities && entityIds && rows) {
-        set({ entities: normalizedEntities, entityIds, rows, itemsPerRow });
+      if (normalizedEntities && rows) {
+        set({ entities: normalizedEntities, rows, itemsPerRow });
       }
     };
 
     return {
       entities: normalizedEntities || {},
-      entityIds: entityIds || [],
       rows: rows || [],
       itemsPerRow: currentItemsPerRow,
       gap: 8,
@@ -124,7 +117,6 @@ export const useDataIntenseStore = create<StoreState>()(
             entities: {
               ...state.entities,
               [id]: {
-                ...entity,
                 value: entity.value === 0 ? 1 : 0,
               },
             },
