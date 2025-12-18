@@ -45,6 +45,8 @@ export const DataCard = ({ value, onToggle, className }: DataCardProps) => {
         {
           [styles.dataCardSelected]: isSelected,
           [styles.dataCardEntered]: hasEntered,
+          [styles.dataCardOne]: value === 1,
+          [styles.dataCardZero]: value === 0,
         },
         className,
       )}

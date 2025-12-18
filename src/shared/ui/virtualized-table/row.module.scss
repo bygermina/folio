@@ -68,6 +68,35 @@
   transform: translateY(0);
 }
 
+.dataCardOne {
+  color: var(--color-cyan-300);
+  border-color: rgba(from var(--color-cyan-400) r g b / 0.3);
+  background-color: rgba(from var(--color-cyan-400) r g b / 0.1);
+
+  &:hover {
+    border-color: rgba(from var(--color-cyan-400) r g b / 0.7);
+    background-color: rgba(from var(--color-cyan-400) r g b / 0.25);
+    box-shadow:
+      0 0 0.5rem rgba(from var(--color-cyan-400) r g b / 0.6),
+      0 0 1rem rgba(from var(--color-cyan-400) r g b / 0.4);
+  }
+}
+
+.dataCardZero {
+  color: var(--color-slate-500);
+  border-color: rgba(from var(--color-slate-600) r g b / 0.3);
+  background-color: rgba(from var(--color-slate-800) r g b / 0.3);
+
+  &:hover {
+    color: var(--color-slate-300);
+    border-color: rgba(from var(--color-slate-500) r g b / 0.6);
+    background-color: rgba(from var(--color-slate-700) r g b / 0.4);
+    box-shadow:
+      0 0 0.5rem rgba(from var(--color-slate-500) r g b / 0.3),
+      0 0 1rem rgba(from var(--color-slate-600) r g b / 0.2);
+  }
+}
+
 .dataCard[data-flash='true'] {
   animation: flash 0.5s ease-out;
 }

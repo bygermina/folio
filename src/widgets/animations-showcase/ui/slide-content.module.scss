@@ -16,8 +16,9 @@
   width: 100%;
   height: 100%;
   transition:
-    transform transition(base),
-    box-shadow transition(base);
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
   padding: spacing(1);
   cursor: grab;
   color: var(--slider-color, var(--color-blue-400));
@@ -46,21 +47,44 @@
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     opacity: 0;
-    transition: opacity transition(base);
+    transition: opacity 0.3s ease;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at center,
+      color-mix(in srgb, var(--slider-color, #3b82f6) 10%, transparent),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
   }
 
   &:hover {
-    transform: translate3d(0, 0, 0) scale(1.05);
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--slider-color, #3b82f6) 30%, transparent);
+    transform: translate3d(0, -4px, 0) scale(1.08);
+    box-shadow:
+      0 8px 24px color-mix(in srgb, var(--slider-color, #3b82f6) 35%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--slider-color, #3b82f6) 20%, transparent);
+    background-color: color-mix(in srgb, var(--slider-color, #3b82f6) 5%, transparent);
 
     &::before {
+      opacity: 1;
+    }
+
+    &::after {
       opacity: 1;
     }
   }
 
   &:active {
     cursor: grabbing;
-    transform: translate3d(0, 0, 0) scale(1.02);
+    transform: translate3d(0, -2px, 0) scale(1.04);
+    transition-duration: 0.1s;
   }
 
   @include respond-to(md) {
@@ -71,6 +95,14 @@
 .icon {
   display: block;
   color: var(--slider-color, var(--color-blue-400));
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+
+  .content:hover & {
+    transform: scale(1.1) rotate(-5deg);
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--slider-color, #3b82f6) 60%, transparent));
+  }
 }
 
 .text {

@@ -95,7 +95,14 @@ export const ExploreTabsWidget = () => {
         const Component = tab.component!;
         return (
           <TabPanel key={tab.title} value={tab.title} className={styles.tabContent}>
-            <Suspense fallback={<div className={styles.loading}>Loading...</div>}>
+            <Suspense
+              fallback={
+                <div className={styles.loading}>
+                  <div className={styles.spinner} />
+                  <span className={styles.loadingText}>Loading...</span>
+                </div>
+              }
+            >
               <Component />
             </Suspense>
           </TabPanel>

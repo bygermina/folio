@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from 'react';
+import { useEffect, useState, useCallback, type RefObject } from 'react';
 
 import { TypeText } from '@/shared/ui/animation/text/type-text';
 import { StaticText } from '@/shared/ui/animation/text/static-text';
@@ -6,6 +6,7 @@ import { Typography } from '@/shared/ui/typography/typography';
 import { WithVibration } from '@/shared/ui/animation/vibration';
 import { Button } from '@/shared/ui/button/button';
 import { cn } from '@/shared/lib/cn';
+import { useEvent } from '@/shared/lib/hooks/use-event';
 
 import { useMainWidgetContext } from '../../model/use-main-widget-context';
 
@@ -27,6 +28,13 @@ interface ContentProps {
 
 export const Content = ({ letterRef, onContentReady, onExploreClick }: ContentProps) => {
   const { animate } = useMainWidgetContext();
+  const [isButtonVisible, setIsButtonVisible] = useState(!animate);
+
+  const handleStarAnimationComplete = useCallback(() => {
+    setIsButtonVisible(true);
+  }, []);
+
+  useEvent('starAnimationComplete', handleStarAnimationComplete);
 
   useEffect(() => {
     if (!animate) {
@@ -65,7 +73,14 @@ export const Content = ({ letterRef, onContentReady, onExploreClick }: ContentPr
           Xenia Liubachka • Production UI Scenarios
         </Typography>
       </div>
-      <div className={cn(styles.actions, styles.actionsWrapper, !animate && styles.hidden)}>
+      <div
+        className={cn(
+          styles.actions,
+          styles.actionsWrapper,
+          !animate && styles.hidden,
+          animate && !isButtonVisible && styles.hiddenAnimated,
+        )}
+      >
         <WithVibration startEvent="starAnimationComplete">
           <Button variant="magic" onClick={onExploreClick}>
             Explore what I can do for your project
