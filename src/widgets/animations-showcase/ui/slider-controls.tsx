@@ -1,4 +1,4 @@
-import { useState, useEffect, useTransition } from 'react';
+import { useState, useTransition, type RefObject } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -6,7 +6,10 @@ import { WithVibration } from '@/shared/ui/animation/vibration';
 import { LabeledInput } from '@/shared/ui/input/labeled-input';
 import { Button } from '@/shared/ui/button/button';
 import { Typography } from '@/shared/ui/typography/typography';
+import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer';
 
+import { DirectionToggle } from './direction-toggle';
+import { SlideInputs } from './slide-inputs';
 import type { LinkData } from '../model/constants';
 import type { IconName } from './slide-content';
 
@@ -23,6 +26,7 @@ interface SliderControlsProps {
   initialSlides: LinkData[];
   initialSpeed: number;
   initialSide: 'left' | 'right';
+  sectionRef: RefObject<HTMLElement | null>;
 }
 
 export const SliderControls = ({
@@ -30,6 +34,7 @@ export const SliderControls = ({
   initialSlides,
   initialSpeed,
   initialSide,
+  sectionRef,
 }: SliderControlsProps) => {
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
@@ -37,23 +42,9 @@ export const SliderControls = ({
   const [side, setSide] = useState<'left' | 'right'>(initialSide);
   const [slides, setSlides] = useState<LinkData[]>(initialSlides);
 
-  useEffect(() => {
-    const sliderSection = document.getElementById('js-animations');
-    if (!sliderSection) return;
+  const isInView = useIntersectionObserver(sectionRef, { threshold: 0.01 });
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) setIsOpen(false);
-      },
-      { threshold: 0.01 },
-    );
-
-    observer.observe(sliderSection);
-
-    return () => {
-      observer.unobserve(sliderSection);
-    };
-  }, []);
+  if (!isInView && isOpen) setIsOpen(false);
 
   const handleSlideChange = (index: number, field: 'query' | 'image', value: string) => {
     const newSlides = [...slides];
@@ -66,11 +57,7 @@ export const SliderControls = ({
 
   const handleApply = () => {
     startTransition(() => {
-      onUpdate({
-        slides,
-        speed,
-        side,
-      });
+      onUpdate({ slides, speed, side });
     });
     setIsOpen(false);
   };
@@ -126,59 +113,13 @@ export const SliderControls = ({
                 onChange={(e) => setSpeed(Number(e.target.value))}
               />
 
-              <div>
-                <Typography variant="label" className={styles.label} color="muted">
-                  Direction
-                </Typography>
-                <div className={styles.directionGroup}>
-                  <Button
-                    variant="toggle"
-                    isActive={side === 'left'}
-                    onClick={() => setSide('left')}
-                    className={styles.directionButton}
-                  >
-                    ← Left
-                  </Button>
-                  <Button
-                    variant="toggle"
-                    isActive={side === 'right'}
-                    onClick={() => setSide('right')}
-                    className={styles.directionButton}
-                  >
-                    Right →
-                  </Button>
-                </div>
-              </div>
+              <DirectionToggle side={side} onSideChange={setSide} />
 
               <div>
                 <Typography variant="label" className={styles.label} color="muted">
                   Slide Content
                 </Typography>
-                <div className={styles.slidesContainer}>
-                  {slides.map((slide, index) => (
-                    <div key={index} className={styles.slide}>
-                      <Typography variant="caption" className={styles.slideIndex}>
-                        Slide {index + 1}
-                      </Typography>
-                      <input
-                        type="text"
-                        value={slide.query}
-                        onChange={(e) => handleSlideChange(index, 'query', e.target.value)}
-                        placeholder="Slide text"
-                        className={styles.input}
-                      />
-                      <select
-                        value={slide.image}
-                        onChange={(e) => handleSlideChange(index, 'image', e.target.value)}
-                        className={styles.select}
-                      >
-                        <option value="reactlogo">React Logo</option>
-                        <option value="typescript">TypeScript Logo</option>
-                        <option value="nodejs">Node.js Logo</option>
-                      </select>
-                    </div>
-                  ))}
-                </div>
+                <SlideInputs slides={slides} onSlideChange={handleSlideChange} />
               </div>
 
               <Button
@@ -196,4 +137,3 @@ export const SliderControls = ({
     </>
   );
 };
-

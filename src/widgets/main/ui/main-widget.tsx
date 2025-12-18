@@ -9,7 +9,7 @@ interface MainWidgetProps {
   animate?: boolean;
 }
 
-export const MainWidget = ({ onExploreClick, animate = false }: MainWidgetProps) => {
+export const MainWidget = ({ onExploreClick, animate = true }: MainWidgetProps) => {
   return (
     <MainWidgetProvider animate={animate}>
       <Section onExploreClick={onExploreClick} />

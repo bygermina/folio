@@ -3,32 +3,19 @@ import { memo, useEffect, useRef, useDeferredValue } from 'react';
 import { Card } from '@/shared/ui/card/card';
 import { VirtualizedTable } from '@/shared/ui/virtualized-table/virtualized-table';
 import { Typography } from '@/shared/ui/typography/typography';
-import { DataRow, useDataIntenseStore, useRandomCardFlash } from '@/features/data-intensive';
+import {
+  DataRow,
+  useDataIntenseStore,
+  useRandomCardFlash,
+  calculateItemsPerRow,
+  DATA_GRID,
+} from '@/features/data-intensive';
 import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions';
 import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer';
 import { useScreenSize } from '@/shared/lib/hooks/use-screen-size';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 import styles from './data-intensive.module.scss';
-
-const ROW_HEIGHT = 56;
-const GAP = 8;
-
-interface ItemsPerRowParams {
-  containerWidth: number;
-}
-
-const calculateItemsPerRow = ({ containerWidth }: ItemsPerRowParams): number => {
-  if (containerWidth <= GAP) return 0;
-
-  const cardSize = ROW_HEIGHT - GAP * 2;
-  if (cardSize <= 0) return 0;
-
-  const totalPerItem = cardSize + GAP;
-  const effectiveWidth = containerWidth - GAP;
-
-  return Math.max(1, Math.floor(effectiveWidth / totalPerItem));
-};
 
 const DataIntensiveWidgetComponent = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -81,7 +68,7 @@ const DataIntensiveWidgetComponent = () => {
             <VirtualizedTable
               rowCount={rowCount}
               rowComponent={DataRow}
-              rowHeight={ROW_HEIGHT}
+              rowHeight={DATA_GRID.ROW_HEIGHT}
               height={isMobile ? viewportHeight * 0.6 : 600}
             />
           ) : (

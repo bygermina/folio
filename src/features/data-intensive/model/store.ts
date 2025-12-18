@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 
 import type { DataItem } from './types';
+import { DATA_GRID } from './constants';
 
 interface InitCompletePayload {
   entities: Record<number, DataItem>;
@@ -51,11 +52,7 @@ const initializeData = async (itemsPerRow: number) => {
     const handleMessage = (event: MessageEvent<{ type: string; payload: InitCompletePayload }>) => {
       if (!event?.data || event.data.type !== 'INIT_COMPLETE') return;
 
-      const {
-        entities,
-        rows: workerRows,
-        itemsPerRow: returnedItemsPerRow,
-      } = event.data.payload;
+      const { entities, rows: workerRows, itemsPerRow: returnedItemsPerRow } = event.data.payload;
 
       if (returnedItemsPerRow !== currentItemsPerRow) return;
 
@@ -107,7 +104,7 @@ export const useDataIntenseStore = create<StoreState>()(
       entities: normalizedEntities || {},
       rows: rows || [],
       itemsPerRow: currentItemsPerRow,
-      gap: 8,
+      gap: DATA_GRID.GAP,
       toggleValue: (id) =>
         set((state) => {
           const entity = state.entities[id];

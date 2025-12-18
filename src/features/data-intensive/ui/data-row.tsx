@@ -7,8 +7,7 @@ import { createReactWindowRowComparator } from '@/shared/lib/react-window-helper
 import { EMPTY_ARRAY } from '@/shared/lib/constants';
 
 import { useDataIntenseStore } from '../model/store';
-
-const GAP = 8;
+import { DATA_GRID } from '../model/constants';
 
 const DataRowItem = memo(
   ({ itemId }: { itemId: number }) => {
@@ -40,7 +39,7 @@ export const DataRow = memo(({ index, style }: RowComponentProps<object>) => {
     <Row
       items={itemIds}
       style={style}
-      gap={GAP}
+      gap={DATA_GRID.GAP}
       renderItem={(itemId) => <DataRowItem itemId={itemId as number} />}
       rowIndex={index}
     />

@@ -23,7 +23,7 @@ const Index = () => {
           Skip to main content
         </a>
         <div aria-hidden="true">
-          <CodeBackground className={styles.codeBackground} />
+          <CodeBackground />
           <LightFollowCoursor />
         </div>
         <main id="main-content" className={styles.scrollContainer}>
@@ -42,9 +42,7 @@ const Index = () => {
             strokeColor="var(--color-blue-400)"
             showSparkle
           /> */}
-          <section id="home">
-            <MainWidget onExploreClick={() => setShowTabs(true)} />
-          </section>
+          <MainWidget onExploreClick={() => setShowTabs(true)} />
           <FooterWidget />
         </main>
       </div>

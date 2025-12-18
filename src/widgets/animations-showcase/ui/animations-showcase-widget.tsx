@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState, useTransition, useDeferredValue } from 'react';
+import { useRef, useState, useTransition, useDeferredValue } from 'react';
 
 import { Slider } from '@/shared/ui/slider/slider';
 import { Typography } from '@/shared/ui/typography/typography';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer';
 
 import { SlideContent } from './slide-content';
 import { SliderControls } from './slider-controls';
@@ -32,34 +33,17 @@ const SLIDER_STYLES = SLIDER_COLORS.map(
     }) as React.CSSProperties,
 );
 
-type SliderConfig = {
+interface SliderConfig {
   slides: LinkData[];
   speed: number;
   side: 'left' | 'right';
-};
+}
 
 export const AnimationsShowcaseWidget = () => {
   const { isMobile } = useScreenSizeContext();
   const slideWidth = isMobile ? SLIDE_WIDTH.MOBILE : SLIDE_WIDTH.DESKTOP;
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting && entry.intersectionRatio > 0.1);
-      },
-      { threshold: [0, 0.1, 0.5, 1], rootMargin: '0px' },
-    );
-
-    observer.observe(containerRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  const isVisible = useIntersectionObserver(containerRef, { threshold: 0.1 });
 
   const [, startTransition] = useTransition();
   const [sliderConfig, setSliderConfig] = useState<SliderConfig>({
@@ -94,6 +78,7 @@ export const AnimationsShowcaseWidget = () => {
           initialSlides={LINKS}
           initialSpeed={0.6}
           initialSide="left"
+          sectionRef={containerRef}
         />
         {SLIDER_INDICES.map((index) => (
           <div key={index} className={styles.sliderContainer} style={SLIDER_STYLES[index]}>
