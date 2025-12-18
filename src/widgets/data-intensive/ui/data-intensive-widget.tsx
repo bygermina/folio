@@ -69,7 +69,7 @@ const DataIntensiveWidgetComponent = () => {
               rowCount={rowCount}
               rowComponent={DataRow}
               rowHeight={DATA_GRID.ROW_HEIGHT}
-              height={isMobile ? viewportHeight * 0.6 : 600}
+              height={viewportHeight * 0.55}
             />
           ) : (
             <div className={styles.loading}>Loading data...</div>
