@@ -15,6 +15,9 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
+  max-width: calc(100vw - spacing(4));
+  overflow-x: auto;
+  @include scrollbar(4px, transparent, var(--color-slate-600));
 }
 
 .tabContent {
