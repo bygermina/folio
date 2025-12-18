@@ -7,14 +7,28 @@
   padding: spacing(2) spacing(3);
   background: transparent;
   border: none;
+  border-radius: radius(md);
   color: var(--color-white);
   cursor: pointer;
   font: inherit;
   text-align: left;
-  transition: var(--transition-base);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 
-  &:hover {
-    opacity: 0.8;
+  @media (hover: hover) {
+    &:hover {
+      background-color: rgba(from var(--color-slate-700) r g b / 0.5);
+
+      .icon {
+        transform: translateX(4px);
+      }
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
   }
 
   &:focus-visible {
