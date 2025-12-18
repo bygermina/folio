@@ -65,15 +65,13 @@ export const Content = ({ letterRef, onContentReady, onExploreClick }: ContentPr
           Xenia Liubachka • Production UI Scenarios
         </Typography>
       </div>
-      {animate && (
-        <div className={cn(styles.actions, styles.actionsWrapper)}>
-          <WithVibration startEvent="starAnimationComplete">
-            <Button variant="magic" onClick={onExploreClick}>
-              Explore what I can do for your project
-            </Button>
-          </WithVibration>
-        </div>
-      )}
+      <div className={cn(styles.actions, styles.actionsWrapper, !animate && styles.hidden)}>
+        <WithVibration startEvent="starAnimationComplete">
+          <Button variant="magic" onClick={onExploreClick}>
+            Explore what I can do for your project
+          </Button>
+        </WithVibration>
+      </div>
     </div>
   );
 };

@@ -17,14 +17,13 @@
 
 .panel {
   position: fixed;
-  top: 8rem;
+  top: 6rem;
   right: spacing(6);
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
   z-index: z-index(modal);
   width: 20rem;
   max-width: calc(100vw - spacing(12));
-  max-height: 80vh;
-  overflow-y: auto;
-  overflow-x: hidden;
   background-color: rgba(from var(--color-slate-900) r g b / 0.95);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(from var(--color-cyan-400) r g b / 0.3);
@@ -32,6 +31,7 @@
   padding: spacing(6);
   box-shadow: shadow(xl);
   box-sizing: border-box;
+  @include scrollbar(4px, transparent, var(--color-cyan-400));
 
   @include respond-to(md) {
     right: spacing(4);
@@ -82,9 +82,6 @@
   display: flex;
   flex-direction: column;
   gap: spacing(3);
-  max-height: 15rem;
-  overflow-y: auto;
-  overflow-x: hidden;
   min-width: 0;
   width: 100%;
 }

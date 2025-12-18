@@ -66,9 +66,11 @@ interface TabProps {
   children: ReactNode;
   className?: string;
   disabled?: boolean;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
-export const Tab = ({ value, children, className, disabled }: TabProps) => {
+export const Tab = ({ value, children, className, disabled, onMouseEnter, onMouseLeave }: TabProps) => {
   const { activeTab, setActiveTab, baseId } = useTabsContext();
   const isActive = activeTab === value;
 
@@ -90,6 +92,8 @@ export const Tab = ({ value, children, className, disabled }: TabProps) => {
       className={className}
       onClick={handleClick}
       disabled={disabled}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {children}
     </Button>

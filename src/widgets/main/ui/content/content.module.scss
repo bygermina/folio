@@ -144,3 +144,8 @@
     transform: translateY(0);
   }
 }
+
+.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
