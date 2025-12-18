@@ -3,9 +3,9 @@ import { useCallback, useRef, useState } from 'react';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 import { cn } from '@/shared/lib/cn';
 
-import { TreeSection, type TreeSectionRef } from './tree-section';
-import { Content } from './content';
-import { PathEffects } from './path-effects';
+import { TreeSection, type TreeSectionRef } from '../tree-section';
+import { Content } from '../content';
+import { PathEffects } from '../path-effects';
 
 import styles from './section.module.scss';
 
@@ -50,3 +50,4 @@ export const Section = ({ onExploreClick }: SectionProps) => {
     </section>
   );
 };
+

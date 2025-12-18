@@ -4,4 +4,3 @@ export const Vignette = () => {
   return <div className={styles.root} />;
 };
 
-

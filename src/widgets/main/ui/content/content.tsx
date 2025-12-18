@@ -8,7 +8,7 @@ import { WithVibration } from '@/shared/ui/animation/vibration';
 import { Button } from '@/shared/ui/button/button';
 import { cn } from '@/shared/lib/cn';
 
-import { useMainWidgetContext } from '../model/use-main-widget-context';
+import { useMainWidgetContext } from '../../model/use-main-widget-context';
 
 import styles from './content.module.scss';
 
@@ -79,3 +79,4 @@ export const Content = ({ letterRef, onContentReady, onExploreClick }: ContentPr
     </div>
   );
 };
+

@@ -88,7 +88,6 @@
 
 .subtitleWrapper {
   @include fade-in(0.8s, 5s);
-  //margin-top: spacing(8);
 }
 
 .actionsWrapper {
@@ -105,3 +104,4 @@
     transform: translateY(0);
   }
 }
+

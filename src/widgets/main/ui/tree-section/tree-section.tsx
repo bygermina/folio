@@ -2,9 +2,9 @@ import { useRef, useImperativeHandle, forwardRef, type RefObject } from 'react';
 
 import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions';
 import { pathTree, paths } from '@/shared/lib/svg-paths';
-import desktop from '../assets/blue circuit tree-large.webp';
-import mobile from '../assets/blue circuit tree-500.webp';
-import tablet from '../assets/blue circuit tree-932.webp';
+import desktop from '../../assets/blue circuit tree-large.webp';
+import mobile from '../../assets/blue circuit tree-500.webp';
+import tablet from '../../assets/blue circuit tree-932.webp';
 import { ImageMask } from '@/shared/ui/animation/image/image-mask';
 import { createResponsiveSources } from '@/shared/ui/picture/picture.utils';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
@@ -79,3 +79,4 @@ export const TreeImage = forwardRef<HTMLImageElement>((_props, ref) => {
     />
   );
 });
+
