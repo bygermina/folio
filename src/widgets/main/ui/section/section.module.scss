@@ -2,19 +2,24 @@
 
 .root {
   position: relative;
-  min-height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
   width: 100%;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-  &Portrait {
-    height: 100vh;
-    flex-direction: column;
-    justify-content: space-between;
+  @include landscape {
+    height: auto;
+    max-height: none;
+    flex-direction: row;
+    justify-content: flex-start;
   }
 
-  &Landscape {
-    flex-direction: row;
+  @include landscape-short {
+    height: 100dvh;
+    max-height: 100dvh;
+    flex-direction: column;
   }
 }
-

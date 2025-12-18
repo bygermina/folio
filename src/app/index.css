@@ -1,4 +1,5 @@
 @import '../shared/styles/design-system/_css-variables.scss';
+@import '../shared/styles/design-system/_animations.scss';
 @import '../shared/styles/glass-text.css';
 
 html {
@@ -20,6 +21,12 @@ html {
 
 .surface-transparent:focus-visible {
   outline-color: rgba(from var(--color-blue-400) r g b / 0.6);
+}
+
+html,
+body {
+  height: 100%;
+  height: 100dvh;
 }
 
 body {

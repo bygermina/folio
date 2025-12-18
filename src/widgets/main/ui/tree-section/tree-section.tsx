@@ -2,20 +2,22 @@ import { useRef, useImperativeHandle, forwardRef, type RefObject } from 'react';
 
 import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions';
 import { pathTree, paths } from '@/shared/lib/svg-paths';
-import desktop from '../../assets/blue circuit tree-large.webp';
-import mobile from '../../assets/blue circuit tree-500.webp';
-import tablet from '../../assets/blue circuit tree-932.webp';
+import { BREAKPOINTS } from '@/shared/lib/breakpoints';
 import { ImageMask } from '@/shared/ui/animation/image/image-mask';
 import { createResponsiveSources } from '@/shared/ui/picture/picture.utils';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 import { getImageOffset, getScaledPath } from '@/shared/lib/svg';
-import { cn } from '@/shared/lib/cn';
+
+import desktop from '../../assets/blue circuit tree-large.webp';
+import mobile from '../../assets/blue circuit tree-500.webp';
+import tablet from '../../assets/blue circuit tree-932.webp';
 
 import styles from './tree-section.module.scss';
 
-const BASE_HEIGHT = 932;
-const BASE_WIDTH = 720;
-const ORIGINAL_RATIO = BASE_HEIGHT / BASE_WIDTH;
+const IMAGE_BASE_HEIGHT = 932;
+const IMAGE_BASE_WIDTH = 720;
+const IMAGE_ASPECT_RATIO = IMAGE_BASE_HEIGHT / IMAGE_BASE_WIDTH;
+const IMAGE_CENTER_PART = 0.5;
 
 export interface TreeSectionProps {
   isContentReady: boolean;
@@ -29,35 +31,36 @@ export interface TreeSectionRef {
   getPaths: () => Path[];
 }
 
-export const TreeSection = forwardRef<TreeSectionRef, TreeSectionProps>(
-  ({ isContentReady, containerRef }, ref) => {
-    const imageRef = useRef<HTMLImageElement>(null);
+export const TreeSection = forwardRef<TreeSectionRef, TreeSectionProps>(function TreeSection(
+  { isContentReady, containerRef },
+  ref,
+) {
+  const imageRef = useRef<HTMLImageElement>(null);
 
-    const imageDimensions = useElementDimensions(
-      imageRef,
-      isContentReady,
-      BASE_HEIGHT,
-      0.5,
-      containerRef,
-    );
+  const imageDimensions = useElementDimensions(
+    imageRef,
+    isContentReady,
+    IMAGE_BASE_HEIGHT,
+    IMAGE_CENTER_PART,
+    containerRef,
+  );
 
-    const dx = getImageOffset(imageDimensions, ORIGINAL_RATIO);
+  const dx = getImageOffset(imageDimensions, IMAGE_ASPECT_RATIO);
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        getPath: () => ({ ...pathTree, path: getScaledPath(imageDimensions, dx, pathTree) }),
-        getPaths: () => paths.map((p) => ({ ...p, path: getScaledPath(imageDimensions, dx, p) })),
-      }),
-      [dx, imageDimensions],
-    );
+  useImperativeHandle(
+    ref,
+    () => ({
+      getPath: () => ({ ...pathTree, path: getScaledPath(imageDimensions, dx, pathTree) }),
+      getPaths: () => paths.map((p) => ({ ...p, path: getScaledPath(imageDimensions, dx, p) })),
+    }),
+    [dx, imageDimensions],
+  );
 
-    return <TreeImage ref={imageRef} />;
-  },
-);
+  return <TreeImage ref={imageRef} />;
+});
 
-export const TreeImage = forwardRef<HTMLImageElement>((_props, ref) => {
-  const { containerScreenMode, screenWidth } = useScreenSizeContext();
+const TreeImage = forwardRef<HTMLImageElement>(function TreeImage(_props, ref) {
+  const { screenWidth } = useScreenSizeContext();
 
   const sources = createResponsiveSources({
     mobile,
@@ -65,18 +68,22 @@ export const TreeImage = forwardRef<HTMLImageElement>((_props, ref) => {
     desktop,
   });
 
-  const fallbackSrc = screenWidth >= 1024 ? desktop : screenWidth >= 768 ? tablet : mobile;
+  const fallbackSrc =
+    screenWidth >= BREAKPOINTS.TABLET
+      ? desktop
+      : screenWidth >= BREAKPOINTS.MOBILE
+        ? tablet
+        : mobile;
 
   return (
     <ImageMask
       key={screenWidth}
       ref={ref}
-      className={cn(styles.treeImage, styles[`treeImage${containerScreenMode}`])}
-      imageClassName={cn(styles.image, styles[`image${containerScreenMode}`])}
+      className={styles.treeImage}
+      imageClassName={styles.image}
       src={fallbackSrc}
       sources={sources}
       alt="Circuit tree"
     />
   );
 });
-

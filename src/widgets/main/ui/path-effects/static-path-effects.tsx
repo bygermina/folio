@@ -4,7 +4,7 @@ import { FireEffect } from '@/shared/ui/animation/light/fire-effect';
 import { getLastPointFromSvgPath } from '@/shared/lib/svg';
 
 import { usePathData } from './use-path-data';
-import type { PathEffectsProps, ScaledPath } from './types';
+import type { PathEffectsProps } from './types';
 
 import styles from './static-path-effects.module.scss';
 
@@ -17,39 +17,35 @@ export const StaticPathEffects = (props: PathEffectsProps) => {
 
     const mainPathLastPoint = getLastPointFromSvgPath(path);
     const pathsLastPoints =
-      scaledPaths?.map((p: ScaledPath) => ({
+      scaledPaths?.map((p) => ({
         path: p.path,
         lastPoint: getLastPointFromSvgPath(p.path),
-      })) || [];
+      })) ?? [];
 
     return { mainPathLastPoint, pathsLastPoints };
   }, [path, scaledPaths]);
 
   if (!scaledPathTree || !isContentReady || !staticPositions) return null;
 
+  const { mainPathLastPoint, pathsLastPoints } = staticPositions;
+
   return (
     <>
-      {staticPositions.mainPathLastPoint && (
+      {mainPathLastPoint && (
         <div
           className={styles.staticFireEffect}
-          style={{
-            left: staticPositions.mainPathLastPoint.x,
-            top: staticPositions.mainPathLastPoint.y,
-          }}
+          style={{ left: mainPathLastPoint.x, top: mainPathLastPoint.y }}
         >
           <FireEffect />
         </div>
       )}
-      {staticPositions.pathsLastPoints.map(
+      {pathsLastPoints.map(
         (item) =>
           item.lastPoint && (
             <div
               key={item.path}
               className={styles.staticFireEffect}
-              style={{
-                left: item.lastPoint.x,
-                top: item.lastPoint.y,
-              }}
+              style={{ left: item.lastPoint.x, top: item.lastPoint.y }}
             >
               <FireEffect />
             </div>

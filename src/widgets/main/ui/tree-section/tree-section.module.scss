@@ -2,57 +2,44 @@
 
 .treeImage {
   position: absolute;
-  will-change: transform;
+  width: 100%;
+  top: 4rem;
 
-  @include respond-to(md) {
-    height: 100%;
-    top: 0;
-  }
-
-  &Portrait {
-    width: 100%;
-
-    @include respond-to(md) {
-      transform: translateY(-6rem);
-      flex-basis: 40%;
-      align-self: center;
-    }
-  }
-
-  &Landscape {
-    height: 100vh;
-    max-width: 960px;
-    @include respond-to(md) {
-      max-height: none;
-      max-width: 50vw;
-    }
-  }
-
-  &Square {
-    height: 80%;
-    top: 40%;
+  @include portrait-square {
+    width: auto;
+    height: 65dvh;
+    top: calc(30% + 2rem);
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  @include landscape {
+    top: 0;
+    width: auto;
+    height: 100dvh;
+    max-width: 960px;
+  }
+
+  @include landscape-tablet {
+    max-width: 50vw;
   }
 }
 
 .image {
   height: auto;
   object-fit: cover;
+  max-height: 80dvh;
 
-  &Portrait {
-    max-height: 80vh;
+  @include portrait-square {
+    height: 100%;
+    max-height: none;
   }
 
-  &Landscape {
+  @include landscape {
+    max-height: none;
     height: 100%;
     width: auto;
     max-width: 100%;
     object-fit: contain;
   }
-
-  &Square {
-    height: 100%;
-  }
 }
-

@@ -13,25 +13,16 @@
   position: absolute;
   left: -999px;
   top: 0;
-  z-index: 10;
-  padding: 0.5rem 1rem;
+  z-index: z-index(content);
+  padding: spacing(2) spacing(4);
   background-color: var(--color-blue-400);
   color: var(--color-white);
-  border-radius: 0.375rem;
-}
+  border-radius: radius(md);
 
-.skipLink:focus {
-  left: 1rem;
-  top: 1rem;
-}
-
-.codeBackground {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 0;
+  &:focus {
+    left: spacing(4);
+    top: spacing(4);
+  }
 }
 
 .scrollContainer {

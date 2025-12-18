@@ -1,26 +1,44 @@
 @use '@/shared/styles/design-system' as *;
 
 .heading {
-  margin-bottom: spacing(8);
+  --typography-h1-line-height: 1.2;
 
-  &Portrait {
-    font-size: clamp(2rem, 8vw, 3.5rem);
-    line-height: 1.2 !important;
+  margin-bottom: spacing(8);
+  font-size: clamp(2rem, 8vw, 3.5rem);
+
+  @include portrait-square {
+    margin-bottom: spacing(4);
   }
 
-  &Landscape {
+  @include landscape {
+    --typography-h1-line-height: 1.15;
+
     font-size: 3rem;
-    line-height: 1.15 !important;
+  }
 
-    @include respond-to(sm) {
+  @include landscape-short {
+    --typography-h1-line-height: 1.1;
+
+    margin-bottom: spacing(4);
+    font-size: 2rem;
+  }
+
+  @include respond-to(sm) {
+    @include landscape {
+      --typography-h1-line-height: 1.1;
+
       font-size: 3.75rem;
-      line-height: 1.1 !important;
     }
+  }
 
-    @include respond-to(md) {
-      font-size: 4.5rem;
-      line-height: 1.05 !important;
-    }
+  @include landscape-wide {
+    font-size: 3rem;
+  }
+
+  @include landscape-ultrawide {
+    --typography-h1-line-height: 1.05;
+
+    font-size: 4.5rem;
   }
 }
 
@@ -34,69 +52,91 @@
 }
 
 .subheading {
-  &Portrait {
-    font-size: clamp(0.875rem, 3.5vw, 1.25rem);
-    margin-bottom: spacing(4);
+  font-size: clamp(0.875rem, 3.5vw, 1.25rem);
+  margin-bottom: spacing(4);
+
+  @include portrait-square {
+    margin-bottom: spacing(2);
+  }
+
+  @include landscape {
+    font-size: inherit;
+    margin-bottom: 0;
   }
 }
 
 .actions {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   @include flex-center;
 
-  &Landscape {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: spacing(3);
+
+  @include landscape {
     margin-bottom: spacing(12);
     gap: spacing(4);
   }
 
-  &Portrait {
-    gap: spacing(3);
+  @include landscape-short {
+    margin-bottom: spacing(4);
   }
 }
 
 .container {
+  @include flex-center;
+
   position: relative;
   z-index: z-index(content);
-  display: flex;
   flex-direction: column;
-  @include flex-center;
   text-align: center;
   width: 100%;
+  margin-top: 100vw;
+  height: calc(100dvh - 100vw);
 
-  &Landscape {
+  @include portrait-square {
+    margin-top: 45dvh;
+    height: 55dvh;
+  }
+
+  @include landscape {
+    margin-top: 0;
+    height: auto;
     max-width: 1280px;
-    margin: 0 auto 0 30vw;
-    min-height: 100vh;
-  }
-
-  &Square {
-    margin-top: 70vw;
-    height: calc(100vh - 70vw);
-  }
-
-  &Portrait {
-    padding: 0 spacing(4);
-    margin-top: 100vw;
-    height: calc(100vh - 100vw);
-    margin-left: auto;
+    margin-left: 30vw;
     margin-right: auto;
-    align-items: center;
+    min-height: 100dvh;
+  }
+
+  @include landscape-short {
+    --tree-width: calc(100dvh * 720 / 932 - 3rem);
+
+    margin-left: var(--tree-width);
+    margin-right: 0;
+    width: calc(100% - var(--tree-width));
   }
 }
 
 .subtitleWrapper {
-  @include fade-in(0.8s, 5s);
+  &Animated {
+    @include fade-in(0.8s, 5s);
+  }
 }
 
 .actionsWrapper {
-  @include fade-in(0.8s, 8s);
+  opacity: 0;
   transform: translateY(20px);
   margin-top: spacing(8);
   animation:
     fadeIn 0.8s 8s forwards,
     slideUp 0.8s 8s forwards;
+
+  @include portrait-square {
+    margin-top: spacing(4);
+  }
+
+  @include landscape-short {
+    margin-top: spacing(4);
+  }
 }
 
 @keyframes slideUp {
@@ -104,4 +144,3 @@
     transform: translateY(0);
   }
 }
-

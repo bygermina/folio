@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
-import { cn } from '@/shared/lib/cn';
 
 import { TreeSection, type TreeSectionRef } from '../tree-section';
 import { Content } from '../content';
@@ -14,7 +13,7 @@ interface SectionProps {
 }
 
 export const Section = ({ onExploreClick }: SectionProps) => {
-  const { screenMode, screenWidth, screenHeight } = useScreenSizeContext();
+  const { screenWidth, screenHeight } = useScreenSizeContext();
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const letterIRef = useRef<HTMLSpanElement>(null);
@@ -27,7 +26,7 @@ export const Section = ({ onExploreClick }: SectionProps) => {
   }, []);
 
   return (
-    <section ref={sectionRef} className={cn(styles.root, styles[`root${screenMode}`])}>
+    <section ref={sectionRef} className={styles.root}>
       <TreeSection
         ref={treeRefCallback}
         isContentReady={isContentReady}
@@ -50,4 +49,3 @@ export const Section = ({ onExploreClick }: SectionProps) => {
     </section>
   );
 };
-

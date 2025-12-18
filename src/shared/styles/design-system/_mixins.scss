@@ -45,6 +45,48 @@
   }
 }
 
+@mixin landscape {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin landscape-tablet {
+  @media (orientation: landscape) and (min-width: breakpoint(sm)) {
+    @content;
+  }
+}
+
+@mixin landscape-desktop {
+  @media (orientation: landscape) and (min-width: breakpoint(md)) {
+    @content;
+  }
+}
+
+@mixin portrait-square {
+  @media (orientation: portrait) and (min-aspect-ratio: 9/20) {
+    @content;
+  }
+}
+
+@mixin landscape-short {
+  @media (orientation: landscape) and (max-height: 650px) {
+    @content;
+  }
+}
+
+@mixin landscape-wide {
+  @media (orientation: landscape) and (min-width: breakpoint(md)) and (max-width: 1400px) {
+    @content;
+  }
+}
+
+@mixin landscape-ultrawide {
+  @media (orientation: landscape) and (min-width: 1401px) {
+    @content;
+  }
+}
+
 @mixin container($max-width: 1280px) {
   width: 100%;
   max-width: $max-width;

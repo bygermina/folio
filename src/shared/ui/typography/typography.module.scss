@@ -11,14 +11,17 @@
 // h1 > h2 > h3 > subheading > body > caption > label
 
 .typography-h1 {
+  --typography-h1-line-height: 1.1;
+
   font-size: clamp(2rem, 8vw, 3.5rem);
-  line-height: 1.1;
+  line-height: var(--typography-h1-line-height);
   font-weight: font-weight(extrabold);
   letter-spacing: -0.025em;
 
   @include respond-to(md) {
+    --typography-h1-line-height: 0.95;
+
     font-size: 4.5rem;
-    line-height: 0.95;
   }
 }
 

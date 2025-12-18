@@ -1,5 +1,3 @@
-@use '@/shared/styles/design-system' as *;
-
 .root {
   pointer-events: none;
   position: absolute;
@@ -12,4 +10,3 @@
     var(--color-dark-25) 100%
   );
 }
-

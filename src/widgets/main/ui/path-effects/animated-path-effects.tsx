@@ -5,7 +5,7 @@ import { BREAKPOINTS } from '@/shared/lib/breakpoints';
 
 import { usePathData } from './use-path-data';
 import { BASE_SPEED, SPEED_MULTIPLIERS } from './constants';
-import type { PathEffectsProps, ScaledPath } from './types';
+import type { PathEffectsProps } from './types';
 
 export const AnimatedPathEffects = (props: PathEffectsProps) => {
   const { containerRef, isContentReady } = props;
@@ -37,7 +37,7 @@ export const AnimatedPathEffects = (props: PathEffectsProps) => {
       >
         <FireEffect />
       </CSSPathMotion>
-      {scaledPaths?.map((p: ScaledPath) => (
+      {scaledPaths?.map((p) => (
         <CSSPathMotion
           key={p.path}
           {...commonMotionProps}

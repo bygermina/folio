@@ -1,4 +1,4 @@
-export const ARC_RADIUS = 100;
+export const ARC_RADIUS = 250;
 export const BASE_SPEED = 250;
 export const LETTER_PART = 0.3;
 
@@ -7,4 +7,3 @@ export const SPEED_MULTIPLIERS = {
   TABLET: 0.9,
   DESKTOP: 1.2,
 } as const;
-
