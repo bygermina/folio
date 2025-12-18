@@ -79,5 +79,3 @@ export const TreeImage = forwardRef<HTMLImageElement>((_props, ref) => {
     />
   );
 });
-
-

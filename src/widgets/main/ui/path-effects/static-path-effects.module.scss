@@ -1,0 +1,8 @@
+@use '@/shared/styles/design-system' as *;
+
+.staticFireEffect {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: fadeIn 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 10;
+}
