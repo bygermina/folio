@@ -24,7 +24,6 @@
   }
 }
 
-/* Sizes */
 .sm {
   @include button-size(2.25rem, var(--spacing-6), 0, 0.75rem, 1rem);
 }
@@ -37,21 +36,20 @@
   @include button-size(2.75rem, var(--spacing-8), 0, 1rem, 1.5rem);
 }
 
-/* Variants */
 @keyframes magicPulse {
   0%,
   100% {
     box-shadow:
-      0 0 0 0 rgba(from var(--color-cyan-400) r g b / 0.4),
-      0 10px 15px -3px var(--color-cyan-400-25),
-      0 4px 6px -2px var(--color-cyan-400-5);
+      0 0 0 0 rgba(from var(--color-blue-400) r g b / 0.3),
+      0 8px 16px -4px var(--color-blue-400-15),
+      0 4px 8px -2px var(--color-blue-400-5);
   }
 
   50% {
     box-shadow:
-      0 0 0 8px rgba(from var(--color-cyan-400) r g b / 0),
-      0 10px 15px -3px var(--color-cyan-400-25),
-      0 4px 6px -2px var(--color-cyan-400-5);
+      0 0 0 6px rgba(from var(--color-blue-400) r g b / 0),
+      0 8px 16px -4px var(--color-blue-400-15),
+      0 4px 8px -2px var(--color-blue-400-5);
   }
 }
 
@@ -68,19 +66,18 @@
 
 .magic {
   position: relative;
-  border: 1px solid var(--color-cyan-400-40);
+  border: 1px solid var(--color-blue-400-30);
   box-shadow:
-    0 10px 15px -3px var(--color-cyan-400-25),
-    0 4px 6px -2px var(--color-cyan-400-5);
-  animation:
-    magicPulse 2.5s ease-in-out infinite,
-    magicGlow 2.5s ease-in-out infinite;
+    0 8px 16px -4px var(--color-blue-400-15),
+    0 4px 8px -2px var(--color-blue-400-5);
   background: linear-gradient(
     135deg,
-    rgba(from var(--color-cyan-400) r g b / 0.1) 0%,
-    transparent 50%,
-    rgba(from var(--color-cyan-400) r g b / 0.05) 100%
+    rgba(from var(--color-blue-400) r g b / 0.12) 0%,
+    rgba(from var(--color-blue-400) r g b / 0.06) 50%,
+    rgba(from var(--color-blue-400) r g b / 0.08) 100%
   );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
   &::before {
     content: '';
@@ -90,27 +87,27 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(from var(--color-cyan-300) r g b / 0.3),
+      rgba(from var(--color-blue-300) r g b / 0.25),
       transparent
     );
     background-size: 200% 100%;
-    animation: shimmerButton 3s ease-in-out infinite;
+    animation: shimmerButton 4s ease-in-out infinite;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
   }
 
   &:hover {
-    transform: scale(1.05);
-    border-color: var(--color-cyan-300-60);
-    animation: none;
+    transform: scale(1.02) translateY(-1px);
+    border-color: var(--color-blue-400);
+    background: rgba(from var(--color-slate-900) r g b / 0.9);
     box-shadow:
-      0 0 20px rgba(from var(--color-cyan-400) r g b / 0.5),
-      0 20px 25px -5px var(--color-cyan-400-35),
-      0 10px 10px -5px var(--color-cyan-400-5);
+      0 8px 32px rgba(from var(--color-blue-400) r g b / 0.6),
+      0 4px 16px rgba(from var(--color-blue-400) r g b / 0.4),
+      0 2px 8px rgba(from var(--color-slate-900) r g b / 0.5);
 
     &::before {
-      opacity: 1;
+      opacity: 0;
     }
   }
 }
@@ -141,13 +138,18 @@
 }
 
 .primary {
-  background-color: var(--color-cyan-400);
-  box-shadow: 0 2px 8px rgba(from var(--color-cyan-400) r g b / 0.3);
+  background: linear-gradient(135deg, var(--color-blue-400) 0%, var(--color-blue-500) 100%);
+  box-shadow:
+    0 4px 12px rgba(from var(--color-blue-400) r g b / 0.25),
+    0 0 0 1px rgba(from var(--color-blue-300) r g b / 0.2);
 
   &:hover {
     transform: translateY(-2px);
-    background-color: var(--color-cyan-500);
-    box-shadow: 0 6px 16px rgba(from var(--color-cyan-400) r g b / 0.4);
+    background: linear-gradient(135deg, var(--color-blue-300) 0%, var(--color-blue-400) 100%);
+    box-shadow:
+      0 8px 20px rgba(from var(--color-blue-400) r g b / 0.35),
+      0 0 0 1px rgba(from var(--color-blue-300) r g b / 0.3),
+      0 0 24px rgba(from var(--color-blue-400) r g b / 0.15);
   }
 }
 
@@ -159,9 +161,9 @@
     border-color var(--transition-base);
 
   &Active {
-    background-color: var(--color-cyan-400-20);
-    border-color: var(--color-cyan-400);
-    color: var(--color-cyan-300);
+    background-color: var(--color-blue-400-20);
+    border-color: var(--color-blue-400);
+    color: var(--color-blue-300);
   }
 
   &Inactive {
@@ -179,14 +181,14 @@
   border: 0;
 
   &Active {
-    color: var(--color-cyan-400);
+    color: var(--color-blue-400);
   }
 
   &Inactive {
     color: var(--color-slate-400);
 
     &:hover {
-      color: var(--color-cyan-300);
+      color: var(--color-blue-300);
     }
   }
 }
@@ -207,27 +209,38 @@
     bottom: -1px;
     left: 50%;
     transform: translateX(-50%) scaleX(0);
-    width: 80%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--color-cyan-400), transparent);
+    width: 60%;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--color-blue-400-50), transparent);
     border-radius: 1px;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   &Active {
-    background-color: var(--color-cyan-400-20);
-    border-color: var(--color-cyan-400);
-    color: var(--color-cyan-300);
-    box-shadow: 0 4px 12px rgba(from var(--color-cyan-400) r g b / 0.2);
+    background: linear-gradient(
+      135deg,
+      rgba(from var(--color-blue-400) r g b / 0.08) 0%,
+      rgba(from var(--color-blue-400) r g b / 0.05) 100%
+    );
+    backdrop-filter: blur(8px) saturate(180%);
+    -webkit-backdrop-filter: blur(8px) saturate(180%);
+    border-color: var(--color-blue-400-10);
+    color: var(--color-blue-300);
+    box-shadow: 0 1px 2px rgba(from var(--color-blue-400) r g b / 0.08);
 
     &::after {
       transform: translateX(-50%) scaleX(1);
+      background: linear-gradient(90deg, transparent, var(--color-blue-400-20), transparent);
     }
 
     &:hover {
-      background-color: var(--color-cyan-400-25);
-      border-color: var(--color-cyan-300);
-      box-shadow: 0 6px 16px rgba(from var(--color-cyan-400) r g b / 0.3);
+      background: linear-gradient(
+        135deg,
+        rgba(from var(--color-blue-400) r g b / 0.12) 0%,
+        rgba(from var(--color-blue-400) r g b / 0.08) 100%
+      );
+      border-color: var(--color-blue-400-15);
+      box-shadow: 0 2px 4px rgba(from var(--color-blue-400) r g b / 0.1);
     }
   }
 
@@ -236,8 +249,14 @@
     color: var(--color-slate-400);
 
     &:hover {
-      color: var(--color-cyan-300);
-      background-color: var(--color-cyan-400-5);
+      color: var(--color-blue-300);
+      background: linear-gradient(
+        135deg,
+        rgba(from var(--color-blue-400) r g b / 0.04) 0%,
+        rgba(from var(--color-blue-400) r g b / 0.02) 100%
+      );
+      backdrop-filter: blur(6px) saturate(150%);
+      -webkit-backdrop-filter: blur(6px) saturate(150%);
 
       &::after {
         transform: translateX(-50%) scaleX(0.5);

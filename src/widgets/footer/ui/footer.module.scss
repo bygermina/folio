@@ -17,13 +17,13 @@
     left: 50%;
     transform: translateX(-50%);
     width: min(400px, 80%);
-    height: 1px;
+    height: 0.5px;
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(from var(--color-cyan-400) r g b / 0.3),
-      rgba(from var(--color-cyan-400) r g b / 0.5),
-      rgba(from var(--color-cyan-400) r g b / 0.3),
+      rgba(from var(--color-blue-400) r g b / 0.3),
+      rgba(from var(--color-blue-400) r g b / 0.5),
+      rgba(from var(--color-blue-400) r g b / 0.3),
       transparent
     );
   }
@@ -58,13 +58,9 @@
     background-color 0.2s ease;
 
   &:hover {
-    color: var(--color-cyan-400);
+    color: var(--color-blue-400);
     transform: translateY(-2px);
-    background-color: rgba(from var(--color-cyan-400) r g b / 0.1);
-  }
-
-  &::after {
-    display: none;
+    background-color: rgba(from var(--color-blue-400) r g b / 0.1);
   }
 }
 

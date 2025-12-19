@@ -13,7 +13,6 @@ import {
 import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions';
 import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer';
 import { useScreenSize } from '@/shared/lib/hooks/use-screen-size';
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 import styles from './data-intensive.module.scss';
 
@@ -24,7 +23,6 @@ const DataIntensiveWidgetComponent = () => {
   const deferredContainerWidth = useDeferredValue(containerWidth);
   const isInViewport = useIntersectionObserver(sectionRef, { threshold: 0 });
   const { screenHeight } = useScreenSize();
-  const { isMobile } = useScreenSizeContext();
   const viewportHeight = screenHeight ?? 600;
   const rowCount = useDataIntenseStore((state) => state.rows.length);
   const itemsPerRow = useDataIntenseStore((state) => state.itemsPerRow);
@@ -36,10 +34,15 @@ const DataIntensiveWidgetComponent = () => {
   });
 
   useEffect(() => {
-    const calculatedItemsPerRow = calculateItemsPerRow({ containerWidth: deferredContainerWidth });
+    const width =
+      deferredContainerWidth || (containerRef.current?.getBoundingClientRect().width ?? 0);
 
-    if (calculatedItemsPerRow && calculatedItemsPerRow !== itemsPerRow) {
-      setItemsPerRow(calculatedItemsPerRow);
+    if (width > 0) {
+      const calculatedItemsPerRow = calculateItemsPerRow({ containerWidth: width });
+
+      if (calculatedItemsPerRow > 0 && calculatedItemsPerRow !== itemsPerRow) {
+        setItemsPerRow(calculatedItemsPerRow);
+      }
     }
   }, [deferredContainerWidth, itemsPerRow, setItemsPerRow]);
 

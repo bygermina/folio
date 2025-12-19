@@ -26,12 +26,12 @@
   max-width: calc(100vw - spacing(12));
   background-color: rgba(from var(--color-slate-900) r g b / 0.95);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(from var(--color-cyan-400) r g b / 0.3);
+  border: 1px solid rgba(from var(--color-blue-400) r g b / 0.3);
   border-radius: radius(lg);
   padding: spacing(6);
   box-shadow: shadow(xl);
   box-sizing: border-box;
-  @include scrollbar(4px, transparent, var(--color-cyan-400));
+  @include scrollbar(4px, transparent, var(--color-blue-400));
 
   @include respond-to(md) {
     right: spacing(4);
@@ -115,7 +115,7 @@
 
   &:focus {
     outline: none;
-    border-color: var(--color-cyan-400);
+    border-color: var(--color-blue-400);
   }
 }
 

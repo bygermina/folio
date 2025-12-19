@@ -31,10 +31,14 @@ body {
 
 body {
   font-family: var(--font-family-sans);
-  background-color: hsl(220, 20%, 8%);
+  background: #000b0dfc;
+  background-attachment: fixed;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -64,12 +68,11 @@ body {
 }
 
 *::-webkit-scrollbar-thumb:active {
-  background: rgba(from var(--color-cyan-400) r g b / 0.6);
+  background: rgba(from var(--color-blue-400) r g b / 0.6);
 }
 
-/* Link styles with hover animations */
 a {
-  color: var(--color-cyan-400);
+  color: var(--color-blue-400);
   text-decoration: none;
   position: relative;
   transition: color 0.2s ease;
@@ -90,7 +93,7 @@ a::after {
 
 @media (hover: hover) {
   a:hover {
-    color: var(--color-cyan-300);
+    color: var(--color-blue-300);
   }
 
   a:hover::after {
@@ -99,25 +102,21 @@ a::after {
   }
 }
 
-/* Focus visible for accessibility */
 a:focus-visible {
-  outline: 2px solid var(--color-cyan-400);
+  outline: 2px solid var(--color-blue-400);
   outline-offset: 2px;
   border-radius: 2px;
 }
 
-/* Selection styling */
 ::selection {
-  background-color: rgba(from var(--color-cyan-400) r g b / 0.3);
+  background-color: rgba(from var(--color-blue-400) r g b / 0.3);
   color: var(--color-white);
 }
 
-/* Smooth appearance for lazy-loaded content */
 [data-loaded='true'] {
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

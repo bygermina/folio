@@ -33,7 +33,7 @@
   }
 }
 
-@mixin focus-ring($color: 'cyan', $shade: 400, $opacity: 0.6) {
+@mixin focus-ring($color: 'blue', $shade: 400, $opacity: 0.6) {
   &:focus-visible {
     outline-color: color-opacity($color, $shade, $opacity);
   }

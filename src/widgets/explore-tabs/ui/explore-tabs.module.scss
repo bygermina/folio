@@ -38,7 +38,12 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-x;
-  @include scrollbar(4px, transparent, var(--color-slate-600));
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .tooltip {
@@ -56,17 +61,22 @@
     font-size: 0.875rem;
     color: var(--color-slate-300);
     line-height: 1.5;
-    background-color: rgba(from var(--color-slate-800) r g b / 0.8);
-    backdrop-filter: blur(8px);
-    border-radius: radius(md);
+    background: linear-gradient(
+      135deg,
+      rgba(from var(--color-slate-800) r g b / 0.15) 0%,
+      rgba(from var(--color-slate-800) r g b / 0.1) 100%
+    );
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-radius: radius(lg);
     border: 1px solid rgba(from var(--color-slate-600) r g b / 0.3);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-4px);
     transition:
-      opacity 0.2s ease,
-      visibility 0.2s ease,
-      transform 0.2s ease;
+      opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0.25s ease,
+      transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
   }
 
@@ -129,14 +139,14 @@
   }
 
   &::before {
-    border-top-color: var(--color-cyan-400);
-    border-right-color: var(--color-cyan-400);
+    border-top-color: var(--color-blue-400);
+    border-right-color: var(--color-blue-400);
     animation: spin 1s linear infinite;
   }
 
   &::after {
-    border-bottom-color: rgba(from var(--color-cyan-400) r g b / 0.3);
-    border-left-color: rgba(from var(--color-cyan-400) r g b / 0.3);
+    border-bottom-color: rgba(from var(--color-blue-400) r g b / 0.3);
+    border-left-color: rgba(from var(--color-blue-400) r g b / 0.3);
     animation: spin 1.5s linear infinite reverse;
   }
 }

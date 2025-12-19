@@ -25,12 +25,12 @@
   border-radius: inherit;
   background: linear-gradient(
     90deg,
-    var(--color-cyan-400),
+    var(--color-blue-500),
     var(--color-blue-400),
-    var(--color-cyan-300)
+    var(--color-blue-300)
   );
   box-shadow:
-    0 0 0.75rem color-mix(in srgb, var(--color-cyan-400) 45%, transparent),
+    0 0 0.75rem color-mix(in srgb, var(--color-blue-400) 45%, transparent),
     0 0 1.5rem color-mix(in srgb, var(--color-blue-400) 30%, transparent),
     inset 0 1px 0 color-mix(in srgb, var(--color-white) 15%, transparent);
   transition: width var(--transition-base);

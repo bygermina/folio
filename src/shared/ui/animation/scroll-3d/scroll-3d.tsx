@@ -270,13 +270,13 @@ const Scroll3DComponent = ({
                 <stop
                   ref={setGradientStopRef('middle')}
                   offset="50%"
-                  stopColor="var(--color-cyan-400)"
+                  stopColor="var(--color-blue-400)"
                   stopOpacity={INITIAL_GRADIENT_OPACITY.middle}
                 />
                 <stop
                   ref={setGradientStopRef('end')}
                   offset="100%"
-                  stopColor="var(--color-purple-500)"
+                  stopColor="var(--color-blue-500)"
                   stopOpacity={INITIAL_GRADIENT_OPACITY.end}
                 />
               </linearGradient>

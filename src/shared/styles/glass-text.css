@@ -1,39 +1,41 @@
 .glass-text-shine {
   background: linear-gradient(
     135deg,
-    rgba(from var(--color-white) r g b / 0.8) 0%,
-    rgba(from var(--color-blue-400) r g b / 0.9) 25%,
-    rgba(from var(--color-cyan-400) r g b / 0.8) 35%,
-    rgba(from var(--color-white) r g b / 1) 50%,
-    rgba(from var(--color-cyan-400) r g b / 0.8) 65%,
-    rgba(from var(--color-purple-500) r g b / 0.9) 75%,
-    rgba(from var(--color-white) r g b / 0.7) 100%
+    rgba(from var(--color-white) r g b / 0.85) 0%,
+    rgba(from var(--color-blue-300) r g b / 0.8) 20%,
+    rgba(from var(--color-cyan-400) r g b / 0.6) 30%,
+    rgba(from var(--color-blue-400) r g b / 0.8) 40%,
+    rgba(from var(--color-white) r g b / 0.95) 50%,
+    rgba(from var(--color-blue-400) r g b / 0.8) 60%,
+    rgba(from var(--color-cyan-400) r g b / 0.6) 70%,
+    rgba(from var(--color-blue-300) r g b / 0.8) 80%,
+    rgba(from var(--color-white) r g b / 0.75) 100%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(from var(--color-blue-400) r g b / 0.4))
-    drop-shadow(0 0 20px rgba(from var(--color-cyan-400) r g b / 0.3));
+  filter: drop-shadow(0 0 8px rgba(from var(--color-blue-400) r g b / 0.25))
+    drop-shadow(0 0 16px rgba(from var(--color-blue-400) r g b / 0.2));
   -webkit-text-stroke: 0.5px rgba(from var(--color-white) r g b / 0.2);
-  animation: glass-shine 7s ease-in-out infinite;
+  animation: glass-shine 12s ease-in-out infinite;
   animation-delay: 2s;
 }
 
 .glass-text {
   background: linear-gradient(
     135deg,
-    rgba(from var(--color-white) r g b / 0.8) 0%,
-    rgba(from var(--color-blue-400) r g b / 0.9) 25%,
-    rgba(from var(--color-cyan-400) r g b / 0.8) 50%,
-    rgba(from var(--color-purple-500) r g b / 0.9) 75%,
-    rgba(from var(--color-white) r g b / 0.7) 100%
+    rgba(from var(--color-white) r g b / 0.7) 0%,
+    rgba(from var(--color-blue-300) r g b / 0.6) 25%,
+    rgba(from var(--color-blue-400) r g b / 0.6) 50%,
+    rgba(from var(--color-blue-300) r g b / 0.6) 75%,
+    rgba(from var(--color-white) r g b / 0.6) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(from var(--color-blue-400) r g b / 0.4))
-    drop-shadow(0 0 20px rgba(from var(--color-cyan-400) r g b / 0.3));
+  filter: drop-shadow(0 0 6px rgba(from var(--color-blue-400) r g b / 0.15))
+    drop-shadow(0 0 12px rgba(from var(--color-blue-400) r g b / 0.1));
   -webkit-text-stroke: 0.5px rgba(from var(--color-white) r g b / 0.2);
   position: relative;
 }

@@ -45,9 +45,9 @@
 @keyframes glow {
   0%,
   100% {
-    box-shadow: 0 0 8px rgba(var(--color-cyan-400-rgb), 0.4);
+    box-shadow: 0 0 8px rgba(from var(--color-blue-400) r g b / 0.4);
   }
   50% {
-    box-shadow: 0 0 16px rgba(var(--color-cyan-400-rgb), 0.6);
+    box-shadow: 0 0 16px rgba(from var(--color-blue-400) r g b / 0.6);
   }
 }

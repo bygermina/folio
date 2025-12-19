@@ -58,12 +58,19 @@
   position: absolute;
   border-radius: 50%;
   animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  filter: blur(0.8px);
+  box-shadow:
+    0 0 6px rgba(from var(--color-white) r g b / 0.8),
+    0 0 12px rgba(from var(--color-blue-300) r g b / 0.5);
 }
 
 .innerCenter {
   position: absolute;
   border-radius: 50%;
-  filter: blur(1px);
+  filter: blur(0.3px);
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   animation-delay: 0.25s;
+  box-shadow:
+    0 0 4px rgba(from var(--color-white) r g b / 1),
+    0 0 8px rgba(from var(--color-blue-300) r g b / 0.6);
 }

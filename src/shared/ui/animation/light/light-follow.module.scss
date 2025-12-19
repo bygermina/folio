@@ -2,19 +2,20 @@
 
 .root {
   position: fixed;
-  width: 360px;
-  height: 360px;
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    var(--color-violet-deep-18) 0%,
-    var(--color-violet-medium-27) 30%,
-    var(--color-deepBlue-7) 70%,
-    transparent 100%
+    rgba(from var(--color-blue-400) r g b / 0.12) 0%,
+    rgba(from var(--color-blue-400) r g b / 0.1) 25%,
+    rgba(from var(--color-blue-500) r g b / 0.08) 45%,
+    rgba(from var(--color-blue-500) r g b / 0.05) 65%,
+    transparent 85%
   );
-  filter: blur(80px);
+  filter: blur(90px);
   z-index: 50;
-  mix-blend-mode: color-dodge;
+  mix-blend-mode: screen;
   pointer-events: none;
   will-change: transform;
 }

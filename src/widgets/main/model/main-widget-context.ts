@@ -5,4 +5,3 @@ interface MainWidgetContextValue {
 }
 
 export const MainWidgetContext = createContext<MainWidgetContextValue | null>(null);
-

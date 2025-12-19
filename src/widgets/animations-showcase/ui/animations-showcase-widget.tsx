@@ -14,12 +14,12 @@ import styles from './animations-showcase.module.scss';
 const SLIDERS_COUNT = 6;
 
 const SLIDER_COLORS = [
-  '#06B6D4', // cyan-400
   '#3B82F6', // blue-400
-  '#A855F7', // purple-500
-  '#6366F1', // indigo-500
-  '#7DD3FC', // sky-300
-  '#8B5CF6', // purple-400 (custom)
+  '#2563EB', // blue-500
+  '#1D4ED8', // blue-600
+  '#60A5FA', // blue-400 lighter
+  '#93C5FD', // blue-300
+  '#DBEAFE', // blue-200
 ] as const;
 
 const SLIDER_INDICES = Array.from({ length: SLIDERS_COUNT }, (_, i) => i);

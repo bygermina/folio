@@ -2,24 +2,15 @@
 @use './functions' as *;
 
 :root {
-  // Cyan
-  --color-cyan-300: #{ds-color('cyan', 300)};
-  --color-cyan-400: #{ds-color('cyan', 400)};
-  --color-cyan-600: #{ds-color('cyan', 600)};
-
-  // Blue
+  // Blue - primary accent
   --color-blue-300: #{ds-color('blue', 300)};
   --color-blue-400: #{ds-color('blue', 400)};
+  --color-blue-500: #{ds-color('blue', 500)};
 
-  // Purple
-  --color-purple-300: #{ds-color('purple', 300)};
-  --color-purple-500: #{ds-color('purple', 500)};
+  // Cyan - accent for glass text
+  --color-cyan-400: #{ds-color('cyan', 400)};
 
-  // Indigo
-  --color-indigo-500: #{ds-color('indigo', 500)};
-
-  // Slate
-  --color-slate-200: #{ds-color('slate', 200)};
+  // Slate - neutrals
   --color-slate-300: #{ds-color('slate', 300)};
   --color-slate-400: #{ds-color('slate', 400)};
   --color-slate-500: #{ds-color('slate', 500)};
@@ -28,14 +19,8 @@
   --color-slate-800: #{ds-color('slate', 800)};
   --color-slate-900: #{ds-color('slate', 900)};
 
-  // Sky
-  --color-sky-500: #{ds-color('sky', 500)};
-
-  // Special colors
+  // Background colors
   --color-dark: #{ds-color('dark')};
-  --color-deepBlue: #{ds-color('deepBlue')};
-  --color-violet-deep: #{ds-color('violet', 'deep')};
-  --color-violet-medium: #{ds-color('violet', 'medium')};
 
   // Base colors
   --color-white: #{ds-color('white')};
@@ -43,28 +28,25 @@
   // Font families
   --font-family-sans: #{font-family(sans)};
 
-  // Colors with opacity (for common use cases)
-  --color-cyan-300-60: #{color-opacity('cyan', 300, 0.6)};
-  --color-cyan-400-35: #{color-opacity('cyan', 400, 0.35)};
-  --color-cyan-400-40: #{color-opacity('cyan', 400, 0.4)};
-  --color-cyan-400-50: #{color-opacity('cyan', 400, 0.5)};
-  --color-cyan-400-5: #{color-opacity('cyan', 400, 0.05)};
-  --color-cyan-400-20: #{color-opacity('cyan', 400, 0.2)};
-  --color-cyan-400-25: #{color-opacity('cyan', 400, 0.25)};
-  --color-cyan-400-60: #{color-opacity('cyan', 400, 0.6)};
-  --color-blue-400-60: #{color-opacity('blue', 400, 0.6)};
+  // Colors with opacity - refined for better hierarchy
+  // Blue opacity scale
+  --color-blue-400-5: #{color-opacity('blue', 400, 0.05)};
   --color-blue-400-10: #{color-opacity('blue', 400, 0.1)};
+  --color-blue-400-15: #{color-opacity('blue', 400, 0.15)};
+  --color-blue-400-20: #{color-opacity('blue', 400, 0.2)};
   --color-blue-400-30: #{color-opacity('blue', 400, 0.3)};
   --color-blue-400-50: #{color-opacity('blue', 400, 0.5)};
-  --color-purple-500-30: #{color-opacity('purple', 500, 0.3)};
-  --color-indigo-500-40: #{color-opacity('indigo', 500, 0.4)};
+  --color-blue-400-60: #{color-opacity('blue', 400, 0.6)};
+  --color-blue-500-15: #{color-opacity('blue', 500, 0.15)};
+  --color-blue-500-20: #{color-opacity('blue', 500, 0.2)};
 
-  // Special colors with opacity
+  // Background colors with opacity
+  --color-dark-8: #{color-opacity('dark', null, 0.08)};
   --color-dark-12: #{color-opacity('dark', null, 0.12)};
   --color-dark-25: #{color-opacity('dark', null, 0.25)};
-  --color-violet-deep-18: #{color-opacity('violet', 'deep', 0.18)};
-  --color-violet-medium-27: #{color-opacity('violet', 'medium', 0.27)};
-  --color-deepBlue-7: #{color-opacity('deepBlue', null, 0.07)};
+  --color-slate-800-30: #{color-opacity('slate', 800, 0.3)};
+  --color-slate-800-50: #{color-opacity('slate', 800, 0.5)};
+  --color-slate-800-80: #{color-opacity('slate', 800, 0.8)};
 
   --spacing-2: #{spacing(2)};
   --spacing-4: #{spacing(4)};

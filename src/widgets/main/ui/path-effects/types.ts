@@ -13,4 +13,3 @@ export interface ScaledPath {
   path: string;
   delay: number;
 }
-

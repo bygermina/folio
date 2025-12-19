@@ -12,12 +12,9 @@ interface FireEffectProps {
 
 const colors = {
   blue: 'var(--color-blue-400)',
-  cyan: 'var(--color-cyan-400)',
-  purple: 'var(--color-purple-500)',
-  indigo: 'var(--color-indigo-500)',
+  blueLight: 'var(--color-blue-300)',
+  blueDark: 'var(--color-blue-500)',
   white: 'var(--color-white)',
-  lightBlue: 'var(--color-blue-300)',
-  lightPurple: 'var(--color-purple-300)',
 };
 
 // Generate symmetric gradient for beams
@@ -69,21 +66,21 @@ const FireEffect = ({ style }: FireEffectProps) => {
     },
     {
       className: styles.beamVertical,
-      color: colors.cyan,
+      color: colors.blueLight,
       direction: 180,
       stops: standardStops,
       size: sizes.verticalBeam,
     },
     {
       className: styles.beamDiagonal45,
-      color: colors.purple,
+      color: colors.blue,
       direction: 90,
       stops: diagonalStops,
       size: sizes.diagonalBeam,
     },
     {
       className: styles.beamDiagonal135,
-      color: colors.indigo,
+      color: colors.blueDark,
       direction: 90,
       stops: diagonalStops,
       size: sizes.diagonalBeam,
@@ -96,7 +93,7 @@ const FireEffect = ({ style }: FireEffectProps) => {
       style={{
         width: sizes.container,
         height: sizes.container,
-        filter: `brightness(2) drop-shadow(0 0 ${sizes.dropShadow}px ${colors.white})`,
+        filter: `brightness(1.3) drop-shadow(0 0 ${sizes.dropShadow * 1.5}px ${colors.white}) drop-shadow(0 0 ${sizes.dropShadow * 0.8}px ${colors.blueLight})`,
         ...style,
       }}
     >
@@ -117,7 +114,7 @@ const FireEffect = ({ style }: FireEffectProps) => {
         style={{
           height: sizes.centralCircle,
           width: sizes.centralCircle,
-          background: `radial-gradient(circle, ${colorWithOpacity(colors.white, 0.9)} 0%, ${colorWithOpacity(colors.cyan, 0.7)} 30%, ${colorWithOpacity(colors.purple, 0.5)} 60%, transparent 80%)`,
+          background: `radial-gradient(circle, ${colorWithOpacity(colors.white, 1)} 0%, ${colorWithOpacity(colors.white, 0.95)} 15%, ${colorWithOpacity(colors.white, 0.8)} 25%, ${colorWithOpacity(colors.blueLight, 0.5)} 45%, ${colorWithOpacity(colors.blue, 0.25)} 65%, transparent 80%)`,
           animationDelay: `${pingDelay}s`,
         }}
       />
@@ -127,7 +124,7 @@ const FireEffect = ({ style }: FireEffectProps) => {
         style={{
           height: sizes.innerCenter,
           width: sizes.innerCenter,
-          background: `radial-gradient(circle, ${colorWithOpacity(colors.white, 0.95)} 0%, ${colorWithOpacity(colors.lightBlue, 0.8)} 50%, ${colorWithOpacity(colors.lightPurple, 0.6)} 80%, transparent 100%)`,
+          background: `radial-gradient(circle, ${colorWithOpacity(colors.white, 1)} 0%, ${colorWithOpacity(colors.white, 0.9)} 25%, ${colorWithOpacity(colors.blueLight, 0.5)} 45%, ${colorWithOpacity(colors.blue, 0.3)} 65%, transparent 80%)`,
         }}
       />
     </div>

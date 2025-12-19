@@ -17,7 +17,7 @@
   border-radius: radius(sm);
   background-color: rgba(from var(--color-slate-800) r g b / 0.5);
   backdrop-filter: blur(4px);
-  border: 1px solid rgba(from var(--color-cyan-400) r g b / 0.2);
+  border: 1px solid rgba(from var(--color-blue-400) r g b / 0.2);
   padding: 0;
   cursor: default;
   transform-style: preserve-3d;
@@ -26,7 +26,7 @@
   flex: 0 0 auto;
   box-sizing: border-box;
   @include typography(sm, bold);
-  color: var(--color-cyan-300);
+  color: var(--color-blue-300);
   line-height: 1;
   text-align: center;
   transition:
@@ -45,22 +45,22 @@
 
   &:hover {
     cursor: pointer;
-    border-color: rgba(from var(--color-cyan-400) r g b / 0.6);
-    background-color: rgba(from var(--color-cyan-400) r g b / 0.2);
+    border-color: rgba(from var(--color-blue-400) r g b / 0.6);
+    background-color: rgba(from var(--color-blue-400) r g b / 0.2);
     box-shadow:
-      0 0 0.5rem rgba(from var(--color-cyan-400) r g b / 0.6),
-      0 0 1rem rgba(from var(--color-cyan-400) r g b / 0.4),
-      0 4px 12px rgba(from var(--color-cyan-400) r g b / 0.3);
+      0 0 0.5rem rgba(from var(--color-blue-400) r g b / 0.6),
+      0 0 1rem rgba(from var(--color-blue-400) r g b / 0.4),
+      0 4px 12px rgba(from var(--color-blue-400) r g b / 0.3);
   }
 }
 
 .dataCardSelected {
-  border-color: rgba(from var(--color-cyan-400) r g b / 0.8);
-  background-color: rgba(from var(--color-cyan-400) r g b / 0.3);
+  border-color: rgba(from var(--color-blue-400) r g b / 0.8);
+  background-color: rgba(from var(--color-blue-400) r g b / 0.3);
   box-shadow:
-    0 0 0.75rem rgba(from var(--color-cyan-400) r g b / 0.8),
-    0 0 1.5rem rgba(from var(--color-cyan-400) r g b / 0.6),
-    0 6px 16px rgba(from var(--color-cyan-400) r g b / 0.4);
+    0 0 0.75rem rgba(from var(--color-blue-400) r g b / 0.8),
+    0 0 1.5rem rgba(from var(--color-blue-400) r g b / 0.6),
+    0 6px 16px rgba(from var(--color-blue-400) r g b / 0.4);
 }
 
 .dataCardEntered {
@@ -69,16 +69,16 @@
 }
 
 .dataCardOne {
-  color: var(--color-cyan-300);
-  border-color: rgba(from var(--color-cyan-400) r g b / 0.3);
-  background-color: rgba(from var(--color-cyan-400) r g b / 0.1);
+  color: var(--color-blue-300);
+  border-color: rgba(from var(--color-blue-400) r g b / 0.3);
+  background-color: rgba(from var(--color-blue-400) r g b / 0.1);
 
   &:hover {
-    border-color: rgba(from var(--color-cyan-400) r g b / 0.7);
-    background-color: rgba(from var(--color-cyan-400) r g b / 0.25);
+    border-color: rgba(from var(--color-blue-400) r g b / 0.7);
+    background-color: rgba(from var(--color-blue-400) r g b / 0.25);
     box-shadow:
-      0 0 0.5rem rgba(from var(--color-cyan-400) r g b / 0.6),
-      0 0 1rem rgba(from var(--color-cyan-400) r g b / 0.4);
+      0 0 0.5rem rgba(from var(--color-blue-400) r g b / 0.6),
+      0 0 1rem rgba(from var(--color-blue-400) r g b / 0.4);
   }
 }
 
@@ -105,11 +105,11 @@
   0% {
     color: var(--color-white);
     text-shadow:
-      0 0 6px rgba(from var(--color-cyan-400) r g b / 1),
-      0 0 18px rgba(from var(--color-cyan-400) r g b / 0.9);
+      0 0 6px rgba(from var(--color-blue-400) r g b / 1),
+      0 0 18px rgba(from var(--color-blue-400) r g b / 0.9);
   }
   100% {
-    color: var(--color-cyan-300);
+    color: var(--color-blue-300);
     text-shadow: none;
   }
 }

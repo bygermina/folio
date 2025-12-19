@@ -11,15 +11,20 @@
 // h1 > h2 > h3 > subheading > body > caption > label
 
 .typography-h1 {
-  --typography-h1-line-height: 1.1;
+  --typography-h1-line-height: 1.15;
 
   font-size: clamp(2rem, 8vw, 3.5rem);
   line-height: var(--typography-h1-line-height);
-  font-weight: font-weight(extrabold);
-  letter-spacing: -0.025em;
+  font-weight: font-weight(bold);
+  letter-spacing: -0.02em;
+  font-feature-settings:
+    'kern' 1,
+    'liga' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   @include respond-to(md) {
-    --typography-h1-line-height: 0.95;
+    --typography-h1-line-height: 1.1;
 
     font-size: 4.5rem;
   }
@@ -27,9 +32,14 @@
 
 .typography-h2 {
   @include typography(3xl);
-  font-weight: font-weight(extrabold);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  font-weight: font-weight(bold);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-feature-settings:
+    'kern' 1,
+    'liga' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   @include respond-to(md) {
     @include typography(4xl);
@@ -38,9 +48,14 @@
 
 .typography-h3 {
   @include typography(2xl);
-  font-weight: font-weight(extrabold);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  font-weight: font-weight(bold);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  font-feature-settings:
+    'kern' 1,
+    'liga' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   @include respond-to(md) {
     @include typography(3xl);
@@ -49,8 +64,12 @@
 
 .typography-subheading {
   @include typography(base);
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: spacing(4);
+  letter-spacing: 0.01em;
+  font-feature-settings: 'kern' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   @include respond-to(sm) {
     @include typography(xl);
@@ -67,7 +86,11 @@
 
 .typography-body {
   @include typography(base);
-  line-height: 1.5;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  font-feature-settings: 'kern' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .typography-caption {
@@ -104,13 +127,14 @@ $weights: (
   }
 }
 
-// Colors
+// Colors - refined for better contrast and hierarchy
 $colors: (
   default: var(--color-white),
-  muted: var(--color-slate-300),
-  primary: var(--color-cyan-400),
-  secondary: var(--color-slate-400),
-  accent: var(--color-cyan-300),
+  muted: var(--color-slate-400),
+  primary: var(--color-blue-300),
+  secondary: var(--color-slate-300),
+  accent: var(--color-blue-300),
+  subtle: var(--color-slate-500),
 );
 
 @each $key, $value in $colors {
@@ -141,5 +165,3 @@ $alignments: (
     @include line-clamp($index);
   }
 }
-
-

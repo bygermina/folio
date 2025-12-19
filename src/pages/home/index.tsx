@@ -1,5 +1,4 @@
 import { ScreenSizeProvider } from '@/shared/lib/providers/screen-size-provider';
-import { LightFollowCoursor } from '@/shared/ui/animation/light/light-follow';
 import { CodeBackground } from '@/shared/ui/code-background/code-background';
 import { ExploreTabsWidget } from '@/widgets/explore-tabs';
 
@@ -14,7 +13,6 @@ const Index = () => {
         </a>
         <div aria-hidden="true">
           <CodeBackground />
-          <LightFollowCoursor />
         </div>
         <main id="main-content" className={styles.scrollContainer}>
           <div className={styles.tabsContainer}>
