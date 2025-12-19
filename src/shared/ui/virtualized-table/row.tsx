@@ -1,4 +1,11 @@
-import { memo, useEffect, useState, type ReactNode, type CSSProperties, type ComponentType } from 'react';
+import {
+  memo,
+  useEffect,
+  useState,
+  type ReactNode,
+  type CSSProperties,
+  type ComponentType,
+} from 'react';
 
 import { compareReactWindowStyle } from '@/shared/lib/react-window-helpers';
 import { setDisplayName } from '@/shared/lib/react-helpers';
@@ -46,7 +53,7 @@ const RowComponent = ({ items, style, gap = 8, renderItem, rowIndex }: RowProps)
   );
 };
 
-const Row = memo<RowProps>(RowComponent, (prevProps, nextProps) => {
+export const Row = memo<RowProps>(RowComponent, (prevProps, nextProps) => {
   if (prevProps.rowIndex !== nextProps.rowIndex) return false;
   if (prevProps.gap !== nextProps.gap) return false;
   if (prevProps.items !== nextProps.items) return false;
@@ -56,5 +63,3 @@ const Row = memo<RowProps>(RowComponent, (prevProps, nextProps) => {
 });
 
 setDisplayName(Row as ComponentType<unknown>, 'Row');
-
-export { Row };

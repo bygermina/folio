@@ -45,5 +45,3 @@ export const LabeledInput = ({
     </div>
   );
 };
-
-

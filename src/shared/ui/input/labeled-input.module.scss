@@ -11,7 +11,7 @@
   width: 100%;
   border-radius: radius(md);
   border: 1px solid var(--color-slate-700);
-  background-color: rgba(from var(--color-slate-900) r g b / 0.8);
+  background-color: var(--color-slate-800-80);
   color: var(--color-white);
   padding: spacing(1.5) spacing(2);
   font-size: 0.875rem;
@@ -28,9 +28,9 @@
   &:focus-visible {
     border-color: var(--color-blue-400);
     box-shadow:
-      0 0 0 3px rgba(from var(--color-blue-400) r g b / 0.15),
-      0 0 16px rgba(from var(--color-blue-400) r g b / 0.1);
-    background-color: rgba(from var(--color-slate-900) r g b / 0.95);
+      0 0 0 3px var(--color-blue-400-20),
+      0 0 16px var(--color-blue-400-10);
+    background-color: var(--color-slate-900);
   }
 }
 
@@ -46,13 +46,14 @@
     background-color: var(--color-slate-700);
   }
 
-  &::-webkit-slider-thumb {
+  &::-webkit-slider-thumb,
+  &::-moz-range-thumb {
     appearance: none;
     width: 0.9rem;
     height: 0.9rem;
-    border-radius: 999px;
+    border-radius: radius(full);
     background-color: var(--color-blue-400);
-    box-shadow: 0 0 0.5rem rgba(from var(--color-blue-400) r g b / 0.8);
+    box-shadow: 0 0 0.5rem var(--color-blue-400);
     transition:
       transform 0.15s ease,
       box-shadow 0.15s ease;
@@ -60,29 +61,7 @@
 
     &:hover {
       transform: scale(1.2);
-      box-shadow: 0 0 1rem rgba(from var(--color-blue-400) r g b / 1);
-    }
-
-    &:active {
-      cursor: grabbing;
-      transform: scale(1.1);
-    }
-  }
-
-  &::-moz-range-thumb {
-    width: 0.9rem;
-    height: 0.9rem;
-    border-radius: 999px;
-    background-color: var(--color-blue-400);
-    box-shadow: 0 0 0.5rem rgba(from var(--color-blue-400) r g b / 0.8);
-    transition:
-      transform 0.15s ease,
-      box-shadow 0.15s ease;
-    cursor: grab;
-
-    &:hover {
-      transform: scale(1.2);
-      box-shadow: 0 0 1rem rgba(from var(--color-blue-400) r g b / 1);
+      box-shadow: 0 0 1rem var(--color-blue-400);
     }
 
     &:active {
@@ -95,5 +74,3 @@
 .inputText {
   font-family: inherit;
 }
-
-

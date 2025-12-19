@@ -41,15 +41,15 @@
   100% {
     box-shadow:
       0 0 0 0 rgba(from var(--color-blue-400) r g b / 0.3),
-      0 8px 16px -4px var(--color-blue-400-15),
-      0 4px 8px -2px var(--color-blue-400-5);
+      0 8px 16px -4px var(--color-blue-400-20),
+      0 4px 8px -2px var(--color-blue-400-10);
   }
 
   50% {
     box-shadow:
       0 0 0 6px rgba(from var(--color-blue-400) r g b / 0),
-      0 8px 16px -4px var(--color-blue-400-15),
-      0 4px 8px -2px var(--color-blue-400-5);
+      0 8px 16px -4px var(--color-blue-400-20),
+      0 4px 8px -2px var(--color-blue-400-10);
   }
 }
 
@@ -66,10 +66,10 @@
 
 .magic {
   position: relative;
-  border: 1px solid var(--color-blue-400-30);
+  border: 1px solid var(--color-blue-400-20);
   box-shadow:
-    0 8px 16px -4px var(--color-blue-400-15),
-    0 4px 8px -2px var(--color-blue-400-5);
+    0 8px 16px -4px var(--color-blue-400-20),
+    0 4px 8px -2px var(--color-blue-400-10);
   background: linear-gradient(
     135deg,
     rgba(from var(--color-blue-400) r g b / 0.12) 0%,
@@ -133,7 +133,7 @@
   }
 
   &:focus-visible {
-    outline-color: var(--color-blue-400-60);
+    outline-color: var(--color-blue-400-50);
   }
 }
 
@@ -239,7 +239,7 @@
         rgba(from var(--color-blue-400) r g b / 0.12) 0%,
         rgba(from var(--color-blue-400) r g b / 0.08) 100%
       );
-      border-color: var(--color-blue-400-15);
+      border-color: var(--color-blue-400-20);
       box-shadow: 0 2px 4px rgba(from var(--color-blue-400) r g b / 0.1);
     }
   }

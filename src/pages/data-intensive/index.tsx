@@ -15,7 +15,6 @@ import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-obs
 import { useScreenSize } from '@/shared/lib/hooks/use-screen-size';
 
 import styles from './index.module.scss';
-import widgetStyles from '@/widgets/data-intensive/ui/data-intensive.module.scss';
 
 const DataIntensivePageComponent = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -51,15 +50,15 @@ const DataIntensivePageComponent = () => {
 
   return (
     <div className={styles.content}>
-      <div className={widgetStyles.section} ref={sectionRef} aria-labelledby={headingId}>
-        <div className={widgetStyles.headingWrapper}>
-          <Typography id={headingId} variant="h1" className={widgetStyles.heading}>
+      <div className={styles.section} ref={sectionRef} aria-labelledby={headingId}>
+        <div className={styles.headingWrapper}>
+          <Typography id={headingId} variant="h1" className={styles.heading}>
             Data intensive
           </Typography>
         </div>
 
-        <div className={widgetStyles.subheadingWrapper}>
-          <Typography variant="subheading" className={widgetStyles.subheading} color="muted">
+        <div className={styles.subheadingWrapper}>
+          <Typography variant="subheading" className={styles.subheading} color="muted">
             <Typography as="span" variant="body" color="primary" weight="medium">
               Issue:
             </Typography>{' '}
@@ -68,7 +67,7 @@ const DataIntensivePageComponent = () => {
         </div>
 
         <Card>
-          <div ref={containerRef} className={widgetStyles.dataContainer}>
+          <div ref={containerRef} className={styles.dataContainer}>
             {rowCount > 0 ? (
               <VirtualizedTable
                 rowCount={rowCount}
@@ -77,7 +76,7 @@ const DataIntensivePageComponent = () => {
                 height={viewportHeight * 0.55}
               />
             ) : (
-              <div className={widgetStyles.loading}>Loading data...</div>
+              <div className={styles.loading}>Loading data...</div>
             )}
           </div>
         </Card>

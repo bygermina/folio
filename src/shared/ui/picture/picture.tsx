@@ -46,5 +46,3 @@ export const Picture = forwardRef<HTMLImageElement, PictureProps>(
 );
 
 Picture.displayName = 'Picture';
-
-

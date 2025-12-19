@@ -20,7 +20,6 @@ export const useEvent = (
     }
   }, [event, isIntersecting, callback]);
 
-  // Handle window event listener
   useEffect(() => {
     if (!event) return;
 

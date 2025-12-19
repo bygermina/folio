@@ -28,25 +28,16 @@
   // Font families
   --font-family-sans: #{font-family(sans)};
 
-  // Colors with opacity - refined for better hierarchy
   // Blue opacity scale
-  --color-blue-400-5: #{color-opacity('blue', 400, 0.05)};
   --color-blue-400-10: #{color-opacity('blue', 400, 0.1)};
-  --color-blue-400-15: #{color-opacity('blue', 400, 0.15)};
   --color-blue-400-20: #{color-opacity('blue', 400, 0.2)};
-  --color-blue-400-30: #{color-opacity('blue', 400, 0.3)};
   --color-blue-400-50: #{color-opacity('blue', 400, 0.5)};
-  --color-blue-400-60: #{color-opacity('blue', 400, 0.6)};
-  --color-blue-500-15: #{color-opacity('blue', 500, 0.15)};
-  --color-blue-500-20: #{color-opacity('blue', 500, 0.2)};
 
-  // Background colors with opacity
-  --color-dark-8: #{color-opacity('dark', null, 0.08)};
-  --color-dark-12: #{color-opacity('dark', null, 0.12)};
-  --color-dark-25: #{color-opacity('dark', null, 0.25)};
-  --color-slate-800-30: #{color-opacity('slate', 800, 0.3)};
-  --color-slate-800-50: #{color-opacity('slate', 800, 0.5)};
+  // Slate opacity scale
+  --color-slate-800-10: #{color-opacity('slate', 800, 0.1)};
+  --color-slate-800-20: #{color-opacity('slate', 800, 0.2)};
   --color-slate-800-80: #{color-opacity('slate', 800, 0.8)};
+  --color-slate-700-50: #{color-opacity('slate', 700, 0.5)};
 
   --spacing-2: #{spacing(2)};
   --spacing-4: #{spacing(4)};

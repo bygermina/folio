@@ -11,30 +11,28 @@ export type Dimensions = {
 };
 
 const getElementDimensions = (
-  element: HTMLElement | null,
-  baseHeight?: number,
-  part: number = 0.5,
-  container?: HTMLElement | null,
-): Dimensions | null => {
-  if (!element) return null;
-
+  element: HTMLElement,
+  baseHeight: number | undefined,
+  part: number,
+  container: HTMLElement | null | undefined,
+): Dimensions => {
   const rect = element.getBoundingClientRect();
   const containerRect = container?.getBoundingClientRect();
-  const offsetLeft = containerRect ? containerRect.left : 0;
-  const offsetTop = containerRect ? containerRect.top : 0;
+  const offsetLeft = containerRect?.left ?? 0;
+  const offsetTop = containerRect?.top ?? 0;
+  const left = rect.left - offsetLeft;
+  const top = rect.top - offsetTop;
 
-  const dimensions: Dimensions = {
+  return {
     width: rect.width,
     height: rect.height,
-    bottomLeft: { x: rect.left - offsetLeft, y: rect.bottom - offsetTop },
+    bottomLeft: { x: left, y: rect.bottom - offsetTop },
     center: {
-      x: rect.left - offsetLeft + rect.width * 0.5,
-      y: rect.top - offsetTop + rect.height * part,
+      x: left + rect.width * 0.5,
+      y: top + rect.height * part,
     },
     scale: baseHeight ? rect.height / baseHeight : 1,
   };
-
-  return dimensions;
 };
 
 const defaultDimensions: Dimensions = {
@@ -47,63 +45,34 @@ const defaultDimensions: Dimensions = {
 
 const EPSILON = 0.9;
 
-const areDimensionsEqual = (a: Dimensions, b: Dimensions): boolean => {
-  if (Math.abs(a.width - b.width) > EPSILON) return false;
-  if (Math.abs(a.height - b.height) > EPSILON) return false;
-  if (Math.abs(a.scale - b.scale) > EPSILON) return false;
-  if (Math.abs(a.bottomLeft.x - b.bottomLeft.x) > EPSILON) return false;
-  if (Math.abs(a.bottomLeft.y - b.bottomLeft.y) > EPSILON) return false;
-  if (Math.abs(a.center.x - b.center.x) > EPSILON) return false;
-  if (Math.abs(a.center.y - b.center.y) > EPSILON) return false;
-  return true;
-};
+const areEqual = (a: number, b: number): boolean => Math.abs(a - b) <= EPSILON;
 
-const areSizesEqual = (a: Dimensions, b: Dimensions): boolean => {
-  if (Math.abs(a.width - b.width) > EPSILON) return false;
-  if (Math.abs(a.height - b.height) > EPSILON) return false;
-  if (Math.abs(a.scale - b.scale) > EPSILON) return false;
-  return true;
-};
+const areSizesEqual = (a: Dimensions, b: Dimensions): boolean =>
+  areEqual(a.width, b.width) && areEqual(a.height, b.height) && areEqual(a.scale, b.scale);
 
 export const useElementDimensions = (
   elementRef: React.RefObject<HTMLElement | null>,
-  isContentReady?: boolean,
+  isContentReady: boolean = true,
   baseHeight?: number,
   part: number = 0.5,
   containerRef?: React.RefObject<HTMLElement | null>,
 ) => {
-  const [dimensions, setDimensions] = useState<Dimensions>({ ...defaultDimensions });
-  const prevDimensions = useRef<Dimensions>({ ...defaultDimensions });
-  const isInitialized = useRef(false);
+  const [dimensions, setDimensions] = useState<Dimensions>(defaultDimensions);
+  const prevDimensions = useRef<Dimensions>(defaultDimensions);
 
   useEffect(() => {
-    if (!elementRef.current) return;
-
-    isInitialized.current = false;
+    const element = elementRef.current;
+    if (!element) return;
 
     const updateDimensions = () => {
-      const newDimensions = getElementDimensions(
-        elementRef.current,
-        baseHeight,
-        part,
-        containerRef?.current ?? undefined,
-      );
-      if (!newDimensions) return;
+      const newDimensions = getElementDimensions(element, baseHeight, part, containerRef?.current);
+      const sizesChanged = !areSizesEqual(prevDimensions.current, newDimensions);
+      prevDimensions.current = newDimensions;
 
-      const value = newDimensions;
-
-      if (areDimensionsEqual(prevDimensions.current, value)) return;
-
-      const sizesChanged = !areSizesEqual(prevDimensions.current, value);
-      prevDimensions.current = value;
-
-      if (sizesChanged || !isInitialized.current) {
-        isInitialized.current = true;
-        setDimensions(value);
-      }
+      if (sizesChanged) setDimensions(newDimensions);
     };
 
-    if (isContentReady ?? true) updateDimensions();
+    if (isContentReady) updateDimensions();
 
     const resizeObserver = new ResizeObserver(updateDimensions);
 
@@ -111,8 +80,8 @@ export const useElementDimensions = (
       requestAnimationFrame(updateDimensions);
     });
 
-    resizeObserver.observe(elementRef.current);
-    mutationObserver.observe(elementRef.current, {
+    resizeObserver.observe(element);
+    mutationObserver.observe(element, {
       attributes: true,
       attributeFilter: ['style', 'class'],
       subtree: false,

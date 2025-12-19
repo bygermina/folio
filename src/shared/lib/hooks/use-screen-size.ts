@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 import { BREAKPOINTS } from '@/shared/lib/breakpoints';
 
@@ -9,38 +9,29 @@ export const useScreenSize = () => {
   const isPortrait = screenHeight > screenWidth;
   const isSquare = isPortrait && screenHeight / screenWidth < 1.3;
 
-  const updateScreenSize = useCallback(() => {
-    const newWidth = window.innerWidth;
-    const newHeight = window.innerHeight;
-
-    if (newWidth === screenWidth && newHeight === screenHeight) return;
-
-    setScreenWidth(newWidth);
-    setScreenHeight(newHeight);
-  }, [screenWidth, screenHeight]);
-
   useEffect(() => {
-    let timeoutId: number;
-    let rafId: number | null = null;
+    let timeoutId: number | undefined;
 
-    const throttledResize = () => {
-      if (rafId) return;
+    const updateScreenSize = () => {
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
 
-      rafId = requestAnimationFrame(() => {
-        clearTimeout(timeoutId);
-        timeoutId = window.setTimeout(updateScreenSize, 100);
-        rafId = null;
-      });
+      setScreenWidth((prevWidth) => (newWidth !== prevWidth ? newWidth : prevWidth));
+      setScreenHeight((prevHeight) => (newHeight !== prevHeight ? newHeight : prevHeight));
     };
 
-    window.addEventListener('resize', throttledResize, { passive: true });
+    const handleResize = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(updateScreenSize, 100);
+    };
+
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
-      window.removeEventListener('resize', throttledResize);
-      clearTimeout(timeoutId);
-      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', handleResize);
+      if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [updateScreenSize]);
+  }, []);
 
   const deviceInfo = useMemo(
     () => ({
@@ -63,5 +54,3 @@ export const useScreenSize = () => {
     ...deviceInfo,
   };
 };
-
-

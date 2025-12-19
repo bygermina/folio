@@ -5,3 +5,54 @@
   padding-top: 8rem;
 }
 
+.section {
+  position: relative;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.heading {
+  margin-bottom: spacing(4);
+  text-align: center;
+}
+
+.subheading {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 42rem;
+  margin-bottom: spacing(6);
+}
+
+.loading {
+  opacity: 0.5;
+}
+
+.dataContainer {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  @include fade-in(1s, 1s);
+}
+
+.headingWrapper {
+  @include fade-in(0.8s, 0.3s);
+  transform: translateY(30px) scale(0.9);
+  animation:
+    fadeIn 0.8s 0.3s forwards,
+    slideUpScale 0.8s 0.3s forwards;
+}
+
+.subheadingWrapper {
+  @include fade-in(0.8s, 3.5s);
+}
+
+@keyframes slideUpScale {
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+

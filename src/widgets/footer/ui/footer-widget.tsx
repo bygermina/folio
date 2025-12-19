@@ -22,29 +22,27 @@ const SOCIAL_LINKS = [
 ];
 
 export const FooterWidget = () => {
-  const { isPortrait } = useScreenSizeContext();
+  const { isMobile } = useScreenSizeContext();
 
-  if (isPortrait) return null;
+  if (isMobile) return null;
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.footerContent}>
-        <nav className={styles.socialLinks} aria-label="Social links">
-          {SOCIAL_LINKS.map(({ name, url, Icon }) => (
-            <a
-              key={name}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.socialLink}
-              aria-label={name}
-            >
-              <Icon className={styles.icon} />
-            </a>
-          ))}
-        </nav>
-        <p className={styles.footerText}>© {new Date().getFullYear()} Xenia Liubachka</p>
-      </div>
+      <nav className={styles.socialLinks} aria-label="Social links">
+        {SOCIAL_LINKS.map(({ name, url, Icon }) => (
+          <a
+            key={name}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.socialLink}
+            aria-label={name}
+          >
+            <Icon className={styles.icon} />
+          </a>
+        ))}
+      </nav>
+      <p className={styles.footerText}>© {new Date().getFullYear()} Xenia Liubachka</p>
     </footer>
   );
 };
