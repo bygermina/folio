@@ -25,4 +25,3 @@ export const useElementSize = (ref: React.RefObject<HTMLElement | null>) => {
 
   return size;
 };
-

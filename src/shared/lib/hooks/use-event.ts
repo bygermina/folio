@@ -29,5 +29,3 @@ export const useEvent = (
     return () => window.removeEventListener(event, callback);
   }, [event, callback]);
 };
-
-

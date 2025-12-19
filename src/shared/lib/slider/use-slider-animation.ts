@@ -42,5 +42,3 @@ export const useSliderAnimation = ({
 
   return { setCircularAnimationPaused };
 };
-
-

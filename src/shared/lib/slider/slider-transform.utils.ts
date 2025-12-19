@@ -5,5 +5,3 @@ export const applyTransform = (slides: (HTMLElement | null)[], translateX: numbe
     el.style.transform = `translate3d(${x}px, 0, 0)`;
   });
 };
-
-

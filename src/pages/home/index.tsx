@@ -1,27 +1,15 @@
-import { ScreenSizeProvider } from '@/shared/lib/providers/screen-size-provider';
-import { CodeBackground } from '@/shared/ui/code-background/code-background';
-import { ExploreTabsWidget } from '@/widgets/explore-tabs';
+import { MainWidget } from '@/widgets/main';
+import { FooterWidget } from '@/widgets/footer';
 
 import styles from './index.module.scss';
 
-const Index = () => {
+const HomePage = () => {
   return (
-    <ScreenSizeProvider>
-      <div className={styles.root}>
-        <a href="#main-content" className={styles.skipLink}>
-          Skip to main content
-        </a>
-        <div aria-hidden="true">
-          <CodeBackground />
-        </div>
-        <main id="main-content" className={styles.scrollContainer}>
-          <div className={styles.tabsContainer}>
-            <ExploreTabsWidget />
-          </div>
-        </main>
-      </div>
-    </ScreenSizeProvider>
+    <div className={styles.content}>
+      <MainWidget animate={true} />
+      <FooterWidget />
+    </div>
   );
 };
 
-export default Index;
+export default HomePage;

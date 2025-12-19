@@ -1,2 +1,2 @@
-export { DataIntensiveWidget } from './ui/data-intensive-widget';
-
+// Data intensive widget was moved to pages/data-intensive
+// This file is kept for potential future exports

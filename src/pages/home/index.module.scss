@@ -1,40 +1,6 @@
 @use '@/shared/styles/design-system' as *;
 
-.root {
-  position: relative;
-  height: 100vh;
-  @supports (height: 100dvh) {
-    height: 100dvh;
-  }
-  overflow: hidden;
-}
-
-.skipLink {
-  position: absolute;
-  left: -999px;
-  top: 0;
-  z-index: z-index(content);
-  padding: spacing(2) spacing(4);
-  background-color: var(--color-blue-400);
-  color: var(--color-white);
-  border-radius: radius(md);
-
-  &:focus {
-    left: spacing(4);
-    top: spacing(4);
-  }
-}
-
-.scrollContainer {
-  position: relative;
-  z-index: 1;
-  overflow-x: hidden;
-  overflow-y: auto;
-  height: 100%;
-  isolation: isolate;
-}
-
-.tabsContainer {
+.content {
   position: relative;
   height: 100%;
   animation: fadeIn 0.3s ease-out;

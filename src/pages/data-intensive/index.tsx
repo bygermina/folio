@@ -14,9 +14,10 @@ import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions'
 import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer';
 import { useScreenSize } from '@/shared/lib/hooks/use-screen-size';
 
-import styles from './data-intensive.module.scss';
+import styles from './index.module.scss';
+import widgetStyles from '@/widgets/data-intensive/ui/data-intensive.module.scss';
 
-const DataIntensiveWidgetComponent = () => {
+const DataIntensivePageComponent = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const containerWidth = useElementDimensions(containerRef, true).width;
@@ -49,38 +50,42 @@ const DataIntensiveWidgetComponent = () => {
   const headingId = 'data-intensive-heading';
 
   return (
-    <div className={styles.section} ref={sectionRef} aria-labelledby={headingId}>
-      <div className={styles.headingWrapper}>
-        <Typography id={headingId} variant="h1" className={styles.heading}>
-          Data intensive
-        </Typography>
-      </div>
-
-      <div className={styles.subheadingWrapper}>
-        <Typography variant="subheading" className={styles.subheading} color="muted">
-          <Typography as="span" variant="body" color="primary" weight="medium">
-            Issue:
-          </Typography>{' '}
-          Rendering {rowCount * itemsPerRow} data points
-        </Typography>
-      </div>
-
-      <Card>
-        <div ref={containerRef} className={styles.dataContainer}>
-          {rowCount > 0 ? (
-            <VirtualizedTable
-              rowCount={rowCount}
-              rowComponent={DataRow}
-              rowHeight={DATA_GRID.ROW_HEIGHT}
-              height={viewportHeight * 0.55}
-            />
-          ) : (
-            <div className={styles.loading}>Loading data...</div>
-          )}
+    <div className={styles.content}>
+      <div className={widgetStyles.section} ref={sectionRef} aria-labelledby={headingId}>
+        <div className={widgetStyles.headingWrapper}>
+          <Typography id={headingId} variant="h1" className={widgetStyles.heading}>
+            Data intensive
+          </Typography>
         </div>
-      </Card>
+
+        <div className={widgetStyles.subheadingWrapper}>
+          <Typography variant="subheading" className={widgetStyles.subheading} color="muted">
+            <Typography as="span" variant="body" color="primary" weight="medium">
+              Issue:
+            </Typography>{' '}
+            Rendering {rowCount * itemsPerRow} data points
+          </Typography>
+        </div>
+
+        <Card>
+          <div ref={containerRef} className={widgetStyles.dataContainer}>
+            {rowCount > 0 ? (
+              <VirtualizedTable
+                rowCount={rowCount}
+                rowComponent={DataRow}
+                rowHeight={DATA_GRID.ROW_HEIGHT}
+                height={viewportHeight * 0.55}
+              />
+            ) : (
+              <div className={widgetStyles.loading}>Loading data...</div>
+            )}
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };
 
-export const DataIntensiveWidget = memo(DataIntensiveWidgetComponent);
+const DataIntensivePage = memo(DataIntensivePageComponent);
+
+export default DataIntensivePage;

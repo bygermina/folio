@@ -1,0 +1,190 @@
+@use '@/shared/styles/design-system' as *;
+
+.nav {
+  position: fixed;
+  top: spacing(2);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: inline-flex;
+  flex-direction: column;
+  max-width: calc(100vw - spacing(4));
+  animation: slideDown 0.4s ease-out;
+}
+
+.navWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.navList {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: spacing(2);
+  padding: spacing(2);
+  border-radius: radius(lg);
+  background: linear-gradient(
+    135deg,
+    rgba(from var(--color-slate-800) r g b / 0.08) 0%,
+    rgba(from var(--color-slate-800) r g b / 0.05) 100%
+  );
+  backdrop-filter: blur(16px) saturate(200%);
+  -webkit-backdrop-filter: blur(16px) saturate(200%);
+  border: 1px solid rgba(from var(--color-slate-600) r g b / 0.2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  max-width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  > * {
+    flex-shrink: 0;
+  }
+}
+
+.navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  padding: 0 spacing(6);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  color: var(--color-slate-400);
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: radius(md);
+  white-space: nowrap;
+  background-color: transparent;
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 60%;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--color-blue-400-50), transparent);
+    border-radius: 1px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:hover {
+    color: var(--color-blue-300);
+    background: linear-gradient(
+      135deg,
+      rgba(from var(--color-blue-400) r g b / 0.04) 0%,
+      rgba(from var(--color-blue-400) r g b / 0.02) 100%
+    );
+    backdrop-filter: blur(6px) saturate(150%);
+    -webkit-backdrop-filter: blur(6px) saturate(150%);
+
+    &::after {
+      transform: translateX(-50%) scaleX(0.5);
+      opacity: 0.5;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-blue-500);
+    outline-offset: 2px;
+  }
+}
+
+.navLinkActive {
+  background: linear-gradient(
+    135deg,
+    rgba(from var(--color-blue-400) r g b / 0.08) 0%,
+    rgba(from var(--color-blue-400) r g b / 0.05) 100%
+  );
+  backdrop-filter: blur(8px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  border-color: var(--color-blue-400-10);
+  color: var(--color-blue-300);
+  box-shadow: 0 1px 2px rgba(from var(--color-blue-400) r g b / 0.08);
+
+  &::after {
+    transform: translateX(-50%) scaleX(1);
+    background: linear-gradient(90deg, transparent, var(--color-blue-400-20), transparent);
+  }
+
+  &:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(from var(--color-blue-400) r g b / 0.12) 0%,
+      rgba(from var(--color-blue-400) r g b / 0.08) 100%
+    );
+    border-color: var(--color-blue-400-15);
+    box-shadow: 0 2px 4px rgba(from var(--color-blue-400) r g b / 0.1);
+  }
+}
+
+.tooltip {
+  display: none;
+
+  @media (hover: hover) {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: spacing(2);
+    padding: spacing(2) spacing(4);
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-slate-300);
+    line-height: 1.5;
+    background: linear-gradient(
+      135deg,
+      rgba(from var(--color-slate-800) r g b / 0.15) 0%,
+      rgba(from var(--color-slate-800) r g b / 0.1) 100%
+    );
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-radius: radius(lg);
+    border: 1px solid rgba(from var(--color-slate-600) r g b / 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0.25s ease,
+      transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+
+  &Visible {
+    @media (hover: hover) {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+

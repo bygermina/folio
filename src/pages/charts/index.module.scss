@@ -1,0 +1,35 @@
+@use '@/shared/styles/design-system' as *;
+
+.content {
+  width: 100%;
+  padding-top: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 8rem);
+}
+
+.placeholder {
+  text-align: center;
+  padding: spacing(8);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-slate-100);
+  margin-bottom: spacing(4);
+}
+
+.description {
+  font-size: 1.125rem;
+  color: var(--color-slate-400);
+  margin-bottom: spacing(4);
+}
+
+.comingSoon {
+  font-size: 0.875rem;
+  color: var(--color-slate-500);
+  font-style: italic;
+}
+
