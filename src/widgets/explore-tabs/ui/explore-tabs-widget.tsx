@@ -1,6 +1,6 @@
 import { Suspense, lazy, useState } from 'react';
 
-import { Tabs, TabList, Tab, TabPanel } from '@/shared/ui/tabs/tabs';
+import { Tabs, TabList, Tab, TabPanel } from '@/shared/ui/tabs';
 import { MainWidget } from '@/widgets/main';
 import { FooterWidget } from '@/widgets/footer';
 import { cn } from '@/shared/lib/cn';
