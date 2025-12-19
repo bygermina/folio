@@ -18,12 +18,13 @@ export const Layout = () => {
         <div aria-hidden="true">
           <CodeBackground />
         </div>
-        <Navigation />
-        <main id="main-content" className={styles.scrollContainer}>
-          <Suspense fallback={<LoadingFallback />}>
-            <Outlet />
-          </Suspense>
-        </main>
+        <Navigation>
+          <main id="main-content" className={styles.scrollContainer}>
+            <Suspense fallback={<LoadingFallback />}>
+              <Outlet />
+            </Suspense>
+          </main>
+        </Navigation>
       </div>
     </ScreenSizeProvider>
   );
